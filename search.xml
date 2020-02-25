@@ -40,18 +40,4 @@
         <tag>jsp</tag>
       </tags>
   </entry>
-  <entry>
-    <title>first blog</title>
-    <url>/2020/02/04/first-blog/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>JavaSE</category>
-      </categories>
-      <tags>
-        <tag>基本语法</tag>
-        <tag>标识符</tag>
-        <tag>关键字</tag>
-        <tag>变量</tag>
-      </tags>
-  </entry>
 </search>
