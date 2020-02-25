@@ -3,7 +3,7 @@
   <entry>
     <title>面试总结</title>
     <url>/2020/02/25/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h2 id="栈和堆的区别"><a href="#栈和堆的区别" class="headerlink" title="栈和堆的区别"></a>栈和堆的区别</h2><h2 id="面试知识点"><a href="#面试知识点" class="headerlink" title="面试知识点"></a>面试知识点</h2><h3 id="JSP九个内置对象"><a href="#JSP九个内置对象" class="headerlink" title="JSP九个内置对象"></a>JSP九个内置对象</h3><ul>
+    <content><![CDATA[<h2 id="面试知识点"><a href="#面试知识点" class="headerlink" title="面试知识点"></a>面试知识点</h2><h3 id="JSP九个内置对象"><a href="#JSP九个内置对象" class="headerlink" title="JSP九个内置对象"></a>JSP九个内置对象</h3><ul>
 <li><p>request：封装客户端的请求，其中包含来自GET或POST请求的参数；</p>
 </li>
 <li><p>response：封装服务器对客户端的响应；</p>
@@ -22,10 +22,12 @@
 </li>
 <li><p>exception：封装页面抛出异常的对象。</p>
 <hr>
+ <a id="more"></a>
+
 </li>
 </ul>
 <p>线程阻塞<br>数据库调优<br>jvm调优<br>springboot主要配置文件<br>spring事务<br>数据库隔离事务<br>设计模式<br>ioc aop<br>cookile session request response<br>栈和堆的区别<br>jsp内置对象</p>
- <a id="more"></a>]]></content>
+]]></content>
       <categories>
         <category>Java面试</category>
       </categories>
