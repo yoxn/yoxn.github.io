@@ -3,7 +3,8 @@
   <entry>
     <title>面试总结</title>
     <url>/2020/02/25/%E6%A0%88%E5%92%8C%E5%A0%86%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[ <a id="more"></a>]]></content>
+    <content><![CDATA[<h2 id="栈和堆的区别"><a href="#栈和堆的区别" class="headerlink" title="栈和堆的区别"></a>栈和堆的区别</h2><p>线程阻塞<br>数据库调优<br>jvm调优<br>springboot主要配置文件<br>spring事务<br>数据库隔离事务<br>设计模式<br>ioc aop<br>cookile session request response<br>栈和堆的区别<br>jsp内置对象</p>
+ <a id="more"></a>]]></content>
       <categories>
         <category>Java面试</category>
       </categories>
