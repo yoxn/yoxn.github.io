@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>栈和堆的区别</title>
+    <title>面试总结</title>
     <url>/2020/02/25/%E6%A0%88%E5%92%8C%E5%A0%86%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[ <a id="more"></a>]]></content>
+      <categories>
+        <category>Java面试</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+        <tag>Spring</tag>
+        <tag>Spring Boot</tag>
+        <tag>设计模式</tag>
+        <tag>数据库</tag>
+        <tag>jsp</tag>
+      </tags>
   </entry>
   <entry>
     <title>first blog</title>
