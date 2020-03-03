@@ -48,6 +48,12 @@
 <p> 在基类中定义创建对象的一个接口，让子类决定实例化哪个类。工厂方法让一个类的实例化延迟到子类中进行。 </p>
 </li>
 <li><p><strong>代理模式</strong></p>
+<p> AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
+<p> <strong>Spring AOP 就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDK Proxy</strong>，去创建代理对象，而对于没有实现接口的对象，就无法使用 JDK Proxy 去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong> ，这时候Spring AOP会使用 <strong>Cglib</strong> 生成一个被代理对象的子类来作为代理。当然你也可以使用 AspectJ ,Spring AOP 已经集成了AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。</p>
+<p> 使用 AOP 之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了 AOP 。</p>
+<p> <strong>Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。</strong> Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。</p>
+<p> Spring AOP 已经集成了 AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。AspectJ 相比于 Spring AOP 功能更加强大，但是 Spring AOP 相对来说更简单，</p>
+<p> 如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择 AspectJ ，它比Spring AOP 快很多。</p>
 </li>
 <li><p><strong>策略模式</strong></p>
 <p>定义一系列的算法，把每一个算法封装起来，并且使它们可以相互替换。这个模式中使得各个算法可以独立于使用它的客户而变化。<br>策略模式的构成：<br>1.抽象策略角色：策略类，通常由一个接口或者抽象类实现。<br>2.具体策略角色：包装了相关的算法和行为，实现策略接口或继承抽象类。<br>3.环境角色：context，运行时持有一个策略类的引用，最终给客户端调用。</p>
@@ -55,6 +61,22 @@
 </li>
 <li><p><strong>模板模式</strong></p>
 <p> 在模板模式（Template Pattern）中，一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。这种类型的设计模式属于行为型模式。 </p>
+</li>
+<li><p><strong>观察者模式</strong></p>
+<p>  观察者模式是一种对象行为型模式。它表示的是一种对象与对象之间具有依赖关系，当一个对象发生改变的时候，这个对象所依赖的对象也会做出反应。</p>
+</li>
+<li><p><strong>适配器模式</strong></p>
+<p>  适配器模式(Adapter Pattern) 将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p> Spring 框架中用到了哪些设计模式？</p>
+<ul>
+<li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</li>
+<li><strong>代理设计模式</strong> : Spring AOP 功能的实现。</li>
+<li><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</li>
+<li><strong>模板方法模式</strong> : Spring 中 <code>jdbcTemplate</code>、<code>hibernateTemplate</code> 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式。</li>
+<li><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</li>
+<li><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</li>
+<li><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</li>
+</ul>
 </li>
 </ul>
 <hr>
@@ -438,8 +460,27 @@
 <p>当<code>@Transactional</code>注解作用于类上时，该类的所有 public 方法将都具有该类型的事务属性，同时，我们也可以在方法级别使用该标注来覆盖类级别的定义。如果类或者方法加了这个注解，那么这个类里面的方法抛出异常，就会回滚，数据库里面的数据也会回滚。</p>
 <p>在<code>@Transactional</code>注解中如果不配置<code>rollbackFor</code>属性,那么事物只会在遇到<code>RuntimeException</code>的时候才会回滚,加上<code>rollbackFor=Exception.class</code>,可以让事物在遇到非运行时异常时也回滚。</p>
 <hr>
-<p>数据库调优<br>jvm调优</p>
-<p>springboot主要配置文件<br>spring事务</p>
+<h3 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h3><h4 id="MyBatis开发时的常用对象"><a href="#MyBatis开发时的常用对象" class="headerlink" title="MyBatis开发时的常用对象"></a>MyBatis开发时的常用对象</h4><p>1.SqlSessionFactory：SqlSesssion工厂。通过SqlSessionFactory：SqlSesssion中的openSession()产生SqlSesssion对象。</p>
+<p>2.SqlSesssion：SqlSesssion对象（类似于JDBC中的Connection）</p>
+<p>3.Executor：MyBatis中所有Mapper语句的执行 都是通过Executor进行的。</p>
+<h4 id="MyBatis四大核心对象"><a href="#MyBatis四大核心对象" class="headerlink" title="MyBatis四大核心对象"></a>MyBatis四大核心对象</h4><p>1.StatementHandler(负责sql语句)：数据库的处理对象 select… from where id = #{}  ..</p>
+<p>2.PrameterHandler(负责sql中的参数)：处理SQL中的参数对象  </p>
+<p>3.Executor</p>
+<p>4.ResultSetHandler：处理SQL的返回结果集</p>
+<h4 id="MyBatis四大处理器"><a href="#MyBatis四大处理器" class="headerlink" title="MyBatis四大处理器"></a>MyBatis四大处理器</h4><p>StatementHandler、PrameterHandler、ResultSetHandler</p>
+<p>剩下一个：TypeHandler （类型转换器）</p>
+<p><img src="D:/Study/Notes/%E9%A2%9C%E7%BE%A4%E8%B5%84%E6%96%99/%E9%9D%A2%E8%AF%95%E6%8C%87%E5%AF%BC-%E7%9B%B4%E6%92%AD%E5%9B%9E%E6%94%BE/3%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6-%E9%9D%A2%E8%AF%95%E6%8C%87%E5%AF%BC.assets/1578052621363.png" alt="1578052621363"></p>
+<h4 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h4><p><img src="D:/Study/Notes/%E9%A2%9C%E7%BE%A4%E8%B5%84%E6%96%99/%E9%9D%A2%E8%AF%95%E6%8C%87%E5%AF%BC-%E7%9B%B4%E6%92%AD%E5%9B%9E%E6%94%BE/3%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6-%E9%9D%A2%E8%AF%95%E6%8C%87%E5%AF%BC.assets/1578052925399.png" alt="1578052925399"></p>
+<h4 id="一对一、一对多，延迟加载"><a href="#一对一、一对多，延迟加载" class="headerlink" title="一对一、一对多，延迟加载"></a>一对一、一对多，延迟加载</h4><p>一对一</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">使用&lt;resultMap&gt;中&lt;association&gt;</span><br><span class="line">一对一的延迟加载：</span><br><span class="line">使用&lt;resultMap&gt;中&lt;association&gt;的select属性指定延迟加载的sql语句</span><br><span class="line">&lt;resultMap&gt;	</span><br><span class="line">		&lt;association select=<span class="string">"延迟加载的sql语句"</span> &gt;</span><br><span class="line">		&lt;&lt;association&gt;&gt;</span><br><span class="line">&lt;/resultMap&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一对多：将一对一中的<association>改为<collection></p>
+<hr>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>jvm优化：1.项目做完时，我用jmeter进行了压力测试，结果发现相应时间太慢（或者内存利用率太高） ，然后我用jvisualvm分析了下JVM的内存情况。分析后，进一步发现项目中的小对象太多了，并且发现这些小对象都是生命周期比较短的对象。然后我猜测可能就是由于短对象太多，造成了堆中新生代容量不足，进而让很多短对象逃逸到了老年代中。这样一来，新生代和老年代中的对象都会很多，就会加速GC的回收频率，从而降低系统的性能。对此，我调大了新生代的内存大小，并且调高了新生代 逃逸到老年代的 阈值。之后再测试，发现性能平稳了许多。</p>
+<p>2.项目做完时，我用jmeter进行了压力测试，结果发现响应时间太慢。然后我用mysqldumslow工具查找到了项目中执行时间最长的那个SQL语句，因此猜测是这条SQL的性能太低，拖累了整个系统。然后我用explain查看了SQL执行计划，发现这个SQL根本没有写索引并且是大表驱动了小表，所以特别慢。之后，我给它后面的where查询字段加上了索引，并且改为了小表驱动大表。然后再次测试，响应时间就缩短了很多。</p>
+<p>PS：这个秀点是“SQL优化”，具体流程是：定位慢SQL-&gt;使用explain查询SQL执行计划，用于分析SQL执行慢的原因-&gt;SQL优化。上述中的“小表驱动大表”等是SQL优化时的术语。</p>
+<hr>
+<h3 id="springboot主要配置文件"><a href="#springboot主要配置文件" class="headerlink" title="springboot主要配置文件"></a>springboot主要配置文件</h3><p>SpringBoot使用一个全局的配置文件，配置文件名是固定的；<br> <strong>1.application.properties</strong><br> <strong>2.application.yml(或者是yaml)</strong><br> 配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好</p>
 ]]></content>
       <categories>
         <category>Java面试</category>
