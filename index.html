@@ -226,7 +226,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-05 09:13:48 / 修改时间：09:15:09" itemprop="dateCreated datePublished" datetime="2020-03-05T09:13:48+08:00">2020-03-05</time>
+              <time title="创建时间：2020-03-05 09:13:48 / 修改时间：09:18:21" itemprop="dateCreated datePublished" datetime="2020-03-05T09:13:48+08:00">2020-03-05</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,15 +252,18 @@
 
       
           <h2 id="OAuth授权登陆模块"><a href="#OAuth授权登陆模块" class="headerlink" title="OAuth授权登陆模块"></a>OAuth授权登陆模块</h2><ol>
-<li>用户点击登陆按钮，请求github提供的authorize接口，需要提供的参数<ul>
+<li><p>用户点击登陆按钮，请求github提供的authorize接口，需要提供的参数</p>
+<ul>
 <li>client_id: github生成的</li>
 <li>redirect_uri: 自己设置的回调接口地址</li>
 <li>state=1</li>
 <li>scope=user</li>
 </ul>
 </li>
-<li>github自动跳转到我们设置的callback接口中，并且携带参数code</li>
-<li>我们继续调用github提供的access_token接口，需要提供参数，将数据穿的的参数封装为AccessTokenDTO对象<ul>
+<li><p>github自动跳转到我们设置的callback接口中，并且携带参数code</p>
+</li>
+<li><p>我们继续调用github提供的access_token接口，需要提供参数，将数据穿的的参数封装为AccessTokenDTO对象</p>
+<ul>
 <li>Client_id: github生成的</li>
 <li>Client_secret: github生成的</li>
 <li>Code: github: 回调提供的参数</li>
@@ -268,94 +271,19 @@
 <li>State: 1 注意请求url: <a href="https://github.com/login/oauth/access_token" target="_blank" rel="noopener">https://github.com/login/oauth/access_token</a> post方式</li>
 </ul>
 </li>
-<li>github响应请求返回access_token</li>
-<li>利用access_token请求github提供的user接口 <a href="https://api.github.com/user?access_token=xxxxx" target="_blank" rel="noopener">https://api.github.com/user?access_token=xxxxx</a> Get方式</li>
-<li>返回Git用户，存入数据，更新登陆状态</li>
-</ol>
-<h2 id="Redis实现用户三天免登陆"><a href="#Redis实现用户三天免登陆" class="headerlink" title="Redis实现用户三天免登陆"></a>Redis实现用户三天免登陆</h2><ol>
-<li>用户登陆成功后,利用UUID生成token,将token放入cookie中并设置3天有效期</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String token &#x3D; UUID.randomUUID().toString();</span><br><span class="line">Cookie cookie &#x3D; new Cookie(&quot;token&quot;, token); </span><br><span class="line">cookie.setMaxAge(60*60*24*3);</span><br><span class="line">response.addCookie(cookie);</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>将用户信息存入redis中，设置有效时间为3天</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redisTemplate.opsForValue().set(user.getToken(), user,60*60*24*3, TimeUnit.SECONDS);</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>编写拦截器,查看本地是否有token,若存在,则从redis中查询出用户信息存入session,若无则返回登陆页面</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">if (cookies &#x3D;&#x3D; null)&#123;</span><br><span class="line">   return true;</span><br><span class="line">&#125;</span><br><span class="line">for (Cookie cookie : cookies) &#123;</span><br><span class="line">   if(&quot;token&quot;.equals(cookie.getName()))&#123;</span><br><span class="line">       String token &#x3D; cookie.getValue();</span><br><span class="line">       User o &#x3D; (User)redisTemplate.opsForValue().get(token);</span><br><span class="line">       System.out.println(o);</span><br><span class="line">       if(o !&#x3D; null)&#123;</span><br><span class="line">           request.getSession().setAttribute(&quot;user&quot;, o);</span><br><span class="line">       &#125;</span><br><span class="line">       break;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="社区帖子发布-修改-分页展示模块"><a href="#社区帖子发布-修改-分页展示模块" class="headerlink" title="社区帖子发布,修改,分页展示模块"></a>社区帖子发布,修改,分页展示模块</h2><ol>
-<li>集成PageHelper分页插件,并配置bean,采用MybatisPlus为Mybatis做增强操作，减少项目大量SQL</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class MybatisConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public PageHelper pageHelper()&#123;</span><br><span class="line">        PageHelper pageHelper &#x3D; new PageHelper();</span><br><span class="line">        Properties p &#x3D; new Properties();</span><br><span class="line">        &#x2F;&#x2F;会将 RowBounds 中的 offset 参数当成 pageNum 使用，可以用页码和页面大小两个参数进行分页。</span><br><span class="line">        p.setProperty(&quot;offsetAsPageNum&quot;,&quot;true&quot;);</span><br><span class="line">        &#x2F;&#x2F;使用 RowBounds 分页会进行 count 查询。</span><br><span class="line">        p.setProperty(&quot;rowBoundsWithCount&quot;,&quot;true&quot;);</span><br><span class="line">        &#x2F;&#x2F;分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum&lt;&#x3D;0 时会查询第一页， pageNum&gt;pages（超过总数时），会查询最后一页。</span><br><span class="line">        p.setProperty(&quot;reasonable&quot;,&quot;true&quot;);</span><br><span class="line">        pageHelper.setProperties(p);</span><br><span class="line">        return pageHelper;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;悲观锁插件</span><br><span class="line">    @Bean</span><br><span class="line">    public OptimisticLockerInterceptor optimisticLockerInterceptor() &#123;</span><br><span class="line">        return new OptimisticLockerInterceptor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>使用thymeleaf+Bootstrap+Jquery解析数据解析美化 所用文档链接:</li>
-</ol>
-<ul>
-<li><a href="https://mp.baomidou.com/" target="_blank" rel="noopener">MyBatisPlus文档</a></li>
-<li><a href="https://v3.bootcss.com/css/" target="_blank" rel="noopener">Bootstrap文档</a></li>
-<li><a href="https://spring.io/" target="_blank" rel="noopener">SpringBoot文档</a></li>
-</ul>
-<h2 id="多级回复及评论观看数功能模块"><a href="#多级回复及评论观看数功能模块" class="headerlink" title="多级回复及评论观看数功能模块"></a>多级回复及评论观看数功能模块</h2><ol>
-<li>数据表设计采用单表设计<ul>
-<li>通过type属性指定评论为问题评论还是评论回复</li>
-<li>通过parent_id在单表中指定级联关系</li>
-</ul>
+<li><p>github响应请求返回access_token</p>
 </li>
-<li>问题显示页面<ul>
-<li>首次进入问题页面应保证效率,仅展示一级评论,即问题的回复</li>
-<li>每条评论显示有点赞数及评论数,用户可点击评论查看二级评论,并显示出二级评论窗口</li>
-</ul>
+<li><p>利用access_token请求github提供的user接口 <a href="https://api.github.com/user?access_token=xxxxx" target="_blank" rel="noopener">https://api.github.com/user?access_token=xxxxx</a> Get方式</p>
 </li>
-</ol>
-<h2 id="Redis中tag标签库完善"><a href="#Redis中tag标签库完善" class="headerlink" title="Redis中tag标签库完善"></a>Redis中tag标签库完善</h2><ol>
-<li>可以将标签全部放入Redis数据库中</li>
-<li>不允许提交问题时输入非法标签</li>
-<li>焦点移动到标签时,弹出标签库，用户选择符合自己的标签进行添加</li>
-</ol>
-<h2 id="通知回复功能模块"><a href="#通知回复功能模块" class="headerlink" title="通知回复功能模块"></a>通知回复功能模块</h2><ol>
-<li>采用RabbitMQ如何实现此功能？<ul>
-<li>每条评论创建时,将通知纳入Queue中,交换器及队列如何设计,如何保证每个用户都能获取到自己的通知</li>
-<li>使用@RabbitListener获取队列中的数据.</li>
-</ul>
-</li>
-<li>createNotification<ul>
-<li>每当有一次评论请求成功时,同时创建一条通知,保存parrent_id问题的id,设置状态为未读,在通知页面显示评论内容及评论人</li>
-<li>使用Spring事务进行管理,保证评论与通知的原子性</li>
-</ul>
-</li>
-<li>通知条数及内容展示<ul>
-<li>使用拦截器查询当前用户在数据库中通知的未读条数,放入Session中</li>
-<li>用户请求通知列表,生成 User评论你的（问题 or 评论） 用户请求某条通知时，转发请求到Question页面并将该通知状态置为已读</li>
-</ul>
-</li>
-</ol>
-<h2 id="集成富文本编辑器（支持Markdown）"><a href="#集成富文本编辑器（支持Markdown）" class="headerlink" title="集成富文本编辑器（支持Markdown）"></a>集成富文本编辑器（支持Markdown）</h2><ol>
-<li><a href="https://pandao.github.io/editor.md/" target="_blank" rel="noopener">开源在线 Markdown 编辑器</a></li>
-<li>引入依赖,添加可嵌入的 Markdown 在线编辑器（组件）</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;editormd&#x2F;css&#x2F;editormd.css&quot; &#x2F;&gt;</span><br><span class="line">&lt;div id&#x3D;&quot;test-editor&quot;&gt;</span><br><span class="line">    &lt;textarea style&#x3D;&quot;display:none;&quot;&gt;### 关于 Editor.md</span><br><span class="line"></span><br><span class="line">**Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。</span><br><span class="line">    &lt;&#x2F;textarea&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcss.com&#x2F;jquery&#x2F;1.11.3&#x2F;jquery.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script src&#x3D;&quot;editormd&#x2F;editormd.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt;</span><br><span class="line">    $(function() &#123;</span><br><span class="line">        var editor &#x3D; editormd(&quot;test-editor&quot;, &#123;</span><br><span class="line">            &#x2F;&#x2F; width  : &quot;100%&quot;,</span><br><span class="line">            &#x2F;&#x2F; height : &quot;100%&quot;,</span><br><span class="line">            path   : &quot;editormd&#x2F;lib&#x2F;&quot;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"> </span><br><span class="line">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt;</span><br><span class="line">   $(function () &#123;</span><br><span class="line">       var editor &#x3D; editormd(&quot;question-editor&quot;, &#123;</span><br><span class="line">           width: &quot;100%&quot;,</span><br><span class="line">           height: 350,</span><br><span class="line">           path: &quot;&#x2F;js&#x2F;lib&#x2F;&quot;,</span><br><span class="line">           delay: 0,</span><br><span class="line">           watch: false,</span><br><span class="line">           placeholder: &quot;请输入问题描述&quot;,</span><br><span class="line">           imageUpload: true,</span><br><span class="line">           imageFormats: [&quot;jpg&quot;, &quot;jpeg&quot;, &quot;gif&quot;, &quot;png&quot;, &quot;bmp&quot;, &quot;webp&quot;],</span><br><span class="line">           imageUploadURL: &quot;&#x2F;file&#x2F;upload&quot;,</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>MarkDown To Html</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;col-lg-12 col-md-12 col-sm-12 col-xs-12&quot; id&#x3D;&quot;question-view&quot;&gt;</span><br><span class="line">    &lt;textarea style&#x3D;&quot;display:none;&quot; th:text&#x3D;&quot;$&#123;question.description&#125;&quot;&gt;&lt;&#x2F;textarea&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt;</span><br><span class="line">    $(function () &#123;</span><br><span class="line">        editormd.markdownToHTML(&quot;question-view&quot;, &#123;&#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="每日热门标签"><a href="#每日热门标签" class="headerlink" title="每日热门标签"></a>每日热门标签</h2><ol>
-<li>引入定时任务并开启 @Scheduled(cron = “0 0 12 * * ?”),每日中午12点执行一次该注解任务</li>
-<li>计算标签权重 查询所有问题中标签的出现次数及该问题的回复数，按权重计算放入map中</li>
-<li>HotTagDTO对象实现Comparable接口 对产生对map对象进行排序,放入List中并存入Redis数据库</li>
-<li>访问首页曲中redis数据库中热门标签展示</li>
-</ol>
-<h2 id="一周最热话题-amp-点赞关系存储"><a href="#一周最热话题-amp-点赞关系存储" class="headerlink" title="一周最热话题&amp;点赞关系存储"></a>一周最热话题&amp;点赞关系存储</h2><ol>
-<li>引入定时任务</li>
-<li>定时查询和存储Redis数据</li>
-</ol>
-
+<li><p>返回Git用户，存入数据，更新登陆状态</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/05/%E9%A1%B9%E7%9B%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -397,10 +325,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-04 11:11:18 / 修改时间：23:27:32" itemprop="dateCreated datePublished" datetime="2020-03-04T11:11:18+08:00">2020-03-04</time>
+              <time title="创建时间：2020-03-04 11:11:18" itemprop="dateCreated datePublished" datetime="2020-03-04T11:11:18+08:00">2020-03-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 09:18:34" itemprop="dateModified" datetime="2020-03-05T09:18:34+08:00">2020-03-05</time>
+              </span>
 
           
 
@@ -413,16 +347,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><h4 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h4><p> 若设二叉树的高度为h，除第 h 层外，其它各层 (1～h-1) 的结点数都达到最大个数，第h层有叶子结点，并且叶子结点都是从左到右依次排布，这就是完全二叉树。 </p>
-<h4 id="满二叉树"><a href="#满二叉树" class="headerlink" title="满二叉树"></a>满二叉树</h4><p> 除了叶结点外每一个结点都有左右子叶且叶子结点都处在最底层的二叉树。 </p>
-<h4 id="线索二叉树"><a href="#线索二叉树" class="headerlink" title="线索二叉树"></a>线索二叉树</h4><p> 在二叉树的结点上加上线索的二叉树称为线索二叉树，对二叉树以某种遍历方式（如先序、中序、后序或层次等）进行遍历，使其变为线索二叉树的过程称为对二叉树进行线索化。  </p>
-<h4 id="二叉排序树"><a href="#二叉排序树" class="headerlink" title="二叉排序树"></a>二叉排序树</h4><p>一棵空树，或者是具有下列性质的二叉树：</p>
-<p>（1）若左子树不空，则左子树上所有结点的值均小于它的根结点的值；</p>
-<p>（2）若右子树不空，则右子树上所有结点的值均大于它的根结点的值；</p>
-<p>（3）左、右子树也分别为二叉排序树；</p>
-<p>（4）没有键值相等的结点。</p>
-<h4 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h4><p>它是一棵二叉排序树，且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。</p>
-<h4 id="B树、B-数"><a href="#B树、B-数" class="headerlink" title="B树、B+数"></a>B树、B+数</h4><h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3>
+          <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -464,10 +397,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-03 21:50:35 / 修改时间：22:46:41" itemprop="dateCreated datePublished" datetime="2020-03-03T21:50:35+08:00">2020-03-03</time>
+              <time title="创建时间：2020-03-03 21:50:35" itemprop="dateCreated datePublished" datetime="2020-03-03T21:50:35+08:00">2020-03-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 09:18:29" itemprop="dateModified" datetime="2020-03-05T09:18:29+08:00">2020-03-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -502,38 +441,15 @@
 <p><strong>缺点</strong>：</p>
 <p>对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于只直接执行相同的操作。</p>
 </li>
-<li></li>
-</ol>
-<hr>
-<h3 id="谈谈对-Java-注解的理解，解决了什么问题？"><a href="#谈谈对-Java-注解的理解，解决了什么问题？" class="headerlink" title="谈谈对 Java 注解的理解，解决了什么问题？"></a>谈谈对 Java 注解的理解，解决了什么问题？</h3><ol>
-<li>jdk 5.0 新增的功能</li>
-<li>Annotation 其实就是代码里的特殊标记, 这些标记可以在编译, 类加载,运行时被读取, 并执行相应的处理。通过使用 Annotation,程序员可以在不改变原逻辑的情况下, 在源文件中嵌入一些补充信息。</li>
-<li>在JavaSE中，注解的使用目的比较简单，例如标记过时的功能，忽略警告等。在JavaEE/Android中注解占据了更重要的角色，例如用来配置应用程序的任何切面，代替JavaEE旧版中所遗留的繁冗代码和XML配置等。</li>
-</ol>
-<hr>
-<h3 id="内部类了解吗？匿名内部类了解吗？"><a href="#内部类了解吗？匿名内部类了解吗？" class="headerlink" title="内部类了解吗？匿名内部类了解吗？"></a>内部类了解吗？匿名内部类了解吗？</h3><ol>
-<li><p>定义：Java中允许将一个类A声明在另一个类B中，则类A就是内部类，类B称为外部类。</p>
-</li>
-<li><p>内部类的分类：<br>成员内部类（静态、非静态 ） vs 局部内部类(方法内、代码块内、构造器内)。</p>
-</li>
-<li><p>成员内部类的理解：<br>一方面，作为外部类的成员：调用外部类的结构；可以被static修饰；可以被4种不同的权限修饰。</p>
-<p>另一方面，作为一个类：类内可以定义属性、方法、构造器等；可以被final修饰，表示此类不能被继承。言外之意，不使用final，就可以被继承；可以被abstract修饰。</p>
-</li>
-<li><p>分类<br>4.1 静态内部类：作为类的静态成员，存在于某个类的内部。<br>4.2 成员内部类：作为类的成员，存在于某个类的内部。<br>4.3 局部内部类：存在于某个方法的内部。<br>4.4 匿名内部类：存在于某个类的内部，但是无类名的类。</p>
-</li>
-</ol>
-<hr>
-<h3 id="BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><a href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程" class="headerlink" title="BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"></a>BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</h3><ol>
-<li>BIO（同步阻塞）：每一个IO请求都会有一个线程去处理，如果数据没有准备就绪，线程会一直等待。直到数据读取完毕线程才会释放，在此期间，进程不回去做任何其他任务，这种模式会浪费一定的线程资源。</li>
-<li>NIO（同步非阻塞）：NIO的优点在于首先基于缓存读写文件，能够批量操作，然后用channel双向读写数据，减少每次打开断开流的资源消耗。引入selecore的概念，用一个线程管理多个通道，大大减少线程开销。</li>
-</ol>
-<hr>
-<h3 id="假如我们需要存500个数需要多大的HashMap？"><a href="#假如我们需要存500个数需要多大的HashMap？" class="headerlink" title="假如我们需要存500个数需要多大的HashMap？"></a>假如我们需要存500个数需要多大的HashMap？</h3><hr>
-<h3 id="HashMap的负载因子"><a href="#HashMap的负载因子" class="headerlink" title="HashMap的负载因子"></a>HashMap的负载因子</h3><p>负载因子表示一个散列表的空间的使用程度，有这样一个公式：initailCapacity*loadFactor=HashMap的容量。</p>
-<p>所以负载因子越大则散列表的装填程度越高，也就是能容纳更多的元素，元素多了，链表大了，所以此时索引效率就会降低。</p>
-<p>反之，负载因子越小则链表中的数据量就越稀疏，此时会对空间造成烂费，但是此时索引效率高。</p>
-<p>HashMap的loadFactor为0.75，默认initailCapacity为16， hreshold：扩容的临界值，=容量<em>填充因子：16</em> 0.75 =&gt; 12 </p>
-
+<li>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/03/JavaSE%E9%9D%A2%E8%AF%95%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
