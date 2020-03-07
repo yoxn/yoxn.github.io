@@ -54,7 +54,7 @@
 <meta property="og:description" content="Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？ JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法。  优">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-03T13:50:35.000Z">
-<meta property="article:modified_time" content="2020-03-05T01:18:29.732Z">
+<meta property="article:modified_time" content="2020-03-06T14:11:21.577Z">
 <meta property="article:tag" content="反射">
 <meta property="article:tag" content="注解">
 <meta property="article:tag" content="内部类">
@@ -238,7 +238,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-05 09:18:29" itemprop="dateModified" datetime="2020-03-05T09:18:29+08:00">2020-03-05</time>
+                <time title="修改时间：2020-03-06 22:11:21" itemprop="dateModified" datetime="2020-03-06T22:11:21+08:00">2020-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -307,6 +307,86 @@
 <p>所以负载因子越大则散列表的装填程度越高，也就是能容纳更多的元素，元素多了，链表大了，所以此时索引效率就会降低。</p>
 <p>反之，负载因子越小则链表中的数据量就越稀疏，此时会对空间造成烂费，但是此时索引效率高。</p>
 <p>HashMap的loadFactor为0.75，默认initailCapacity为16， hreshold：扩容的临界值，=容量<em>填充因子：16</em> 0.75 =&gt; 12 </p>
+<hr>
+<h3 id="Linux文件的权限，如何设置可读可写权限"><a href="#Linux文件的权限，如何设置可读可写权限" class="headerlink" title="Linux文件的权限，如何设置可读可写权限"></a>Linux文件的权限，如何设置可读可写权限</h3><p>chmod(change mode)功能：变更文件或目录的权限</p>
+<p>chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ]</p>
+<p>-R 递归处理：将指定目录下的所有文件及子目录一并处理</p>
+<ul>
+<li><p>权限范围：</p>
+<p>u:User</p>
+<p>g:Group</p>
+<p>o:Other</p>
+<p>a:All</p>
+</li>
+<li><p>符号：</p>
+<p>+添加权限</p>
+<p>-取消权限</p>
+</li>
+<li><p>权限代号：</p>
+<p>r:读写 4</p>
+<p>w:写入 2</p>
+<p>x:执行或切换 1</p>
+<p>-：不具有任何权限 0</p>
+</li>
+</ul>
+<hr>
+<h3 id="UUID是什么，如何生成的，-如何保证一致性"><a href="#UUID是什么，如何生成的，-如何保证一致性" class="headerlink" title="UUID是什么，如何生成的， 如何保证一致性"></a>UUID是什么，如何生成的， 如何保证一致性</h3><p><strong>UUID</strong> 是指Universally Unique Identifier，翻译为中文是<strong>通用唯一识别码</strong>，UUID 的目的是让分布式系统中的所有元素都能有唯一的识别信息。如此一来，每个人都可以创建不与其它人冲突的 UUID，就不需考虑数据库创建时的名称重复问题。</p>
+<p>UUID 是由一组32位数的16进制数字所构成，是故 UUID 理论上的总数为1632=2128，约等于3.4 x 10123。</p>
+<p>也就是说若每纳秒产生1百万个 UUID，要花100亿年才会将所有 UUID 用完。</p>
+<hr>
+<h3 id="自定义注解-应用场景"><a href="#自定义注解-应用场景" class="headerlink" title="自定义注解 应用场景"></a>自定义注解 应用场景</h3><p><strong>自定义注解：</strong></p>
+<ul>
+<li><p>① 注解声明为：@interface</p>
+<ul>
+<li>② 内部定义成员，通常使用value表示</li>
+<li>③ 可以指定成员的默认值，使用default定义</li>
+<li>④ 如果自定义注解没成员，表明是一个标识作用。</li>
+</ul>
+</li>
+</ul>
+<p><strong>说明：</strong><br>如果注解有成员，在使用注解时，需要指明成员的值。<br>自定义注解必须配上注解的信息处理流程(使用反射)才意义。<br>自定义注解通常都会指明两个元注解：Retention、Target</p>
+<p><strong>代码举例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Inherited</span><br><span class="line">@Repeatable(MyAnnotations.class)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE,TYPE_PARAMETER,TYPE_USE&#125;)</span><br><span class="line">public @interface MyAnnotation &#123;</span><br><span class="line"></span><br><span class="line">    String value() default &quot;hello&quot;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>元注解 ：对现有的注解进行解释说明的注解。</strong><br>jdk 提供的4种元注解：<br><strong>Retention</strong>：指定所修饰的 Annotation 的生命周期：SOURCE\CLASS（默认行为\RUNTIME） 只声明为RUNTIME生命周期的注解，才能通过反射获取。<br><strong>Target</strong>:用于指定被修饰的 Annotation 能用于修饰哪些程序元素。<br><strong>Documented:</strong>表示所修饰的注解在被javadoc解析时，保留下来。<br><strong>Inherited</strong>:被它修饰的 Annotation 将具继承性。</p>
+<p>—&gt;类比：元数据的概念：String name = “Tom”;</p>
+<p><strong>应用场景:</strong></p>
+<p>示例一：生成文档相关的注解</p>
+<p>示例二：在编译时进行格式检查(JDK内置的个基本注解)<br>                @Override: 限定重写父类方法, 该注解只能用于方法<br>                @Deprecated: 用于表示所修饰的元素(类, 方法等)已过时。通常是因为所修                饰的结构危险或存在更好的选择<br>                @SuppressWarnings: 抑制编译器警告</p>
+<hr>
+<h3 id="Java-面向对象编程三大特性-封装-继承-多态"><a href="#Java-面向对象编程三大特性-封装-继承-多态" class="headerlink" title="Java 面向对象编程三大特性: 封装 继承 多态"></a>Java 面向对象编程三大特性: 封装 继承 多态</h3><h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>封装把一个对象的属性私有化，同时提供一些可以被外界访问的属性的方法，如果属性不想被外界访问，我们大可不必提供方法给外界访问。但是如果一个类没有提供给外界访问的方法，那么这个类也没有什么意义了。</p>
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>继承是使用已存在的类的定义作为基础建立新类的技术，新类的定义可以增加新的数据或新的功能，也可以用父类的功能，但不能选择性地继承父类。通过使用继承我们能够非常方便地复用以前的代码。</p>
+<p><strong>关于继承如下 3 点请记住：</strong></p>
+<ol>
+<li>子类拥有父类对象所有的属性和方法（包括私有属性和私有方法），但是父类中的私有属性和方法子类是无法访问，<strong>只是拥有</strong>。</li>
+<li>子类可以拥有自己属性和方法，即子类可以对父类进行扩展。</li>
+<li>子类可以用自己的方式实现父类的方法。（以后介绍）。</li>
+</ol>
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>所谓多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程时并不确定，而是在程序运行期间才确定，即一个引用变量到底会指向哪个类的实例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运行期间才能决定。</p>
+<p>在 Java 中有两种形式可以实现多态：继承（多个子类对同一方法的重写）和接口（实现接口并覆盖接口中同一方法）。</p>
+<hr>
+<h3 id="项目遇到的问题"><a href="#项目遇到的问题" class="headerlink" title="项目遇到的问题"></a>项目遇到的问题</h3><p>String[] s = new String[]{“aa”,”bb”,”cc”};</p>
+<p>List<String> sList = Arrays.asList(s);</p>
+<p>System.out.println(sList);</p>
+<p>sList.add(“ddd”);</p>
+<p>Arrays.asList()返回一个List，通过阅读源码才发现，返回的List不是Collection中的那个List</p>
+<p>ArrayList提供了一个将List转为数组的方法：toArray</p>
+<hr>
+<p>数据库事务 四大特性</p>
+<p>左连接查询 右连接查询</p>
+<p>三次握手 四次握手</p>
+<p>三次握手什么协议  TCP UDP区别</p>
+<p>Linux远程拷贝有几种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># scp php-7.2.4.tar.gz root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;   &#x2F;&#x2F;这里是从当前主机拷贝到IP位142的局域网主机目录&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># scp root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;redis.tar.gz &#x2F;usr&#x2F;local&#x2F;src&#x2F;  &#x2F;&#x2F;这里是从目标主机142拷贝文件到本机&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
+
+<p>部署到云服务器的命令</p>
+<p>Java面向对象如何理解 封装继承多态</p>
+<p>中间件</p>
+<p>spring MVC组件</p>
+<p>flow函数</p>
+<p>时间转字符串 </p>
 
     </div>
 
@@ -395,7 +475,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><span class="nav-number">1.</span> <span class="nav-text">Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谈谈对-Java-注解的理解，解决了什么问题？"><span class="nav-number">2.</span> <span class="nav-text">谈谈对 Java 注解的理解，解决了什么问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部类了解吗？匿名内部类了解吗？"><span class="nav-number">3.</span> <span class="nav-text">内部类了解吗？匿名内部类了解吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><span class="nav-number">4.</span> <span class="nav-text">BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假如我们需要存500个数需要多大的HashMap？"><span class="nav-number">5.</span> <span class="nav-text">假如我们需要存500个数需要多大的HashMap？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap的负载因子"><span class="nav-number">6.</span> <span class="nav-text">HashMap的负载因子</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><span class="nav-number">1.</span> <span class="nav-text">Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谈谈对-Java-注解的理解，解决了什么问题？"><span class="nav-number">2.</span> <span class="nav-text">谈谈对 Java 注解的理解，解决了什么问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部类了解吗？匿名内部类了解吗？"><span class="nav-number">3.</span> <span class="nav-text">内部类了解吗？匿名内部类了解吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><span class="nav-number">4.</span> <span class="nav-text">BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假如我们需要存500个数需要多大的HashMap？"><span class="nav-number">5.</span> <span class="nav-text">假如我们需要存500个数需要多大的HashMap？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap的负载因子"><span class="nav-number">6.</span> <span class="nav-text">HashMap的负载因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux文件的权限，如何设置可读可写权限"><span class="nav-number">7.</span> <span class="nav-text">Linux文件的权限，如何设置可读可写权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UUID是什么，如何生成的，-如何保证一致性"><span class="nav-number">8.</span> <span class="nav-text">UUID是什么，如何生成的， 如何保证一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义注解-应用场景"><span class="nav-number">9.</span> <span class="nav-text">自定义注解 应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-面向对象编程三大特性-封装-继承-多态"><span class="nav-number">10.</span> <span class="nav-text">Java 面向对象编程三大特性: 封装 继承 多态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">10.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">10.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">10.3.</span> <span class="nav-text">多态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目遇到的问题"><span class="nav-number">11.</span> <span class="nav-text">项目遇到的问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -409,20 +489,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

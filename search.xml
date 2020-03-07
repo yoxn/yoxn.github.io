@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Mysql</title>
+    <url>/2020/03/06/Mysql/</url>
+    <content><![CDATA[<h3 id="1-数据库的创建"><a href="#1-数据库的创建" class="headerlink" title="1. 数据库的创建"></a>1. 数据库的创建</h3><h4 id="1-1创建一个名称为mydb1的数据库"><a href="#1-1创建一个名称为mydb1的数据库" class="headerlink" title="1.1创建一个名称为mydb1的数据库"></a>1.1创建一个名称为mydb1的数据库</h4><p>​        create dateabase mydb1;</p>
+<h4 id="1-2-创建一个使用utf8字符集的mydb2数据库。"><a href="#1-2-创建一个使用utf8字符集的mydb2数据库。" class="headerlink" title="1.2 创建一个使用utf8字符集的mydb2数据库。"></a>1.2 创建一个使用utf8字符集的mydb2数据库。</h4><p>​         create database mydb2 character set utf8;</p>
+<h4 id="1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。"><a href="#1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。" class="headerlink" title="1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。"></a>1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。</h4><p>​        create database mydb3 character set utf8 collate utf8_general_ci;</p>
+<h3 id="2-数据库的修改"><a href="#2-数据库的修改" class="headerlink" title="2. 数据库的修改"></a>2. 数据库的修改</h3><p>​      <strong>修改mydb2字符集为gbk</strong></p>
+<p>​        alter database mydb2 character set gbk;</p>
+<h3 id="3-数据库的删除"><a href="#3-数据库的删除" class="headerlink" title="3. 数据库的删除"></a>3. 数据库的删除</h3><p>​    <strong>删除数据库mydb3</strong> </p>
+<p>​    drop database mydb3;</p>
+<h3 id="4-数据库查看"><a href="#4-数据库查看" class="headerlink" title="4. 数据库查看"></a>4. 数据库查看</h3><p>​    <strong>查看所有数据库</strong><br>​    show databases;<br>​    <strong>查看数据库mydb1的字符集</strong></p>
+<p>​    show create database mydb1;</p>
+<hr>
+<h3 id="数据库中表操作的sql练习"><a href="#数据库中表操作的sql练习" class="headerlink" title="数据库中表操作的sql练习"></a>数据库中表操作的sql练习</h3><h4 id="一、创建表"><a href="#一、创建表" class="headerlink" title="一、创建表"></a>一、创建表</h4><p>​    <strong>1、创建一张员工表employee</strong><br>​            字段        类型<br>​            id            整形<br>​            name        字符型<br>​            gender        字符型<br>​            birthday    日期型<br>​            entry_date  日期型<br>​            job            字符型<br>​            salary        小数型<br>​            resume        文本<br>​    <strong>2、创建一张员工表employee2</strong><br>​            字段        类型<br>​            id            整形<br>​            name        字符型<br>​            gender        字符型<br>​            birthday    日期型<br>​            entry_date  日期型<br>​            job            字符型<br>​            salary        小数型<br>​            resume        文本<br>​    要求：把id 设置成主键，并且自动增长。name不允许为空。</p>
+<p> create table employee (id int primary key auto_increment,<br> name varchar(20) not null,<br> gender varchar(10),<br> birthday date,<br> entry_date date,<br> job varchar(30),<br> salary double,<br> resume text<br> );</p>
+<h4 id="二、删除表"><a href="#二、删除表" class="headerlink" title="二、删除表"></a>二、删除表</h4><p>​    <strong>删除employee2表</strong><br>​    drop table employee;</p>
+<h4 id="三、数据表的结构的修改："><a href="#三、数据表的结构的修改：" class="headerlink" title="三、数据表的结构的修改："></a>三、数据表的结构的修改：</h4><p>​    <strong>1、在上面员工表的基本上增加一个image列。</strong><br>        alter table employee add image varchr(20);<br>​    <strong>2、修改job列，使其长度为60。</strong><br>​      alter table employee modify job varchar(60);<br>​    <strong>3、删除gender列。</strong><br>​       alter table employee drop gender;<br>​    <strong>4、表名改为user。</strong><br>​       rename table employee to user;<br>​    <strong>5、修改表的字符集为utf8</strong><br>​       alter table user character set utf8;<br>​    <strong>6、列名name修改为username</strong><br>​        alter table user change name username varchar(20) not null;</p>
+<h4 id="四、查看表结构"><a href="#四、查看表结构" class="headerlink" title="四、查看表结构"></a>四、查看表结构</h4><p>​    <strong>1、查看数据库内的所有表</strong><br>​       show tables;<br>​    <strong>2、查看employee的建表语句</strong><br>​       show create table employee;<br>​    <strong>3、查看employee的表结构</strong><br>​       desc employee;</p>
+<hr>
+<h3 id="mysql时间与字符串之间相互转换"><a href="#mysql时间与字符串之间相互转换" class="headerlink" title="mysql时间与字符串之间相互转换"></a>mysql时间与字符串之间相互转换</h3><h4 id="1-时间转字符串"><a href="#1-时间转字符串" class="headerlink" title="1.时间转字符串"></a>1.时间转字符串</h4><p>DATE_FORMAT(日期，格式字符串)</p>
+<p>SELECT DATE_FORMAT(NOW(), ‘%Y-%m-%d %H:%i:%s’);</p>
+<h4 id="2-字符串转时间"><a href="#2-字符串转时间" class="headerlink" title="2.字符串转时间"></a>2.字符串转时间</h4><p>STR_TO_DATE(字符串，日志格式)</p>
+<p>SELECT STR_TO_DATE(‘2019-01-20 16:01:45’, ‘%Y-%m-%d %H:%i:%s’);</p>
+<h4 id="3-时间转时间戳"><a href="#3-时间转时间戳" class="headerlink" title="3.时间转时间戳"></a>3.时间转时间戳</h4><p>select unix_timestamp(now());</p>
+<h4 id="4-字符串转时间戳"><a href="#4-字符串转时间戳" class="headerlink" title="4.字符串转时间戳"></a>4.字符串转时间戳</h4><p>select unix_timestamp(‘2019-01-20’); </p>
+<h4 id="5-时间戳转字符串"><a href="#5-时间戳转字符串" class="headerlink" title="5.时间戳转字符串"></a>5.时间戳转字符串</h4><p>select from_unixtime(1451997924,’%Y-%d’);</p>
+<h4 id="附日期格式如下："><a href="#附日期格式如下：" class="headerlink" title="附日期格式如下："></a>附日期格式如下：</h4><p>%M 月名字(January……December)<br>%W 星期名字(Sunday……Saturday)<br>%D 有英语前缀的月份的日期(1st, 2nd, 3rd, 等等。）<br>%Y 年, 数字, 4 位<br>%y 年, 数字, 2 位<br>%a 缩写的星期名字(Sun……Sat)<br>%d 月份中的天数, 数字(00……31)<br>%e 月份中的天数, 数字(0……31)<br>%m 月, 数字(01……12)<br>%c 月, 数字(1……12)<br>%b 缩写的月份名字(Jan……Dec)<br>%j 一年中的天数(001……366)<br>%H 小时(00……23)<br>%k 小时(0……23)<br>%h 小时(01……12)<br>%I 小时(01……12)<br>%l 小时(1……12)<br>%i 分钟, 数字(00……59)<br>%r 时间,12 小时(hh:mm:ss [AP]M)<br>%T 时间,24 小时(hh:mm:ss)<br>%S 秒(00……59)<br>%s 秒(00……59)<br>%p AM或PM<br>%w 一个星期中的天数(0=Sunday ……6=Saturday ）<br>%U 星期(0……52), 这里星期天是星期的第一天<br>%u 星期(0……52), 这里星期一是星期的第一 </p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>Mysql</tag>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>项目</title>
     <url>/2020/03/05/%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<h2 id="OAuth授权登陆模块"><a href="#OAuth授权登陆模块" class="headerlink" title="OAuth授权登陆模块"></a>OAuth授权登陆模块</h2><ol>
@@ -186,6 +222,86 @@
 <p>所以负载因子越大则散列表的装填程度越高，也就是能容纳更多的元素，元素多了，链表大了，所以此时索引效率就会降低。</p>
 <p>反之，负载因子越小则链表中的数据量就越稀疏，此时会对空间造成烂费，但是此时索引效率高。</p>
 <p>HashMap的loadFactor为0.75，默认initailCapacity为16， hreshold：扩容的临界值，=容量<em>填充因子：16</em> 0.75 =&gt; 12 </p>
+<hr>
+<h3 id="Linux文件的权限，如何设置可读可写权限"><a href="#Linux文件的权限，如何设置可读可写权限" class="headerlink" title="Linux文件的权限，如何设置可读可写权限"></a>Linux文件的权限，如何设置可读可写权限</h3><p>chmod(change mode)功能：变更文件或目录的权限</p>
+<p>chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ]</p>
+<p>-R 递归处理：将指定目录下的所有文件及子目录一并处理</p>
+<ul>
+<li><p>权限范围：</p>
+<p>u:User</p>
+<p>g:Group</p>
+<p>o:Other</p>
+<p>a:All</p>
+</li>
+<li><p>符号：</p>
+<p>+添加权限</p>
+<p>-取消权限</p>
+</li>
+<li><p>权限代号：</p>
+<p>r:读写 4</p>
+<p>w:写入 2</p>
+<p>x:执行或切换 1</p>
+<p>-：不具有任何权限 0</p>
+</li>
+</ul>
+<hr>
+<h3 id="UUID是什么，如何生成的，-如何保证一致性"><a href="#UUID是什么，如何生成的，-如何保证一致性" class="headerlink" title="UUID是什么，如何生成的， 如何保证一致性"></a>UUID是什么，如何生成的， 如何保证一致性</h3><p><strong>UUID</strong> 是指Universally Unique Identifier，翻译为中文是<strong>通用唯一识别码</strong>，UUID 的目的是让分布式系统中的所有元素都能有唯一的识别信息。如此一来，每个人都可以创建不与其它人冲突的 UUID，就不需考虑数据库创建时的名称重复问题。</p>
+<p>UUID 是由一组32位数的16进制数字所构成，是故 UUID 理论上的总数为1632=2128，约等于3.4 x 10123。</p>
+<p>也就是说若每纳秒产生1百万个 UUID，要花100亿年才会将所有 UUID 用完。</p>
+<hr>
+<h3 id="自定义注解-应用场景"><a href="#自定义注解-应用场景" class="headerlink" title="自定义注解 应用场景"></a>自定义注解 应用场景</h3><p><strong>自定义注解：</strong></p>
+<ul>
+<li><p>① 注解声明为：@interface</p>
+<ul>
+<li>② 内部定义成员，通常使用value表示</li>
+<li>③ 可以指定成员的默认值，使用default定义</li>
+<li>④ 如果自定义注解没成员，表明是一个标识作用。</li>
+</ul>
+</li>
+</ul>
+<p><strong>说明：</strong><br>如果注解有成员，在使用注解时，需要指明成员的值。<br>自定义注解必须配上注解的信息处理流程(使用反射)才意义。<br>自定义注解通常都会指明两个元注解：Retention、Target</p>
+<p><strong>代码举例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Inherited</span><br><span class="line">@Repeatable(MyAnnotations.class)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE,TYPE_PARAMETER,TYPE_USE&#125;)</span><br><span class="line">public @interface MyAnnotation &#123;</span><br><span class="line"></span><br><span class="line">    String value() default &quot;hello&quot;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>元注解 ：对现有的注解进行解释说明的注解。</strong><br>jdk 提供的4种元注解：<br><strong>Retention</strong>：指定所修饰的 Annotation 的生命周期：SOURCE\CLASS（默认行为\RUNTIME） 只声明为RUNTIME生命周期的注解，才能通过反射获取。<br><strong>Target</strong>:用于指定被修饰的 Annotation 能用于修饰哪些程序元素。<br><strong>Documented:</strong>表示所修饰的注解在被javadoc解析时，保留下来。<br><strong>Inherited</strong>:被它修饰的 Annotation 将具继承性。</p>
+<p>—&gt;类比：元数据的概念：String name = “Tom”;</p>
+<p><strong>应用场景:</strong></p>
+<p>示例一：生成文档相关的注解</p>
+<p>示例二：在编译时进行格式检查(JDK内置的个基本注解)<br>                @Override: 限定重写父类方法, 该注解只能用于方法<br>                @Deprecated: 用于表示所修饰的元素(类, 方法等)已过时。通常是因为所修                饰的结构危险或存在更好的选择<br>                @SuppressWarnings: 抑制编译器警告</p>
+<hr>
+<h3 id="Java-面向对象编程三大特性-封装-继承-多态"><a href="#Java-面向对象编程三大特性-封装-继承-多态" class="headerlink" title="Java 面向对象编程三大特性: 封装 继承 多态"></a>Java 面向对象编程三大特性: 封装 继承 多态</h3><h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>封装把一个对象的属性私有化，同时提供一些可以被外界访问的属性的方法，如果属性不想被外界访问，我们大可不必提供方法给外界访问。但是如果一个类没有提供给外界访问的方法，那么这个类也没有什么意义了。</p>
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>继承是使用已存在的类的定义作为基础建立新类的技术，新类的定义可以增加新的数据或新的功能，也可以用父类的功能，但不能选择性地继承父类。通过使用继承我们能够非常方便地复用以前的代码。</p>
+<p><strong>关于继承如下 3 点请记住：</strong></p>
+<ol>
+<li>子类拥有父类对象所有的属性和方法（包括私有属性和私有方法），但是父类中的私有属性和方法子类是无法访问，<strong>只是拥有</strong>。</li>
+<li>子类可以拥有自己属性和方法，即子类可以对父类进行扩展。</li>
+<li>子类可以用自己的方式实现父类的方法。（以后介绍）。</li>
+</ol>
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>所谓多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程时并不确定，而是在程序运行期间才确定，即一个引用变量到底会指向哪个类的实例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运行期间才能决定。</p>
+<p>在 Java 中有两种形式可以实现多态：继承（多个子类对同一方法的重写）和接口（实现接口并覆盖接口中同一方法）。</p>
+<hr>
+<h3 id="项目遇到的问题"><a href="#项目遇到的问题" class="headerlink" title="项目遇到的问题"></a>项目遇到的问题</h3><p>String[] s = new String[]{“aa”,”bb”,”cc”};</p>
+<p>List<String> sList = Arrays.asList(s);</p>
+<p>System.out.println(sList);</p>
+<p>sList.add(“ddd”);</p>
+<p>Arrays.asList()返回一个List，通过阅读源码才发现，返回的List不是Collection中的那个List</p>
+<p>ArrayList提供了一个将List转为数组的方法：toArray</p>
+<hr>
+<p>数据库事务 四大特性</p>
+<p>左连接查询 右连接查询</p>
+<p>三次握手 四次握手</p>
+<p>三次握手什么协议  TCP UDP区别</p>
+<p>Linux远程拷贝有几种方式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># scp php-7.2.4.tar.gz root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;   &#x2F;&#x2F;这里是从当前主机拷贝到IP位142的局域网主机目录&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># scp root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;redis.tar.gz &#x2F;usr&#x2F;local&#x2F;src&#x2F;  &#x2F;&#x2F;这里是从目标主机142拷贝文件到本机&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
+
+<p>部署到云服务器的命令</p>
+<p>Java面向对象如何理解 封装继承多态</p>
+<p>中间件</p>
+<p>spring MVC组件</p>
+<p>flow函数</p>
+<p>时间转字符串 </p>
 ]]></content>
       <categories>
         <category>Java面试</category>
@@ -451,6 +567,9 @@
 <h4 id="5-为什么要四次挥手"><a href="#5-为什么要四次挥手" class="headerlink" title="5. 为什么要四次挥手"></a>5. 为什么要四次挥手</h4><p>任何一方都可以在数据传送结束后发出连接释放的通知，待对方确认后进入半关闭状态。当另一方也没有数据再发送的时候，则发出连接释放通知，对方确认后就完全关闭了TCP连接。</p>
 <p>举个例子：A 和 B 打电话，通话即将结束后，A 说“我没啥要说的了”，B回答“我知道了”，但是 B 可能还会有要说的话，A 不能要求 B 跟着自己的节奏结束通话，于是 B 可能又巴拉巴拉说了一通，最后 B 说“我说完了”，A 回答“知道了”，这样通话才算结束。</p>
 <hr>
+<h3 id="TCP和UDP的区别"><a href="#TCP和UDP的区别" class="headerlink" title="TCP和UDP的区别"></a>TCP和UDP的区别</h3><p>UDP 在传送数据之前不需要先建立连接，远地主机在收到 UDP 报文后，不需要给出任何确认。虽然 UDP 不提供可靠交付，但在某些情况下 UDP 确是一种最有效的工作方式（一般用于即时通信），比如： QQ 语音、 QQ 视频 、直播等等</p>
+<p>TCP 提供面向连接的服务。在传送数据之前必须先建立连接，数据传送结束后要释放连接。 TCP 不提供广播或多播服务。由于 TCP 要提供可靠的，面向连接的传输服务（TCP的可靠体现在TCP在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制，在数据传完后，还会断开连接用来节约系统资源），这一难以避免增加了许多开销，如确认，流量控制，计时器以及连接管理等。这不仅使协议数据单元的首部增大很多，还要占用许多处理机资源。TCP 一般用于文件传输、发送和接收邮件、远程登录等场景。</p>
+<hr>
 <h3 id="在浏览器中输入url地址-gt-gt-显示主页的过程-面试常客"><a href="#在浏览器中输入url地址-gt-gt-显示主页的过程-面试常客" class="headerlink" title="在浏览器中输入url地址 -&gt;&gt; 显示主页的过程(面试常客)"></a>在浏览器中输入url地址 -&gt;&gt; 显示主页的过程(面试常客)</h3><p>图解（图片来源：《图解HTTP》）：</p>
 <p><a href="https://camo.githubusercontent.com/07ae8275dfa810865986f72535ca7e242857038a/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d31312f75726ce8be93e585a5e588b0e5b195e7a4bae587bae69da5e79a84e8bf87e7a88b2e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/07ae8275dfa810865986f72535ca7e242857038a/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d31312f75726ce8be93e585a5e588b0e5b195e7a4bae587bae69da5e79a84e8bf87e7a88b2e6a7067" alt="img"></a></p>
 <p>总体来说分为以下几个过程:</p>
@@ -604,6 +723,17 @@
 <li><code>ViewResolver</code> 会根据逻辑 <code>View</code> 查找实际的 <code>View</code>。</li>
 <li><code>DispaterServlet</code> 把返回的 <code>Model</code> 传给 <code>View</code>（视图渲染）。</li>
 <li>把 <code>View</code> 返回给请求者（浏览器）</li>
+</ol>
+<h4 id="Spring-MVC组件"><a href="#Spring-MVC组件" class="headerlink" title="Spring MVC组件"></a>Spring MVC组件</h4><ol>
+<li>前端控制器组件（DispatcherServlet） </li>
+<li>处理器组件（Controller） </li>
+<li>处理器映射器组件（HandlerMapping） </li>
+<li>处理器适配器组件（HandlerAdapter） </li>
+<li>拦截器组件（HandlerInterceptor） </li>
+<li>视图解析器组件（ViewResolver） </li>
+<li>视图组件（View） </li>
+<li>数据转换组件（DataBinder） </li>
+<li>消息转换器组件（HttpMessageConverter） </li>
 </ol>
 <h4 id="Spring-框架中用到了哪些设计模式？"><a href="#Spring-框架中用到了哪些设计模式？" class="headerlink" title="Spring 框架中用到了哪些设计模式？"></a>Spring 框架中用到了哪些设计模式？</h4><ul>
 <li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</li>

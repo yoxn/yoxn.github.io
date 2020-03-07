@@ -46,28 +46,32 @@
   };
 </script>
 
-  <meta name="description" content="Enjoy when you can,and endure when you must.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YoXn&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="1. 数据库的创建1.1创建一个名称为mydb1的数据库​        create dateabase mydb1; 1.2 创建一个使用utf8字符集的mydb2数据库。​         create database mydb2 character set utf8; 1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。​        create database m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql">
+<meta property="og:url" content="http://yoursite.com/2020/03/06/Mysql/index.html">
 <meta property="og:site_name" content="YoXn&#39;s Blog">
-<meta property="og:description" content="Enjoy when you can,and endure when you must.">
+<meta property="og:description" content="1. 数据库的创建1.1创建一个名称为mydb1的数据库​        create dateabase mydb1; 1.2 创建一个使用utf8字符集的mydb2数据库。​         create database mydb2 character set utf8; 1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。​        create database m">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-06T08:59:42.000Z">
+<meta property="article:modified_time" content="2020-03-06T14:11:26.210Z">
+<meta property="article:tag" content="Mysql">
+<meta property="article:tag" content="sql">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2020/03/06/Mysql/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>YoXn's Blog</title>
+  <title>Mysql | YoXn's Blog</title>
   
 
 
@@ -197,10 +201,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/06/Mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -214,8 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/06/Mysql/" class="post-title-link" itemprop="url">Mysql</a>
+          Mysql
         </h1>
 
         <div class="post-meta">
@@ -251,7 +254,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="1-数据库的创建"><a href="#1-数据库的创建" class="headerlink" title="1. 数据库的创建"></a>1. 数据库的创建</h3><h4 id="1-1创建一个名称为mydb1的数据库"><a href="#1-1创建一个名称为mydb1的数据库" class="headerlink" title="1.1创建一个名称为mydb1的数据库"></a>1.1创建一个名称为mydb1的数据库</h4><p>​        create dateabase mydb1;</p>
+        <h3 id="1-数据库的创建"><a href="#1-数据库的创建" class="headerlink" title="1. 数据库的创建"></a>1. 数据库的创建</h3><h4 id="1-1创建一个名称为mydb1的数据库"><a href="#1-1创建一个名称为mydb1的数据库" class="headerlink" title="1.1创建一个名称为mydb1的数据库"></a>1.1创建一个名称为mydb1的数据库</h4><p>​        create dateabase mydb1;</p>
 <h4 id="1-2-创建一个使用utf8字符集的mydb2数据库。"><a href="#1-2-创建一个使用utf8字符集的mydb2数据库。" class="headerlink" title="1.2 创建一个使用utf8字符集的mydb2数据库。"></a>1.2 创建一个使用utf8字符集的mydb2数据库。</h4><p>​         create database mydb2 character set utf8;</p>
 <h4 id="1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。"><a href="#1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。" class="headerlink" title="1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。"></a>1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。</h4><p>​        create database mydb3 character set utf8 collate utf8_general_ci;</p>
 <h3 id="2-数据库的修改"><a href="#2-数据库的修改" class="headerlink" title="2. 数据库的修改"></a>2. 数据库的修改</h3><p>​      <strong>修改mydb2字符集为gbk</strong></p>
@@ -276,385 +279,37 @@
 <h4 id="5-时间戳转字符串"><a href="#5-时间戳转字符串" class="headerlink" title="5.时间戳转字符串"></a>5.时间戳转字符串</h4><p>select from_unixtime(1451997924,’%Y-%d’);</p>
 <h4 id="附日期格式如下："><a href="#附日期格式如下：" class="headerlink" title="附日期格式如下："></a>附日期格式如下：</h4><p>%M 月名字(January……December)<br>%W 星期名字(Sunday……Saturday)<br>%D 有英语前缀的月份的日期(1st, 2nd, 3rd, 等等。）<br>%Y 年, 数字, 4 位<br>%y 年, 数字, 2 位<br>%a 缩写的星期名字(Sun……Sat)<br>%d 月份中的天数, 数字(00……31)<br>%e 月份中的天数, 数字(0……31)<br>%m 月, 数字(01……12)<br>%c 月, 数字(1……12)<br>%b 缩写的月份名字(Jan……Dec)<br>%j 一年中的天数(001……366)<br>%H 小时(00……23)<br>%k 小时(0……23)<br>%h 小时(01……12)<br>%I 小时(01……12)<br>%l 小时(1……12)<br>%i 分钟, 数字(00……59)<br>%r 时间,12 小时(hh:mm:ss [AP]M)<br>%T 时间,24 小时(hh:mm:ss)<br>%S 秒(00……59)<br>%s 秒(00……59)<br>%p AM或PM<br>%w 一个星期中的天数(0=Sunday ……6=Saturday ）<br>%U 星期(0……52), 这里星期天是星期的第一天<br>%u 星期(0……52), 这里星期一是星期的第一 </p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+              <a href="/tags/sql/" rel="tag"># sql</a>
+          </div>
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/05/%E9%A1%B9%E7%9B%AE/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="Enjoy when you can,and endure when you must.">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YoXn's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/05/%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">项目</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-03-05 09:13:48 / 修改时间：09:18:21" itemprop="dateCreated datePublished" datetime="2020-03-05T09:13:48+08:00">2020-03-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">项目</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="OAuth授权登陆模块"><a href="#OAuth授权登陆模块" class="headerlink" title="OAuth授权登陆模块"></a>OAuth授权登陆模块</h2><ol>
-<li><p>用户点击登陆按钮，请求github提供的authorize接口，需要提供的参数</p>
-<ul>
-<li>client_id: github生成的</li>
-<li>redirect_uri: 自己设置的回调接口地址</li>
-<li>state=1</li>
-<li>scope=user</li>
-</ul>
-</li>
-<li><p>github自动跳转到我们设置的callback接口中，并且携带参数code</p>
-</li>
-<li><p>我们继续调用github提供的access_token接口，需要提供参数，将数据穿的的参数封装为AccessTokenDTO对象</p>
-<ul>
-<li>Client_id: github生成的</li>
-<li>Client_secret: github生成的</li>
-<li>Code: github: 回调提供的参数</li>
-<li>Redirect_uri: 自己设置的回调接口地址</li>
-<li>State: 1 注意请求url: <a href="https://github.com/login/oauth/access_token" target="_blank" rel="noopener">https://github.com/login/oauth/access_token</a> post方式</li>
-</ul>
-</li>
-<li><p>github响应请求返回access_token</p>
-</li>
-<li><p>利用access_token请求github提供的user接口 <a href="https://api.github.com/user?access_token=xxxxx" target="_blank" rel="noopener">https://api.github.com/user?access_token=xxxxx</a> Get方式</p>
-</li>
-<li><p>返回Git用户，存入数据，更新登陆状态</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/05/%E9%A1%B9%E7%9B%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/05/%E9%A1%B9%E7%9B%AE/" rel="prev" title="项目">
+      <i class="fa fa-chevron-left"></i> 项目
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="Enjoy when you can,and endure when you must.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YoXn's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">数据结构</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-04 11:11:18" itemprop="dateCreated datePublished" datetime="2020-03-04T11:11:18+08:00">2020-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-05 09:18:34" itemprop="dateModified" datetime="2020-03-05T09:18:34+08:00">2020-03-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/03/JavaSE%E9%9D%A2%E8%AF%95%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="Enjoy when you can,and endure when you must.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YoXn's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/03/JavaSE%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-title-link" itemprop="url">JavaSE面试题</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-03 21:50:35" itemprop="dateCreated datePublished" datetime="2020-03-03T21:50:35+08:00">2020-03-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-06 22:11:21" itemprop="dateModified" datetime="2020-03-06T22:11:21+08:00">2020-03-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">Java面试</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><a href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？" class="headerlink" title="Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"></a>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</h3><ol>
-<li><p>JAVA反射机制是在运行状态中，<strong>对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性</strong>；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法。</p>
-</li>
-<li><p><strong>优点</strong>：</p>
-<p>可以实现动态创建对象和编译，体现出很大的灵活性，特别是在J2EE的开发中，它的灵活性就表现的十分明显。</p>
-<p>比如，一个大型的软件，不可能一次就把把它设计的很完美，当这个程序编译后，发布了。</p>
-<p>当发现需要更新某些功能时，我们不可能要用户把以前的卸载，再重新安装新的版本，假如这样的话，这个软件肯定是没有多少人用的。</p>
-<p>采用静态的话，需要把整个程序重新编译一次才可以实现功能 的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时才动态的创建和编译，就可以实现该功能。</p>
-<p><strong>缺点</strong>：</p>
-<p>对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于只直接执行相同的操作。</p>
-</li>
-<li>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/03/JavaSE%E9%9D%A2%E8%AF%95%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/25/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="Enjoy when you can,and endure when you must.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YoXn's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/25/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">面试总结</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-25 10:34:26" itemprop="dateCreated datePublished" datetime="2020-02-25T10:34:26+08:00">2020-02-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-06 22:11:54" itemprop="dateModified" datetime="2020-03-06T22:11:54+08:00">2020-03-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">Java面试</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="面试知识点"><a href="#面试知识点" class="headerlink" title="面试知识点"></a>面试知识点</h2><h3 id="JSP九个内置对象"><a href="#JSP九个内置对象" class="headerlink" title="JSP九个内置对象"></a>JSP九个内置对象</h3><ul>
-<li>request：封装客户端的请求，其中包含来自GET或POST请求的参数；</li>
-<li>response：封装服务器对客户端的响应；</li>
-<li>pageContext：通过该对象可以获取其他对象；</li>
-<li>session：封装用户会话的对象；</li>
-<li>application：封装服务器运行环境的对象；</li>
-<li>out：输出服务器响应的输出流对象；</li>
-<li>config：Web应用的配置对象；</li>
-<li>page：JSP页面本身（相当于Java程序中的this）；</li>
-<li>exception：封装页面抛出异常的对象。</li>
-</ul>
-<hr>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/25/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -705,6 +360,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库的创建"><span class="nav-number">1.</span> <span class="nav-text">1. 数据库的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1创建一个名称为mydb1的数据库"><span class="nav-number">1.1.</span> <span class="nav-text">1.1创建一个名称为mydb1的数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-创建一个使用utf8字符集的mydb2数据库。"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 创建一个使用utf8字符集的mydb2数据库。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-数据库的修改"><span class="nav-number">2.</span> <span class="nav-text">2. 数据库的修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-数据库的删除"><span class="nav-number">3.</span> <span class="nav-text">3. 数据库的删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-数据库查看"><span class="nav-number">4.</span> <span class="nav-text">4. 数据库查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库中表操作的sql练习"><span class="nav-number">5.</span> <span class="nav-text">数据库中表操作的sql练习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、创建表"><span class="nav-number">5.1.</span> <span class="nav-text">一、创建表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、删除表"><span class="nav-number">5.2.</span> <span class="nav-text">二、删除表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、数据表的结构的修改："><span class="nav-number">5.3.</span> <span class="nav-text">三、数据表的结构的修改：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、查看表结构"><span class="nav-number">5.4.</span> <span class="nav-text">四、查看表结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql时间与字符串之间相互转换"><span class="nav-number">6.</span> <span class="nav-text">mysql时间与字符串之间相互转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-时间转字符串"><span class="nav-number">6.1.</span> <span class="nav-text">1.时间转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-字符串转时间"><span class="nav-number">6.2.</span> <span class="nav-text">2.字符串转时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-时间转时间戳"><span class="nav-number">6.3.</span> <span class="nav-text">3.时间转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-字符串转时间戳"><span class="nav-number">6.4.</span> <span class="nav-text">4.字符串转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-时间戳转字符串"><span class="nav-number">6.5.</span> <span class="nav-text">5.时间戳转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附日期格式如下："><span class="nav-number">6.6.</span> <span class="nav-text">附日期格式如下：</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
