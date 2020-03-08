@@ -54,7 +54,7 @@
 <meta property="og:description" content="OAuth授权登陆模块 用户点击登陆按钮，请求github提供的authorize接口，需要提供的参数  client_id: github生成的 redirect_uri: 自己设置的回调接口地址 state&#x3D;1 scope&#x3D;user   github自动跳转到我们设置的callback接口中，并且携带参数code  我们继续调用github提供的access_token接口，需要提供参数，将数">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-05T01:13:48.000Z">
-<meta property="article:modified_time" content="2020-03-05T01:18:21.442Z">
+<meta property="article:modified_time" content="2020-03-08T13:42:55.678Z">
 <meta property="article:tag" content="项目">
 <meta name="twitter:card" content="summary">
 
@@ -226,18 +226,24 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-05 09:13:48 / 修改时间：09:18:21" itemprop="dateCreated datePublished" datetime="2020-03-05T09:13:48+08:00">2020-03-05</time>
+              <time title="创建时间：2020-03-05 09:13:48" itemprop="dateCreated datePublished" datetime="2020-03-05T09:13:48+08:00">2020-03-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-08 21:42:55" itemprop="dateModified" datetime="2020-03-08T21:42:55+08:00">2020-03-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">项目</span>
+                  <a href="/categories/Java%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">Java面试</span>
                   </a>
                 </span>
             </span>
@@ -365,6 +371,22 @@
 <li>引入定时任务</li>
 <li>定时查询和存储Redis数据</li>
 </ol>
+<hr>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>jvm优化：1.项目做完时，我用jmeter进行了压力测试，结果发现相应时间太慢（或者内存利用率太高） ，然后我用jvisualvm分析了下JVM的内存情况。分析后，进一步发现项目中的小对象太多了，并且发现这些小对象都是生命周期比较短的对象。然后我猜测可能就是由于短对象太多，造成了堆中新生代容量不足，进而让很多短对象逃逸到了老年代中。这样一来，新生代和老年代中的对象都会很多，就会加速GC的回收频率，从而降低系统的性能。对此，我调大了新生代的内存大小，并且调高了新生代 逃逸到老年代的 阈值。之后再测试，发现性能平稳了许多。</p>
+<p>2.项目做完时，我用jmeter进行了压力测试，结果发现响应时间太慢。然后我用mysqldumpslow工具查找到了项目中执行时间最长的那个SQL语句，因此猜测是这条SQL的性能太低，拖累了整个系统。然后我用explain查看了SQL执行计划，发现这个SQL根本没有写索引并且是大表驱动了小表，所以特别慢。之后，我给它后面的where查询字段加上了索引，并且改为了小表驱动大表。然后再次测试，响应时间就缩短了很多。</p>
+<p>PS：这个秀点是“SQL优化”，具体流程是：定位慢SQL-&gt;使用explain查询SQL执行计划，用于分析SQL执行慢的原因-&gt;SQL优化。上述中的“小表驱动大表”等是SQL优化时的术语。</p>
+<hr>
+<h3 id="UUID是什么，如何生成的，-如何保证一致性"><a href="#UUID是什么，如何生成的，-如何保证一致性" class="headerlink" title="UUID是什么，如何生成的， 如何保证一致性"></a>UUID是什么，如何生成的， 如何保证一致性</h3><p><strong>UUID</strong> 是指Universally Unique Identifier，翻译为中文是<strong>通用唯一识别码</strong>，UUID 的目的是让分布式系统中的所有元素都能有唯一的识别信息。如此一来，每个人都可以创建不与其它人冲突的 UUID，就不需考虑数据库创建时的名称重复问题。</p>
+<p>UUID 是由一组32位数的16进制数字所构成，是故 UUID 理论上的总数为1632=2128，约等于3.4 x 10123。</p>
+<p>也就是说若每纳秒产生1百万个 UUID，要花100亿年才会将所有 UUID 用完。</p>
+<hr>
+<h3 id="项目遇到的问题"><a href="#项目遇到的问题" class="headerlink" title="项目遇到的问题"></a>项目遇到的问题</h3><p>String[] s = new String[]{“aa”,”bb”,”cc”};</p>
+<p>List<String> sList = Arrays.asList(s);</p>
+<p>System.out.println(sList);</p>
+<p>sList.add(“ddd”);</p>
+<p>Arrays.asList()返回一个List，通过阅读源码才发现，返回的List不是Collection中的那个List</p>
+<p>ArrayList提供了一个将List转为数组的方法：toArray</p>
+<hr>
 
     </div>
 
@@ -449,7 +471,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OAuth授权登陆模块"><span class="nav-number">1.</span> <span class="nav-text">OAuth授权登陆模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis实现用户三天免登陆"><span class="nav-number">2.</span> <span class="nav-text">Redis实现用户三天免登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社区帖子发布-修改-分页展示模块"><span class="nav-number">3.</span> <span class="nav-text">社区帖子发布,修改,分页展示模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多级回复及评论观看数功能模块"><span class="nav-number">4.</span> <span class="nav-text">多级回复及评论观看数功能模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis中tag标签库完善"><span class="nav-number">5.</span> <span class="nav-text">Redis中tag标签库完善</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通知回复功能模块"><span class="nav-number">6.</span> <span class="nav-text">通知回复功能模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成富文本编辑器（支持Markdown）"><span class="nav-number">7.</span> <span class="nav-text">集成富文本编辑器（支持Markdown）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#每日热门标签"><span class="nav-number">8.</span> <span class="nav-text">每日热门标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一周最热话题-amp-点赞关系存储"><span class="nav-number">9.</span> <span class="nav-text">一周最热话题&amp;点赞关系存储</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OAuth授权登陆模块"><span class="nav-number">1.</span> <span class="nav-text">OAuth授权登陆模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis实现用户三天免登陆"><span class="nav-number">2.</span> <span class="nav-text">Redis实现用户三天免登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社区帖子发布-修改-分页展示模块"><span class="nav-number">3.</span> <span class="nav-text">社区帖子发布,修改,分页展示模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多级回复及评论观看数功能模块"><span class="nav-number">4.</span> <span class="nav-text">多级回复及评论观看数功能模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis中tag标签库完善"><span class="nav-number">5.</span> <span class="nav-text">Redis中tag标签库完善</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通知回复功能模块"><span class="nav-number">6.</span> <span class="nav-text">通知回复功能模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成富文本编辑器（支持Markdown）"><span class="nav-number">7.</span> <span class="nav-text">集成富文本编辑器（支持Markdown）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#每日热门标签"><span class="nav-number">8.</span> <span class="nav-text">每日热门标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一周最热话题-amp-点赞关系存储"><span class="nav-number">9.</span> <span class="nav-text">一周最热话题&amp;点赞关系存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">9.1.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UUID是什么，如何生成的，-如何保证一致性"><span class="nav-number">9.2.</span> <span class="nav-text">UUID是什么，如何生成的， 如何保证一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目遇到的问题"><span class="nav-number">9.3.</span> <span class="nav-text">项目遇到的问题</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -463,20 +485,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

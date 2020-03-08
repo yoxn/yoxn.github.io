@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="什么是线程阻塞？在某一时刻某一个线程在运行一段代码的时候，这时候另一个线程也需要运行，但是在运行过程中的那个线程执行完成之前，另一个线程是无法获取到CPU执行权的（调用sleep方法是进入到睡眠暂停状态，但是CPU执行权并没有交出去，而调用wait方法则是将CPU执行权交给另一个线程），这个时候就会造成线程阻塞。 为什么会出现线程阻塞？1.睡眠状态：当一个线程执行代码的时候调用了sleep方法后，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并发知识">
+<meta property="og:url" content="http://yoursite.com/2020/03/08/%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="YoXn&#39;s Blog">
+<meta property="og:description" content="什么是线程阻塞？在某一时刻某一个线程在运行一段代码的时候，这时候另一个线程也需要运行，但是在运行过程中的那个线程执行完成之前，另一个线程是无法获取到CPU执行权的（调用sleep方法是进入到睡眠暂停状态，但是CPU执行权并没有交出去，而调用wait方法则是将CPU执行权交给另一个线程），这个时候就会造成线程阻塞。 为什么会出现线程阻塞？1.睡眠状态：当一个线程执行代码的时候调用了sleep方法后，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-08T13:12:55.000Z">
+<meta property="article:modified_time" content="2020-03-08T13:42:51.216Z">
+<meta property="article:tag" content="进程">
+<meta property="article:tag" content="线程">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/08/%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>并发知识 | YoXn's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoXn's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/08/%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="Enjoy when you can,and endure when you must.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoXn's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          并发知识
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-08 21:12:55 / 修改时间：21:42:51" itemprop="dateCreated datePublished" datetime="2020-03-08T21:12:55+08:00">2020-03-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">Java面试</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="什么是线程阻塞？"><a href="#什么是线程阻塞？" class="headerlink" title="什么是线程阻塞？"></a>什么是线程阻塞？</h3><p>在某一时刻某一个线程在运行一段代码的时候，这时候另一个线程也需要运行，但是在运行过程中的那个线程执行完成之前，另一个线程是无法获取到CPU执行权的（调用sleep方法是进入到睡眠暂停状态，但是CPU执行权并没有交出去，而调用wait方法则是将CPU执行权交给另一个线程），这个时候就会造成线程阻塞。</p>
+<h4 id="为什么会出现线程阻塞？"><a href="#为什么会出现线程阻塞？" class="headerlink" title="为什么会出现线程阻塞？"></a>为什么会出现线程阻塞？</h4><p>1<strong>.睡眠状态</strong>：当一个线程执行代码的时候调用了sleep方法后，线程处于睡眠状态，需要设置一个睡眠时间，此时有其他线程需要执行时就会造成线程阻塞，而且sleep方法被调用之后，线程不会释放锁对象，也就是说锁还在该线程手里，CPU执行权还在自己手里，等睡眠时间一过，该线程就会进入就绪状态，典型的“占着茅坑不拉屎”；</p>
+<p>2.<strong>等待状态</strong>：当一个线程正在运行时，调用了wait方法，此时该线程需要交出CPU执行权，也就是将锁释放出去，交给另一个线程，该线程进入等待状态，但与睡眠状态不一样的是，进入等待状态的线程不需要设置睡眠时间，但是需要执行notify方法或者notifyall方法来对其唤醒，自己是不会主动醒来的，等被唤醒之后，该线程也会进入就绪状态，但是进入就绪状态的该线程手里是没有执行权的，也就是没有锁，而睡眠状态的线程一旦苏醒，进入就绪状态时是自己还拿着锁的。等待状态的线程苏醒后，就是典型的“物是人非，大权旁落“；</p>
+<p>3.<strong>礼让状态</strong>：当一个线程正在运行时，调用了yield方法之后，该线程会将执行权礼让给同等级的线程或者比它高一级的线程优先执行，此时该线程有可能只执行了一部分而此时把执行权礼让给了其他线程，这个时候也会进入阻塞状态，但是该线程会随时可能又被分配到执行权，这就很”中国化的线程“了，比较讲究谦让；</p>
+<p>4.<strong>自闭状态</strong>：当一个线程正在运行时，调用了一个join方法，此时该线程会进入阻塞状态，另一个线程会运行，直到运行结束后，原线程才会进入就绪状态。这个比较像是”走后门“，本来该先把你的事情解决完了再解决后边的人的事情，但是这时候有走后门的人，那就会停止给你解决，而优先把走后门的人事情解决了；</p>
+<p>5.<strong>suspend() 和 resume()</strong> ：这两个方法是配套使用的，suspend() 是让线程进入阻塞状态，它的解药就是resume()，没有resume()它自己是不会恢复的，由于这种比较容易出现死锁现象，所以jdk1.5之后就已经被废除了，这对就是相爱相杀的一对。</p>
+<h4 id="理解同步阻塞、同步非阻塞、异步阻塞、异步非阻塞"><a href="#理解同步阻塞、同步非阻塞、异步阻塞、异步非阻塞" class="headerlink" title="理解同步阻塞、同步非阻塞、异步阻塞、异步非阻塞"></a>理解同步阻塞、同步非阻塞、异步阻塞、异步非阻塞</h4><p><strong>同步/异步关注的是消息通知的机制，而阻塞/非阻塞关注的是程序（线程）等待消息通知时的状态。</strong></p>
+<p>以小明下载文件打个比方，从这两个关注点来再次说明这两组概念，希望能够更好的促进大家的理解。</p>
+<p><strong>同步阻塞</strong>：小明一直盯着下载进度条，到 100% 的时候就完成。</p>
+<p>同步体现在：等待下载完成通知；</p>
+<p>阻塞体现在：等待下载完成通知过程中，不能做其他任务处理；</p>
+<p><strong>同步非阻塞</strong>：小明提交下载任务后就去干别的，每过一段时间就去瞄一眼进度条，看到 100% 就完成。</p>
+<p>同步体现在：等待下载完成通知，但是要在；</p>
+<p>非阻塞体现在：等待下载完成通知过程中，去干别的任务了，只是时不时会瞄一眼进度条；【小明必须要在两个任务间切换，关注下载进度】</p>
+<p><strong>异步阻塞</strong>：小明换了个有下载完成通知功能的软件，下载完成就“叮”一声。不过小明仍然一直等待“叮”的声音（看起来很傻，不是吗）。</p>
+<p>异步体现在：下载完成“叮”一声通知；</p>
+<p>阻塞体现在：等待下载完成“叮”一声通知过程中，不能做其他任务处理；</p>
+<p><strong>异步非阻塞</strong>：仍然是那个会“叮”一声的下载软件，小明提交下载任务后就去干别的，听到“叮”的一声就知道完成了。</p>
+<p>异步体现在：下载完成“叮”一声通知；</p>
+<p>非阻塞体现在：等待下载完成“叮”一声通知过程中，去干别的任务了，只需要接收“叮”声通知即可；【软件处理下载任务，小明处理其他任务，不需关注进度，只需接收软件“叮”声通知，即可】</p>
+<p><strong>也就是说，同步/异步是“下载完成消息”通知的方式（机制），而阻塞/非阻塞则是在等待“下载完成消息”通知过程中的状态（能不能干其他任务），在不同的场景下，同步/异步、阻塞/非阻塞的四种组合都有应用。</strong></p>
+<p>所以，综上所述，同步和异步仅仅是关注的消息如何通知的机制，而阻塞与非阻塞关注的是等待消息通知时的状态。也就是说，同步的情况下，是由处理消息者自己去等待消息是否被触发，而异步的情况下是由触发机制来通知处理消息者，所以在异步机制中，处理消息者和触发机制之间就需要一个连接的桥梁：</p>
+<p>在小明的例子中，这个桥梁就是软件“叮”的声音。</p>
+<h4 id="同步-异步与阻塞-非阻塞"><a href="#同步-异步与阻塞-非阻塞" class="headerlink" title="同步/异步与阻塞/非阻塞"></a>同步/异步与阻塞/非阻塞</h4><ol>
+<li><p><strong>同步阻塞形式</strong></p>
+<p>效率是最低的，</p>
+<p>拿上面的例子来说，就是你专心等待下载完成，什么别的事都不做。</p>
+<p>实际程序中：就是未对fd 设置O_NONBLOCK标志位的read/write 操作；</p>
+</li>
+<li><p><strong>异步阻塞形式</strong></p>
+<p>异步操作是可以被阻塞住的，只不过它不是在处理消息时阻塞，而是在等待消息通知时被阻塞。</p>
+<p>比如select 函数，假如传入的最后一个timeout参数为NULL，那么如果所关注的事件没有一个被触发，程序就会一直阻塞在这个select 调用处。</p>
+</li>
+<li><p><strong>同步非阻塞形式</strong></p>
+<p>实际上是效率低下的，</p>
+<p>想象一下你一边干别的事情一边还需要抬头看下载完成没有，如果把干别的事情和观察下载完成情况的位置看成是程序的两个操作的话，这个程序需要在这两种不同的行为之间来回的切换，效率可想而知是低下的。</p>
+<p>很多人会写阻塞的read/write 操作，但是别忘了可以对fd设置O_NONBLOCK 标志位，这样就可以将同步操作变成非阻塞的了。</p>
+</li>
+<li><p><strong>异步非阻塞形式</strong></p>
+<p>效率更高，</p>
+<p>因为等待下载完成是你(等待者)的事情，而通知你则是电脑(消息触发机制)的事情，程序没有在两种不同的操作中来回切换。</p>
+</li>
+</ol>
+<hr>
+<h3 id="线程的状态有哪些？阻塞和等待状态区别？"><a href="#线程的状态有哪些？阻塞和等待状态区别？" class="headerlink" title="线程的状态有哪些？阻塞和等待状态区别？"></a>线程的状态有哪些？阻塞和等待状态区别？</h3><ol>
+<li><p><strong>新建(NEW)</strong>：新创建了一个线程对象。</p>
+</li>
+<li><p><strong>可运行(RUNNABLE)</strong>：线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。 </p>
+</li>
+<li><p><strong>运行(RUNNING)</strong>：可运行状态(runnable)的线程获得了cpu 时间片（timeslice）,执行程序代码。</p>
+</li>
+<li><p><strong>阻塞(BLOCKED)</strong>：阻塞状态是指线程因为某种原因放弃了cpu 使用权，也即让出了cpu timeslice，暂时停止运行。直到线程进入可运行(runnable)状态，才有机会再次获得cpu timeslice 转到运行(running)状态。阻塞的情况分三种： </p>
+<ul>
+<li>等待阻塞：运行(running)的线程执行o.wait()方法，JVM会把该线程放入等待队列(waitting queue)中。</li>
+<li>同步阻塞：运行(running)的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池(lock pool)中。</li>
+<li>其他阻塞：运行(running)的线程执行Thread.sleep(long ms)或t.join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入可运行(runnable)状态。</li>
+</ul>
+</li>
+<li><p><strong>等待(WAITING)</strong>：一个线程进入了锁，但是需要等待其他线程执行某些操作。时间不确定，当wait，join，park方法调用时，进入waiting状态。前提是这个线程已经拥有锁了。 </p>
+</li>
+<li><p><strong>死亡(DEAD)</strong>：线程run()、main() 方法执行结束，或者因异常退出了run()方法，则该线程结束生命周期。死亡的线程不可再次复生。</p>
+</li>
+</ol>
+<hr>
+<h3 id="什么情况会形成死锁？-Java怎么避免死锁？"><a href="#什么情况会形成死锁？-Java怎么避免死锁？" class="headerlink" title="什么情况会形成死锁？ Java怎么避免死锁？"></a>什么情况会形成死锁？ Java怎么避免死锁？</h3><ol>
+<li><p>多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放。由于线程被无限期地阻塞，因此程序不可能正常终止。 比如线程 A 持有资源 2，线程 B 持有资源 1，他们同时都想申请对方的资源，所以这两个线程就会互相等待而进入死锁状态。 </p>
+<p>产生<strong>死锁</strong>必须具备的四个条件：</p>
+<ul>
+<li>互斥条件：该资源任意一个时刻只能由一个线程占用</li>
+<li>请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放</li>
+<li>不剥夺条件：线程已经获得的资源再未使用完之前不能被其他线程强行剥夺，只能自己使用完毕后才释放资源</li>
+<li>循环等待条件：若干进程之间形成一种头尾相接的循环等待资源关系</li>
+</ul>
+</li>
+<li><p>避免死锁：</p>
+<p><strong>破坏互斥条件</strong></p>
+<p>这个条件我们没有办法破坏，因为我们用锁本来就是想让他们互斥的（临界资源需要互斥访问）。</p>
+<p><strong>破坏请求与保持条件</strong></p>
+<p>一次性申请所有的资源。</p>
+<p><strong>破坏不剥夺条件</strong></p>
+<p>占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源。</p>
+<p><strong>破坏循环等待条件</strong></p>
+<p>靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件。</p>
+</li>
+</ol>
+<hr>
+<h3 id="线程怎么安全退出？"><a href="#线程怎么安全退出？" class="headerlink" title="线程怎么安全退出？"></a>线程怎么安全退出？</h3><p>Thread提供了一个stop()方法，但是stop()方法是一个被废弃的方法。为什么stop()方法被废弃而不被使用呢？原因是stop()方法太过于暴力，会强行把执行一半的线程终止。  这样会就不会保证线程的资源正确释放，通常是没有给与线程完成资源释放工作的机会，因此会导致程序工作在不确定的状态下 。</p>
+<p>Thread.interrupt(),我们可以用他来停止线程，他是安全的，可是使用他的时候并不会真的停止了线程，只是会给线程打上了一个记号，至于这个记号有什么用呢我们可以这样来用。 </p>
+<h4 id="用什么方法去看什么状态呢"><a href="#用什么方法去看什么状态呢" class="headerlink" title="用什么方法去看什么状态呢"></a>用什么方法去看什么状态呢</h4><ol>
+<li>this.interrupted():看看当前线程是否是中断状态，执行后将状态表示改为false； interrupted()是静态方法：内部实现是调用的当前线程的isInterrupted()，并且会重置当前线程的中断状态 </li>
+<li>this.isInterrupeted():看看线程对象是否已经是中断状态，但是不清除中断状态标记。 isInterrupted()是实例方法，是调用该方法的对象所表示的那个线程的isInterrupted()，不会重置当前线程的中断状态 </li>
+</ol>
+<hr>
+<h3 id="什么是线程池，线程池的好处？"><a href="#什么是线程池，线程池的好处？" class="headerlink" title="什么是线程池，线程池的好处？"></a>什么是线程池，线程池的好处？</h3><p><strong>线程池是一种多线程处理形式，处理过程中将任务添加队列，然后在创建线程后自动启动这些任务</strong>，每个线程都使用默认的堆栈大小，以默认的优先级运行，并处在多线程单元中，如果某个线程在托管代码中空闲，则线程池将插入另一个辅助线程来使所有处理器保持繁忙。如果所有线程池都始终保持繁忙，但队列中包含挂起的工作，则线程池将在一段时间后辅助线程的数目永远不会超过最大值。超过最大值的线程可以排队，但他们要等到其他线程完成后才能启动。</p>
+<p>java里面的线程池的顶级接口是Executor，Executor并不是一个线程池，而只是一个执行线程的工具，而真正的线程池是ExecutorService。</p>
+<p>java中的有哪些线程池？</p>
+<ol>
+<li><p>newCachedThreadPool创建一个可缓存线程池程</p>
+<p>是一种线程数量不定的线程池，并且其最大线程数Integer.MAX_VALUE，这个数是很大的，一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。但是线程池中的空闲线程都有超时限制，这个超时时长是60秒，超过60秒闲置线程就会被回收。调用execute将重用以前构造的线程(如果线程可用)。这类线程池比较适合执行大量的耗时较少的任务，当整个线程池都处于闲置状态时，线程池中的线程都会超时被停止。</p>
+</li>
+<li><p>newFixedThreadPool 创建一个定长线程池</p>
+<p>创建一个指定工作线程数量的线程池，每当提交一个任务就创建一个工作线程，当线程 处于空闲状态时，它们并不会被回收，除非线程池被关闭了，如果工作线程数量达到线程池初始的最大数，则将提交的任务存入到池队列（没有大小限制）中。由于newFixedThreadPool只有核心线程并且这些核心线程不会被回收，这样它更加快速底相应外界的请求。</p>
+</li>
+<li><p>newScheduledThreadPool 创建一个定长线程池</p>
+<p>创建一个线程池，它的核心线程数量是固定的，而非核心线程数是没有限制的，并且当非核心线程闲置时会被立即回收，它可安排给定延迟后运行命令或者定期地执行。这类线程池主要用于执行定时任务和具有固定周期的重复任务。 </p>
+</li>
+<li><p>newSingleThreadExecutor 创建一个单线程化的线程池</p>
+<p>这类线程池内部只有一个核心线程，以无界队列方式来执行该线程，这使得这些任务之间不需要处理线程同步的问题，它确保所有的任务都在同一个线程中按顺序中执行，并且可以在任意给定的时间不会有多个线程是活动的。 </p>
+</li>
+</ol>
+<p><strong>使用线程池的好处</strong>：</p>
+<ul>
+<li><strong>降低资源消耗</strong>。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。</li>
+<li><strong>提高响应速度</strong>。当任务到达时，任务可以不需要的等到线程创建就能立即执行。</li>
+<li><strong>提高线程的可管理性</strong>。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</li>
+</ul>
+<hr>
+<h3 id="Java线程消费者与生产者中的相关问题，怎么实现？"><a href="#Java线程消费者与生产者中的相关问题，怎么实现？" class="headerlink" title="Java线程消费者与生产者中的相关问题，怎么实现？"></a>Java线程消费者与生产者中的相关问题，怎么实现？</h3><h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>生产者消费者问题（Producer-consumer problem），也称有限缓冲问题（Bounded-buffer problem），是一个多线程同步问题的经典案例。生产者生成一定量的数据放到缓冲区中，然后重复此过程；与此同时，消费者也在缓冲区消耗这些数据。生产者和消费者之间必须保持同步，要保证生产者不会在缓冲区满时放入数据，消费者也不会在缓冲区空时消耗数据。不够完善的解决方法容易出现死锁的情况，此时进程都在等待唤醒。</p>
+<h4 id="解决问题的核心"><a href="#解决问题的核心" class="headerlink" title="解决问题的核心"></a>解决问题的核心</h4><p>保证同一资源被多个线程并发访问时的完整性。常用的同步方法是采用信号或加锁机制，保证资源在任意时刻至多被一个线程访问。 </p>
+<h4 id="Java能实现的几种方法"><a href="#Java能实现的几种方法" class="headerlink" title="Java能实现的几种方法"></a>Java能实现的几种方法</h4><ol>
+<li><p><strong>wait() / notify()方法</strong></p>
+<p><strong>wait()用在以下场合:</strong><br>（1）当缓冲区满时，缓冲区调用wait()方法，使得生产者释放锁，当前线程阻塞，其他线程可以获得锁。</p>
+<p>（2）当缓冲区空时，缓冲区调用wait()方法，使得消费者释放锁，当前线程阻塞，其他线程可以获得锁。</p>
+<p><strong>notify()用在以下场合：</strong><br>（1）当缓冲区未满时，生产者生产商品放入缓冲区，然后缓冲区调用notify()方法，通知上一个因wait()方法释放锁的线程现在可以去获得锁了，同步块代码执行完成后，释放对象锁，此处的对象锁，锁住的是缓冲区。</p>
+<p>（2）当缓冲区不为空时，消费者从缓冲区中取出商品，然后缓冲区调用notify()方法，通知上一个因wait()方法释放锁的线程现在可以去获得锁了，同步块代码执行完成后，释放对象锁。</p>
+</li>
+<li><p><strong>await() / signal()方法</strong></p>
+<p>在JDK5.0之后，Java提供了Lock与Condition机制。Condition接口的await()和signal()是用来做同步的两种方法 </p>
+</li>
+<li><p><strong>BlockingQueue阻塞队列方法</strong></p>
+<p><strong>什么是阻塞队列：</strong></p>
+<p>如果向一个已经满了的队列中添加元素或者从空队列中移除元素，都将会导致线程阻塞，线程一直等待到有旧元素被移除或新元素被添加的时候，才能继续执行。符合这种情况的队列，称为阻塞队列。</p>
+<p>JDK 1.5 以后新增BlockingQueue接口，我们采用它实现类的其中两个类，ArrayBlockingQueue或者是LinkedBlockingQueue。</p>
+<p><strong>怎么使用LinkedBlockingQueue？</strong><br>这里我们用LinkedBlockingQueue来解决生产者与消费者问题，主要用到它的两个方法，即put()与take()</p>
+<p>put():向阻塞队列中添加一个元素，队列满时，自动阻塞。</p>
+<p>take():从阻塞队列中取出一个元素，队列空时，自动阻塞。</p>
+<p>其实LinkedBlockingQueue底层使用的仍然是Lock与Condition机制，我们从源码就可以看出来</p>
+</li>
+<li><p><strong>信号量</strong></p>
+<p>Semaphore是一种基于计数的信号量。它可以设定一个阈值，基于此，多个线程竞争获取许可信号，做完自己的申请后归还，超过阈值后，线程申请许可信号将会被阻塞。Semaphore可以用来构建一些对象池，资源池之类的，比如数据库连接池，我们也可以创建计数为1的Semaphore，将其作为一种类似互斥锁的机制，这也叫二元信号量，表示两种互斥状态。计数为0的Semaphore是可以release的，然后就可以acquire（即一开始使线程阻塞从而完成其他执行。）。</p>
+</li>
+<li><p><strong>管道</strong></p>
+<p>一种特殊的流，用于不同线程间直接传送数据，一个线程发送数据到输出管道，另一个线程从输入管道中读数据。</p>
+<p>inputStream.connect(outputStream)或outputStream.connect(inputStream)作用是使两个Stream之间产生通信链接，这样才可以将数据进行输出与输入。</p>
+<p>这种方式只适用于两个线程之间通信，不适合多个线程之间通信。</p>
+</li>
+</ol>
+<hr>
+<h3 id="synchronized方法和synchronized同步块的区别？"><a href="#synchronized方法和synchronized同步块的区别？" class="headerlink" title="synchronized方法和synchronized同步块的区别？"></a>synchronized方法和synchronized同步块的区别？</h3><p><strong>同步方法默认用this或者当前类class对象作为锁；</strong><br><strong>同步代码块可以选择以什么来加锁，比同步方法要更细颗粒度，</strong>我们可以选择只同步会发生同步问题的部分代码而不是整个方法；<br>同步方法使用关键字 synchronized修饰方法，而同步代码块主要是修饰需要进行同步的代码，用 synchronized（object）{代码内容}进行修饰；</p>
+<p>对象锁: synchronized(object) 锁住的是对象,每个对象自己拥有一个锁<br>类锁: synchronized(Class) 锁住的是类，也就是同一个类的实例，任意时刻只会有一个线程能获得资源</p>
+<ul>
+<li><strong>修饰实例方法:</strong> 作用于当前对象实例加锁，进入同步代码前要获得当前对象实例的锁</li>
+<li><strong>修饰静态方法:</strong> 也就是给当前类加锁，会作用于类的所有对象实例，因为静态成员不属于任何一个实例对象，是类成员（ static 表明这是该类的一个静态资源，不管new了多少个对象，只有一份）。所以如果一个线程A调用一个实例对象的非静态 synchronized 方法，而线程B需要调用这个实例对象所属类的静态 synchronized 方法，是允许的，不会发生互斥现象，<strong>因为访问静态 synchronized 方法占用的锁是当前类的锁，而访问非静态 synchronized 方法占用的锁是当前实例对象锁</strong>。</li>
+<li><strong>修饰代码块:</strong> 指定加锁对象，对给定对象加锁，进入同步代码库前要获得给定对象的锁。</li>
+</ul>
+<p><strong>总结：</strong> synchronized 关键字加到 static 静态方法和 synchronized(class)代码块上都是是给 Class 类上锁。synchronized 关键字加到实例方法上是给对象实例上锁。尽量不要使用 synchronized(String a) 因为JVM中，字符串常量池具有缓存功能！</p>
+<hr>
+<h3 id="synchronized-关键字的底层原理"><a href="#synchronized-关键字的底层原理" class="headerlink" title="synchronized 关键字的底层原理"></a>synchronized 关键字的底层原理</h3><p> <strong>synchronized 同步语句块的实现使用的是 monitorenter 和 monitorexit 指令，其中 monitorenter 指令指向同步代码块的开始位置，monitorexit 指令则指明同步代码块的结束位置。</strong> 当执行 monitorenter 指令时，线程试图获取锁也就是获取 monitor(monitor对象存在于每个Java对象的对象头中，synchronized 锁便是通过这种方式获取锁的，也是为什么Java中任意对象可以作为锁的原因) 的持有权。当计数器为0则可以成功获取，获取后将锁计数器设为1也就是加1。相应的在执行 monitorexit 指令后，将锁计数器设为0，表明锁被释放。如果获取对象锁失败，那当前线程就要阻塞等待，直到锁被另外一个线程释放为止。 </p>
+<p> synchronized 修饰的<strong>方法</strong>并没有 monitorenter 指令和 monitorexit 指令，取得代之的确实是 ACC_SYNCHRONIZED 标识，该标识指明了该方法是一个同步方法，JVM 通过该 ACC_SYNCHRONIZED 访问标志来辨别一个方法是否声明为同步方法，从而执行相应的同步调用。 </p>
+<hr>
+<h3 id="wait-和-sleep-的区别？"><a href="#wait-和-sleep-的区别？" class="headerlink" title="wait() 和 sleep() 的区别？"></a>wait() 和 sleep() 的区别？</h3><p><strong>sleep()方法和wait()方法的区别?</strong></p>
+<ol>
+<li>sleep方法是Thread的静态方法，wait方法是Object类的普通方法</li>
+<li>sleep方法不释放同步锁，wait方法释放同步锁，(执行notify方法唤醒wait的线程时是不释放同步锁的)</li>
+<li>wait方法用于线程间通信，而sleep方法用于短暂的暂停线程</li>
+<li>sleep针对当前线程，而wait针对被同步代码块加锁的对象</li>
+<li>sleep方法是当前线程暂停指定时间，将执行机会让给其它线程，时间结束后进入就绪状态等待</li>
+<li>调用wait方法会暂停线程，当前线程释放对象的同步锁，进入等待池(wait pool)，只有调用对象的notify或者notifyAll方法唤醒时，线程进入等锁池(lock pool)，直到线程再次获得对象的锁才会进入就绪状态</li>
+<li>wait方法(notify，notifyAll)只能在同步方法或者同步块中使用(如果在non-synchronized函数或non-synchronizedblock中进行调用，虽然能编译通过，但在运行时会发生illegalMonitorStateException的异常)；sleep方法可以在任意位置使用</li>
+</ol>
+<p>注：如果线程A希望立即结束线程B，则可以对线程B对应的Thread实例调用interrupt方法。如果此刻线程B正在wait/sleep/join，则线程B会立刻抛出InterruptedException，在catch() {} 中直接return即可安全地结束线程</p>
+<p><strong>sleep()方法和yield()方法的区别?</strong></p>
+<ol>
+<li>sleep方法给其他线程机会时不考虑线程优先级(优先级低的也有可能)；而yield方法只会给相同优先级或者更高优先级线程机会(如果没有相同或者更高优先级的线程，该线程会继续运行)</li>
+<li>线程执行sleep方法进入阻塞状态，执行yield方法进入就绪状态</li>
+</ol>
+<hr>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BF%9B%E7%A8%8B/" rel="tag"># 进程</a>
+              <a href="/tags/%E7%BA%BF%E7%A8%8B/" rel="tag"># 线程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/08/%E5%AE%B9%E5%99%A8%E7%9F%A5%E8%AF%86/" rel="prev" title="容器知识">
+      <i class="fa fa-chevron-left"></i> 容器知识
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/08/JVM%E7%9F%A5%E8%AF%86/" rel="next" title="JVM知识">
+      JVM知识 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是线程阻塞？"><span class="nav-number">1.</span> <span class="nav-text">什么是线程阻塞？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么会出现线程阻塞？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么会出现线程阻塞？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#理解同步阻塞、同步非阻塞、异步阻塞、异步非阻塞"><span class="nav-number">1.2.</span> <span class="nav-text">理解同步阻塞、同步非阻塞、异步阻塞、异步非阻塞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步-异步与阻塞-非阻塞"><span class="nav-number">1.3.</span> <span class="nav-text">同步&#x2F;异步与阻塞&#x2F;非阻塞</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的状态有哪些？阻塞和等待状态区别？"><span class="nav-number">2.</span> <span class="nav-text">线程的状态有哪些？阻塞和等待状态区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况会形成死锁？-Java怎么避免死锁？"><span class="nav-number">3.</span> <span class="nav-text">什么情况会形成死锁？ Java怎么避免死锁？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程怎么安全退出？"><span class="nav-number">4.</span> <span class="nav-text">线程怎么安全退出？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用什么方法去看什么状态呢"><span class="nav-number">4.1.</span> <span class="nav-text">用什么方法去看什么状态呢</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是线程池，线程池的好处？"><span class="nav-number">5.</span> <span class="nav-text">什么是线程池，线程池的好处？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java线程消费者与生产者中的相关问题，怎么实现？"><span class="nav-number">6.</span> <span class="nav-text">Java线程消费者与生产者中的相关问题，怎么实现？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题描述"><span class="nav-number">6.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决问题的核心"><span class="nav-number">6.2.</span> <span class="nav-text">解决问题的核心</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java能实现的几种方法"><span class="nav-number">6.3.</span> <span class="nav-text">Java能实现的几种方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized方法和synchronized同步块的区别？"><span class="nav-number">7.</span> <span class="nav-text">synchronized方法和synchronized同步块的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized-关键字的底层原理"><span class="nav-number">8.</span> <span class="nav-text">synchronized 关键字的底层原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait-和-sleep-的区别？"><span class="nav-number">9.</span> <span class="nav-text">wait() 和 sleep() 的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">10.</span> <span class="nav-text"></span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description">Enjoy when you can,and endure when you must.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

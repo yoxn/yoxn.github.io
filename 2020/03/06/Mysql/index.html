@@ -53,11 +53,13 @@
 <meta property="og:site_name" content="YoXn&#39;s Blog">
 <meta property="og:description" content="1. 数据库的创建1.1创建一个名称为mydb1的数据库​        create dateabase mydb1; 1.2 创建一个使用utf8字符集的mydb2数据库。​         create database mydb2 character set utf8; 1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。​        create database m">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camo.githubusercontent.com/429c7cf4d94faa9ee216b110bf3258bf2a346987/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545342542412538422545352538412541312545372538392542392545362538302541372e706e67">
 <meta property="article:published_time" content="2020-03-06T08:59:42.000Z">
-<meta property="article:modified_time" content="2020-03-06T14:11:26.210Z">
+<meta property="article:modified_time" content="2020-03-08T13:42:40.566Z">
 <meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="sql">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/429c7cf4d94faa9ee216b110bf3258bf2a346987/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545342542412538422545352538412541312545372538392542392545362538302541372e706e67">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/06/Mysql/">
 
@@ -227,10 +229,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-06 16:59:42 / 修改时间：22:11:26" itemprop="dateCreated datePublished" datetime="2020-03-06T16:59:42+08:00">2020-03-06</time>
+              <time title="创建时间：2020-03-06 16:59:42" itemprop="dateCreated datePublished" datetime="2020-03-06T16:59:42+08:00">2020-03-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-08 21:42:40" itemprop="dateModified" datetime="2020-03-08T21:42:40+08:00">2020-03-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -278,7 +286,86 @@
 <h4 id="4-字符串转时间戳"><a href="#4-字符串转时间戳" class="headerlink" title="4.字符串转时间戳"></a>4.字符串转时间戳</h4><p>select unix_timestamp(‘2019-01-20’); </p>
 <h4 id="5-时间戳转字符串"><a href="#5-时间戳转字符串" class="headerlink" title="5.时间戳转字符串"></a>5.时间戳转字符串</h4><p>select from_unixtime(1451997924,’%Y-%d’);</p>
 <h4 id="附日期格式如下："><a href="#附日期格式如下：" class="headerlink" title="附日期格式如下："></a>附日期格式如下：</h4><p>%M 月名字(January……December)<br>%W 星期名字(Sunday……Saturday)<br>%D 有英语前缀的月份的日期(1st, 2nd, 3rd, 等等。）<br>%Y 年, 数字, 4 位<br>%y 年, 数字, 2 位<br>%a 缩写的星期名字(Sun……Sat)<br>%d 月份中的天数, 数字(00……31)<br>%e 月份中的天数, 数字(0……31)<br>%m 月, 数字(01……12)<br>%c 月, 数字(1……12)<br>%b 缩写的月份名字(Jan……Dec)<br>%j 一年中的天数(001……366)<br>%H 小时(00……23)<br>%k 小时(0……23)<br>%h 小时(01……12)<br>%I 小时(01……12)<br>%l 小时(1……12)<br>%i 分钟, 数字(00……59)<br>%r 时间,12 小时(hh:mm:ss [AP]M)<br>%T 时间,24 小时(hh:mm:ss)<br>%S 秒(00……59)<br>%s 秒(00……59)<br>%p AM或PM<br>%w 一个星期中的天数(0=Sunday ……6=Saturday ）<br>%U 星期(0……52), 这里星期天是星期的第一天<br>%u 星期(0……52), 这里星期一是星期的第一 </p>
+<hr>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><strong>事务是逻辑上的一组操作，要么都执行，要么都不执行。</strong></p>
+<p>事务最经典也经常被拿出来说例子就是转账了。假如小明要给小红转账1000元，这个转账会涉及到两个关键操作就是：将小明的余额减少1000元，将小红的余额增加1000元。万一在这两个操作之间突然出现错误比如银行系统崩溃，导致小明余额减少而小红的余额没有增加，这样就不对了。事务就是保证这两个关键操作要么都成功，要么都要失败。</p>
+<h4 id="事物的四大特性-ACID"><a href="#事物的四大特性-ACID" class="headerlink" title="事物的四大特性(ACID)"></a>事物的四大特性(ACID)</h4><p><a href="https://camo.githubusercontent.com/429c7cf4d94faa9ee216b110bf3258bf2a346987/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545342542412538422545352538412541312545372538392542392545362538302541372e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/429c7cf4d94faa9ee216b110bf3258bf2a346987/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545342542412538422545352538412541312545372538392542392545362538302541372e706e67" alt="事物的特性"></a></p>
+<ol>
+<li><strong>原子性（Atomicity）：</strong> 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；</li>
+<li><strong>一致性（Consistency）：</strong> 执行事务前后，数据保持一致，多个事务对同一个数据读取的结果是相同的；</li>
+<li><strong>隔离性（Isolation）：</strong> 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的；</li>
+<li><strong>持久性（Durability）：</strong> 一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。</li>
+</ol>
+<h4 id="并发事务带来哪些问题"><a href="#并发事务带来哪些问题" class="headerlink" title="并发事务带来哪些问题?"></a>并发事务带来哪些问题?</h4><p>在典型的应用程序中，多个事务并发运行，经常会操作相同的数据来完成各自的任务（多个用户对同一数据进行操作）。并发虽然是必须的，但可能会导致以下的问题。</p>
+<ul>
+<li><strong>脏读（Dirty read）:</strong> 当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</li>
+<li><strong>丢失修改（Lost to modify）:</strong> 指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。 例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。</li>
+<li><strong>不可重复读（Unrepeatableread）:</strong> 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。</li>
+<li><strong>幻读（Phantom read）:</strong> 幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。</li>
+</ul>
+<p><strong>不可重复读和幻读区别：</strong></p>
+<p>不可重复读的重点是修改比如多次读取一条记录发现其中某些列的值被修改，幻读的重点在于新增或者删除比如多次读取一条记录发现记录增多或减少了。</p>
+<h4 id="事务隔离级别有哪些-MySQL的默认隔离级别是"><a href="#事务隔离级别有哪些-MySQL的默认隔离级别是" class="headerlink" title="事务隔离级别有哪些?MySQL的默认隔离级别是?"></a>事务隔离级别有哪些?MySQL的默认隔离级别是?</h4><p><strong>SQL 标准定义了四个隔离级别：</strong></p>
+<ul>
+<li><strong>READ-UNCOMMITTED(读取未提交)：</strong> 最低的隔离级别，允许读取尚未提交的数据变更，<strong>可能会导致脏读、幻读或不可重复读</strong>。</li>
+<li><strong>READ-COMMITTED(读取已提交)：</strong> 允许读取并发事务已经提交的数据，<strong>可以阻止脏读，但是幻读或不可重复读仍有可能发生</strong>。</li>
+<li><strong>REPEATABLE-READ(可重复读)：</strong> 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，<strong>可以阻止脏读和不可重复读，但幻读仍有可能发生</strong>。</li>
+<li><strong>SERIALIZABLE(可串行化)：</strong> 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻影读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>READ-UNCOMMITTED</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>READ-COMMITTED</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>REPEATABLE-READ</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody></table>
+<p>MySQL InnoDB 存储引擎的默认支持的隔离级别是 <strong>REPEATABLE-READ（可重读）</strong>。我们可以通过<code>SELECT @@tx_isolation;</code>命令来查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br><span class="line">+-----------------+</span><br><span class="line">| @@tx_isolation  |</span><br><span class="line">+-----------------+</span><br><span class="line">| REPEATABLE-READ |</span><br><span class="line">+-----------------+</span><br></pre></td></tr></table></figure>
 
+<p>这里需要注意的是：与 SQL 标准不同的地方在于 InnoDB 存储引擎在 <strong>REPEATABLE-READ（可重读）</strong> 事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server) 是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是 <strong>REPEATABLE-READ（可重读）</strong> 已经可以完全保证事务的隔离性要求，即达到了 SQL标准的 <strong>SERIALIZABLE(可串行化)</strong> 隔离级别。因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是 <strong>READ-COMMITTED(读取提交内容)</strong> ，但是你要知道的是InnoDB 存储引擎默认使用 <strong>REPEAaTABLE-READ（可重读）</strong> 并不会有任何性能损失。</p>
+<p>InnoDB 存储引擎在 <strong>分布式事务</strong> 的情况下一般会用到 <strong>SERIALIZABLE(可串行化)</strong> 隔离级别。</p>
+<hr>
+<p>###数据库（MySQL）瓶颈在哪儿？数据库瓶颈现象如何解决？</p>
+<p>MySQL 是存在瓶颈的。 当 MySQL 单表数据量达到千万级别以上时，无论如何对 MySQL 进行优化，查询如何简单，MySQL 的性能都会显著降低。 采取措施：</p>
+<ol>
+<li>增加 MySQL 配置中的 buffer 和 Cache 的数值，增加服务器 CPU 数量和内存的大小，这样能很大程度上应对 MySQL 的性能瓶颈。 性能优化中，效果最显著、成本最低的当属硬件和服务器优化，所以这是应该首先考虑的。 </li>
+<li>使用第三方引擎或衍生版本。]</li>
+<li>迁移到其它数据库。<br> 如开源的 Post供热SQL 和商业的 Oracle。 与 Oracle 和 PostgreSQL 相比， MySQL 属于线程模式，并且采用了插件引擎的架构。这种实现的确有自己的优势：轻巧快速、系统资源消耗小、支持更多并发连接，但进程模式能更充分的应用 CPU 资源，在应付复杂业务查询上更有优势。比如,在常规优化的前提下，Oracle 的但别性能瓶颈经验值在 2 亿数据量的级别，远远优于 MySQL。 不仅如此，在关联查询和内置函数等功上,Oracle 都是完胜 MySQL 数据库的。 再比如，PostgreSQL 数据库相比 MySQL，拥有更强大的查询优化器，不会频繁重建索引，支持物化视图等优势。当然，迁移到其他数据库还要看应用的类型，比如是偏向 OLTP（ On-Line Transaction Processing，联机事物处理）的应用还是偏向OLAP（On-Line Analytical Processing，联机分析处理）应用。 </li>
+<li>对数据库进行分区、分表，减少单表体积。</li>
+<li>使用NoSQL 等辅助解决方案，如 Memcached、Redis。</li>
+<li>使用中间件做数据拆分和分布式部署，这方面的典型案例有阿里巴巴对外开源的数据库中间件 Cobar。</li>
+<li>使用数据库连接池技术。 </li>
+</ol>
+<hr>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
     </div>
 
     
@@ -300,7 +387,10 @@
     <a href="/2020/03/05/%E9%A1%B9%E7%9B%AE/" rel="prev" title="项目">
       <i class="fa fa-chevron-left"></i> 项目
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/08/%E5%AE%B9%E5%99%A8%E7%9F%A5%E8%AF%86/" rel="next" title="容器知识">
+      容器知识 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -360,7 +450,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库的创建"><span class="nav-number">1.</span> <span class="nav-text">1. 数据库的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1创建一个名称为mydb1的数据库"><span class="nav-number">1.1.</span> <span class="nav-text">1.1创建一个名称为mydb1的数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-创建一个使用utf8字符集的mydb2数据库。"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 创建一个使用utf8字符集的mydb2数据库。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-数据库的修改"><span class="nav-number">2.</span> <span class="nav-text">2. 数据库的修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-数据库的删除"><span class="nav-number">3.</span> <span class="nav-text">3. 数据库的删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-数据库查看"><span class="nav-number">4.</span> <span class="nav-text">4. 数据库查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库中表操作的sql练习"><span class="nav-number">5.</span> <span class="nav-text">数据库中表操作的sql练习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、创建表"><span class="nav-number">5.1.</span> <span class="nav-text">一、创建表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、删除表"><span class="nav-number">5.2.</span> <span class="nav-text">二、删除表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、数据表的结构的修改："><span class="nav-number">5.3.</span> <span class="nav-text">三、数据表的结构的修改：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、查看表结构"><span class="nav-number">5.4.</span> <span class="nav-text">四、查看表结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql时间与字符串之间相互转换"><span class="nav-number">6.</span> <span class="nav-text">mysql时间与字符串之间相互转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-时间转字符串"><span class="nav-number">6.1.</span> <span class="nav-text">1.时间转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-字符串转时间"><span class="nav-number">6.2.</span> <span class="nav-text">2.字符串转时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-时间转时间戳"><span class="nav-number">6.3.</span> <span class="nav-text">3.时间转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-字符串转时间戳"><span class="nav-number">6.4.</span> <span class="nav-text">4.字符串转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-时间戳转字符串"><span class="nav-number">6.5.</span> <span class="nav-text">5.时间戳转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附日期格式如下："><span class="nav-number">6.6.</span> <span class="nav-text">附日期格式如下：</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库的创建"><span class="nav-number">1.</span> <span class="nav-text">1. 数据库的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1创建一个名称为mydb1的数据库"><span class="nav-number">1.1.</span> <span class="nav-text">1.1创建一个名称为mydb1的数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-创建一个使用utf8字符集的mydb2数据库。"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 创建一个使用utf8字符集的mydb2数据库。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-数据库的修改"><span class="nav-number">2.</span> <span class="nav-text">2. 数据库的修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-数据库的删除"><span class="nav-number">3.</span> <span class="nav-text">3. 数据库的删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-数据库查看"><span class="nav-number">4.</span> <span class="nav-text">4. 数据库查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库中表操作的sql练习"><span class="nav-number">5.</span> <span class="nav-text">数据库中表操作的sql练习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、创建表"><span class="nav-number">5.1.</span> <span class="nav-text">一、创建表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、删除表"><span class="nav-number">5.2.</span> <span class="nav-text">二、删除表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、数据表的结构的修改："><span class="nav-number">5.3.</span> <span class="nav-text">三、数据表的结构的修改：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、查看表结构"><span class="nav-number">5.4.</span> <span class="nav-text">四、查看表结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql时间与字符串之间相互转换"><span class="nav-number">6.</span> <span class="nav-text">mysql时间与字符串之间相互转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-时间转字符串"><span class="nav-number">6.1.</span> <span class="nav-text">1.时间转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-字符串转时间"><span class="nav-number">6.2.</span> <span class="nav-text">2.字符串转时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-时间转时间戳"><span class="nav-number">6.3.</span> <span class="nav-text">3.时间转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-字符串转时间戳"><span class="nav-number">6.4.</span> <span class="nav-text">4.字符串转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-时间戳转字符串"><span class="nav-number">6.5.</span> <span class="nav-text">5.时间戳转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附日期格式如下："><span class="nav-number">6.6.</span> <span class="nav-text">附日期格式如下：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-number">7.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事物的四大特性-ACID"><span class="nav-number">7.1.</span> <span class="nav-text">事物的四大特性(ACID)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发事务带来哪些问题"><span class="nav-number">7.2.</span> <span class="nav-text">并发事务带来哪些问题?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务隔离级别有哪些-MySQL的默认隔离级别是"><span class="nav-number">7.3.</span> <span class="nav-text">事务隔离级别有哪些?MySQL的默认隔离级别是?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">8.</span> <span class="nav-text"></span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -374,20 +464,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

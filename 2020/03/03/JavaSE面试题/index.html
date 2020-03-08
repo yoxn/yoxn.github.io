@@ -46,39 +46,23 @@
   };
 </script>
 
-  <meta name="description" content="Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？ JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法。  优">
+  <meta name="description" content="JSP九个内置对象 request：封装客户端的请求，其中包含来自GET或POST请求的参数； response：封装服务器对客户端的响应； pageContext：通过该对象可以获取其他对象； session：封装用户会话的对象； application：封装服务器运行环境的对象； out：输出服务器响应的输出流对象； config：Web应用的配置对象； page：JSP页面本身（相当于Jav">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaSE面试题">
 <meta property="og:url" content="http://yoursite.com/2020/03/03/JavaSE%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="YoXn&#39;s Blog">
-<meta property="og:description" content="Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？ JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法。  优">
+<meta property="og:description" content="JSP九个内置对象 request：封装客户端的请求，其中包含来自GET或POST请求的参数； response：封装服务器对客户端的响应； pageContext：通过该对象可以获取其他对象； session：封装用户会话的对象； application：封装服务器运行环境的对象； out：输出服务器响应的输出流对象； config：Web应用的配置对象； page：JSP页面本身（相当于Jav">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://camo.githubusercontent.com/4012482f49926b35d8557b63952ee605fd259f62/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d33e5a086e7bb93e69e842e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/6b0bb14d82c24d5d4b0302c69a11589b3d887adc/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545352541302538362545352538362538352545352541442539382e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/2713b77464413e9aeb63cdd9d8cd198cb3fea34a/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32353137383335302e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/9c349ba9ea4778b4c5f7cd0fb7e7efd812902330/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f31303331373134362e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/42464b598a233d4319009cc06e3d199b6331c314/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32383935343238362e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/215514817e1b01cd89ba942c382d2f64cb6c9e3d/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32383132383738352e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/b3a4bf00f50b9981e3c7b933d54f276e20933b66/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f31313033343235392e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/6c6a9c7e2a7849cab8d5966ec1916115380e2842/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f37323736323034392e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/abe4956dea64d2661d54586797be1516f9166d0b/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545352539452538332545352539432542452545362539342542362545392539422538362545372541452539372545362542332539352e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/dc1f798e7c7f9aa9a3ab692db10a6b1788e5d505/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f36333730373238312e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/94cfc5e1fbe9d49b3ed056d2943fd86dac1833a2/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f39303938343632342e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/e5223ec7b2460498e1934c14eeaf969bafdcab59/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f39343035373034392e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/f769c52ae89d045695e8b41d4583dda4b921ca3e/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545352539452538332545352539432542452545362539342542362545392539422538362545352539392541382e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/aba41c5c08ea9884554b9a69ea69c7ceeebc83ff/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f34363837333032362e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/f298ba56ec4667487fdf4acc987f2ef9e6df254e/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f32323031383336382e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/f298ba56ec4667487fdf4acc987f2ef9e6df254e/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f32323031383336382e6a7067">
-<meta property="og:image" content="https://camo.githubusercontent.com/d74545af0f987d17b7f41a60bb237a113fff925b/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f38323832353037392e6a7067">
+<meta property="og:image" content="https://img-blog.csdn.net/20160924191851607">
 <meta property="article:published_time" content="2020-03-03T13:50:35.000Z">
-<meta property="article:modified_time" content="2020-03-07T16:36:06.388Z">
+<meta property="article:modified_time" content="2020-03-08T13:42:36.845Z">
 <meta property="article:tag" content="反射">
 <meta property="article:tag" content="注解">
 <meta property="article:tag" content="内部类">
 <meta property="article:tag" content="IO">
 <meta property="article:tag" content="HashMap">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://camo.githubusercontent.com/4012482f49926b35d8557b63952ee605fd259f62/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d33e5a086e7bb93e69e842e706e67">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20160924191851607">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/03/JavaSE%E9%9D%A2%E8%AF%95%E9%A2%98/">
 
@@ -256,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-08 00:36:06" itemprop="dateModified" datetime="2020-03-08T00:36:06+08:00">2020-03-08</time>
+                <time title="修改时间：2020-03-08 21:42:36" itemprop="dateModified" datetime="2020-03-08T21:42:36+08:00">2020-03-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,7 +265,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><a href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？" class="headerlink" title="Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"></a>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</h3><ol>
+        <h3 id="JSP九个内置对象"><a href="#JSP九个内置对象" class="headerlink" title="JSP九个内置对象"></a>JSP九个内置对象</h3><ul>
+<li>request：封装客户端的请求，其中包含来自GET或POST请求的参数；</li>
+<li>response：封装服务器对客户端的响应；</li>
+<li>pageContext：通过该对象可以获取其他对象；</li>
+<li>session：封装用户会话的对象；</li>
+<li>application：封装服务器运行环境的对象；</li>
+<li>out：输出服务器响应的输出流对象；</li>
+<li>config：Web应用的配置对象；</li>
+<li>page：JSP页面本身（相当于Java程序中的this）；</li>
+<li>exception：封装页面抛出异常的对象。</li>
+</ul>
+<hr>
+ <a id="more"></a>
+
+<h3 id="Cookie和Session的的区别"><a href="#Cookie和Session的的区别" class="headerlink" title="Cookie和Session的的区别"></a>Cookie和Session的的区别</h3><p>Cookie 和 Session都是用来跟踪浏览器用户身份的会话方式，但是两者的应用场景不太一样。</p>
+<p><strong>Cookie 一般用来保存用户信息</strong> </p>
+<p>①我们在 Cookie 中保存已经登录过得用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了；</p>
+<p>②一般的网站都会有保持登录也就是说下次你再访问网站的时候就不需要重新登录了，这是因为用户登录的时候我们可以存放了一个 Token 在 Cookie 中，下次登录的时候只需要根据 Token 值来查找用户即可(为了安全考虑，重新登录一般要将 Token 重写)；</p>
+<p>③登录一次网站后访问网站其他页面不需要重新登录。</p>
+<p><strong>Session 的主要作用就是通过服务端记录用户的状态。</strong></p>
+<p>典型的场景是购物车，当你要添加商品到购物车的时候，系统不知道是哪个用户操作的，因为 HTTP 协议是无状态的。服务端给特定的用户创建特定的 Session 之后就可以标识这个用户并且跟踪这个用户了。</p>
+<p>Cookie 数据保存在客户端(浏览器端)，Session 数据保存在服务器端。</p>
+<p>Cookie 存储在客户端中，而Session存储在服务器上，相对来说 Session 安全性更高。如果使用 Cookie 的一些敏感信息不要写入 Cookie 中，最好能将 Cookie 信息加密然后使用到的时候再去服务器端解密。</p>
+<p><strong>session机制</strong>：</p>
+<p>客户端第一次请求服务端时，（jsessionid-sessionid）服务端会产生一个session对象（用于保存该客户的信息）；<br>并且每个session对象 都会有一个唯一的 sessionId( 用于区分其他session);<br>服务端也会产生一个cookie，并且 该cookie的name=JSESSIONID ,value=服务端sessionId的值；<br>然后 服务端会在 响应客户端的同时 将该cookie发送给客户端，至此 客户端就有了 一个cookie(JSESSIONID)；<br>因此，客户端的cookie就可以和服务端的session一一对应（JSESSIONID - sessionID）</p>
+<p>客户端第二/n次请求服务端时:服务端会先用客户端cookie种的JSESSIONID  去服务端的session中匹配sessionid,如果匹配成功（cookie  jsessionid和sesion sessionid），说明此用户 不是第一次访问,无需登录；</p>
+<hr>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><ul>
+<li><p><strong>单例模式</strong></p>
+<p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。 </p>
+</li>
+<li><p><strong>工厂模式</strong></p>
+<p>在基类中定义创建对象的一个接口，让子类决定实例化哪个类。工厂方法让一个类的实例化延迟到子类中进行。 </p>
+</li>
+<li><p><strong>代理模式</strong></p>
+<p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
+<p><strong>Spring AOP 就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDK Proxy</strong>，去创建代理对象，而对于没有实现接口的对象，就无法使用 JDK Proxy 去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong> ，这时候Spring AOP会使用 <strong>Cglib</strong> 生成一个被代理对象的子类来作为代理。当然你也可以使用 AspectJ ,Spring AOP 已经集成了AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。</p>
+<p>使用 AOP 之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了 AOP 。</p>
+<p><strong>Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。</strong> Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。</p>
+<p>Spring AOP 已经集成了 AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。AspectJ 相比于 Spring AOP 功能更加强大，但是 Spring AOP 相对来说更简单，</p>
+<p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择 AspectJ ，它比Spring AOP 快很多。</p>
+</li>
+<li><p><strong>策略模式</strong></p>
+<p>定义一系列的算法，把每一个算法封装起来，并且使它们可以相互替换。这个模式中使得各个算法可以独立于使用它的客户而变化。<br>策略模式的构成：<br>1.抽象策略角色：策略类，通常由一个接口或者抽象类实现。<br>2.具体策略角色：包装了相关的算法和行为，实现策略接口或继承抽象类。<br>3.环境角色：context，运行时持有一个策略类的引用，最终给客户端调用。</p>
+<p>策略模式让算法独立于使用它的客户而独立变化。策略模式重点是封装不同的算法和行为，不同的场景下可以相互替换。策略模式是开闭原则的体现，开闭原则讲的是一个软件实体应该对拓展开放对修改关闭。因为策略模式在加入新的策略时，不会影响其他类的修改，增加了拓展性，也就是对拓展是开放的；对于调用场景来说，只依赖于抽象，而不依赖于具体实现，所以对修改是关闭的。<br>策略模式的优点和缺点<br>优点：<br>（1）调用策略中的方法在context中，没有和各个策略的实现耦合在一起，各个实现策略的不同子类可以去拓展、修改和切换。<br>（2）避免写很多if else代码，提高了可观性。同时可以结合抽象类（策略类）去使用，Java支持很好。<br>缺点：<br>（1）客户端调用时必须知道所有的策略类，并且感知到要调用哪一种策略实现。<br>（2）一旦抽象，必然会对一些特殊场景难以处理。并且这里去加入了很多的策略实现类，也有Context类的加入，增加了开销。</p>
+</li>
+<li><p><strong>模板模式</strong></p>
+<p>在模板模式（Template Pattern）中，一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。这种类型的设计模式属于行为型模式。 </p>
+</li>
+<li><p><strong>观察者模式</strong></p>
+<p>观察者模式是一种对象行为型模式。它表示的是一种对象与对象之间具有依赖关系，当一个对象发生改变的时候，这个对象所依赖的对象也会做出反应。</p>
+</li>
+<li><p><strong>适配器模式</strong></p>
+<p>适配器模式(Adapter Pattern) 将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Spring 框架中用到了哪些设计模式？</p>
+<ul>
+<li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</li>
+<li><strong>代理设计模式</strong> : Spring AOP 功能的实现。</li>
+<li><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</li>
+<li><strong>模板方法模式</strong> : Spring 中 <code>jdbcTemplate</code>、<code>hibernateTemplate</code> 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式。</li>
+<li><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</li>
+<li><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</li>
+<li><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><a href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？" class="headerlink" title="Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"></a>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</h3><ol>
 <li><p>JAVA反射机制是在运行状态中，<strong>对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性</strong>；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法。</p>
 </li>
 <li><p><strong>优点</strong>：</p>
@@ -291,9 +342,6 @@
 <p>采用静态的话，需要把整个程序重新编译一次才可以实现功能 的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时才动态的创建和编译，就可以实现该功能。</p>
 <p><strong>缺点</strong>：</p>
 <p>对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于只直接执行相同的操作。</p>
-</li>
-<li><a id="more"></a>
-
 </li>
 </ol>
 <hr>
@@ -321,37 +369,6 @@
 </ol>
 <hr>
 <h3 id="假如我们需要存500个数需要多大的HashMap？"><a href="#假如我们需要存500个数需要多大的HashMap？" class="headerlink" title="假如我们需要存500个数需要多大的HashMap？"></a>假如我们需要存500个数需要多大的HashMap？</h3><hr>
-<h3 id="HashMap的负载因子"><a href="#HashMap的负载因子" class="headerlink" title="HashMap的负载因子"></a>HashMap的负载因子</h3><p>负载因子表示一个散列表的空间的使用程度，有这样一个公式：initailCapacity*loadFactor=HashMap的容量。</p>
-<p>所以负载因子越大则散列表的装填程度越高，也就是能容纳更多的元素，元素多了，链表大了，所以此时索引效率就会降低。</p>
-<p>反之，负载因子越小则链表中的数据量就越稀疏，此时会对空间造成烂费，但是此时索引效率高。</p>
-<p>HashMap的loadFactor为0.75，默认initailCapacity为16， hreshold：扩容的临界值，=容量<em>填充因子：16</em> 0.75 =&gt; 12 </p>
-<hr>
-<h3 id="Linux文件的权限，如何设置可读可写权限"><a href="#Linux文件的权限，如何设置可读可写权限" class="headerlink" title="Linux文件的权限，如何设置可读可写权限"></a>Linux文件的权限，如何设置可读可写权限</h3><p>chmod(change mode)功能：变更文件或目录的权限</p>
-<p>chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ]</p>
-<p>-R 递归处理：将指定目录下的所有文件及子目录一并处理</p>
-<ul>
-<li><p>权限范围：</p>
-<p>u:User</p>
-<p>g:Group</p>
-<p>o:Other</p>
-<p>a:All</p>
-</li>
-<li><p>符号：</p>
-<p>+添加权限</p>
-<p>-取消权限</p>
-</li>
-<li><p>权限代号：</p>
-<p>r:读写 4</p>
-<p>w:写入 2</p>
-<p>x:执行或切换 1</p>
-<p>-：不具有任何权限 0</p>
-</li>
-</ul>
-<hr>
-<h3 id="UUID是什么，如何生成的，-如何保证一致性"><a href="#UUID是什么，如何生成的，-如何保证一致性" class="headerlink" title="UUID是什么，如何生成的， 如何保证一致性"></a>UUID是什么，如何生成的， 如何保证一致性</h3><p><strong>UUID</strong> 是指Universally Unique Identifier，翻译为中文是<strong>通用唯一识别码</strong>，UUID 的目的是让分布式系统中的所有元素都能有唯一的识别信息。如此一来，每个人都可以创建不与其它人冲突的 UUID，就不需考虑数据库创建时的名称重复问题。</p>
-<p>UUID 是由一组32位数的16进制数字所构成，是故 UUID 理论上的总数为1632=2128，约等于3.4 x 10123。</p>
-<p>也就是说若每纳秒产生1百万个 UUID，要花100亿年才会将所有 UUID 用完。</p>
-<hr>
 <h3 id="自定义注解-应用场景"><a href="#自定义注解-应用场景" class="headerlink" title="自定义注解 应用场景"></a>自定义注解 应用场景</h3><p><strong>自定义注解：</strong></p>
 <ul>
 <li><p>① 注解声明为：@interface</p>
@@ -383,349 +400,10 @@
 <h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>所谓多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程时并不确定，而是在程序运行期间才确定，即一个引用变量到底会指向哪个类的实例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运行期间才能决定。</p>
 <p>在 Java 中有两种形式可以实现多态：继承（多个子类对同一方法的重写）和接口（实现接口并覆盖接口中同一方法）。</p>
 <hr>
-<h3 id="项目遇到的问题"><a href="#项目遇到的问题" class="headerlink" title="项目遇到的问题"></a>项目遇到的问题</h3><p>String[] s = new String[]{“aa”,”bb”,”cc”};</p>
-<p>List<String> sList = Arrays.asList(s);</p>
-<p>System.out.println(sList);</p>
-<p>sList.add(“ddd”);</p>
-<p>Arrays.asList()返回一个List，通过阅读源码才发现，返回的List不是Collection中的那个List</p>
-<p>ArrayList提供了一个将List转为数组的方法：toArray</p>
-<hr>
-<p>数据库事务 四大特性</p>
-<p>左连接查询 右连接查询</p>
-<p>三次握手 四次握手</p>
-<p>三次握手什么协议  TCP UDP区别</p>
-<p>Linux远程拷贝有几种方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># scp php-7.2.4.tar.gz root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;   &#x2F;&#x2F;这里是从当前主机拷贝到IP位142的局域网主机目录&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># scp root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;redis.tar.gz &#x2F;usr&#x2F;local&#x2F;src&#x2F;  &#x2F;&#x2F;这里是从目标主机142拷贝文件到本机&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
-
-<p>部署到云服务器的命令</p>
-<p>Java面向对象如何理解 封装继承多态</p>
-<p>中间件</p>
-<p>spring MVC组件</p>
-<p>flow函数</p>
-<p>时间转字符串 </p>
-<hr>
-<h3 id="数组与链表的区别？"><a href="#数组与链表的区别？" class="headerlink" title="数组与链表的区别？"></a>数组与链表的区别？</h3><p>链表：上一个元素的引用指向下一个元素的存储结构。</p>
-<p>区别：<strong>链表</strong>是链式存储结构，数组是顺序存储结构；链表通过指针来连接元素和元素，数组则是把所有的元素按次序依次存储；链表的插入和删除元素相对数组较为简单，不需要移动元素，且较为实现长度扩充，但是寻找某个元素较为困难。<strong>数组</strong>寻找某个元素较为简单，但是插入与删除较为复杂 由于最大长度需要再编程一开始时指定，故当达到最大长度时，扩充长度不如链表方便。</p>
-<p>相同：两种结构均可实现数据的顺序存储，构造出来的模型呈线性结构。</p>
-<hr>
-<h3 id="线程的状态有哪些？阻塞和等待状态区别？"><a href="#线程的状态有哪些？阻塞和等待状态区别？" class="headerlink" title="线程的状态有哪些？阻塞和等待状态区别？"></a>线程的状态有哪些？阻塞和等待状态区别？</h3><ol>
-<li><p><strong>新建(NEW)</strong>：新创建了一个线程对象。</p>
-</li>
-<li><p><strong>可运行(RUNNABLE)</strong>：线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。 </p>
-</li>
-<li><p><strong>运行(RUNNING)</strong>：可运行状态(runnable)的线程获得了cpu 时间片（timeslice）,执行程序代码。</p>
-</li>
-<li><p><strong>阻塞(BLOCKED)</strong>：阻塞状态是指线程因为某种原因放弃了cpu 使用权，也即让出了cpu timeslice，暂时停止运行。直到线程进入可运行(runnable)状态，才有机会再次获得cpu timeslice 转到运行(running)状态。阻塞的情况分三种： </p>
-<ul>
-<li>等待阻塞：运行(running)的线程执行o.wait()方法，JVM会把该线程放入等待队列(waitting queue)中。</li>
-<li>同步阻塞：运行(running)的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池(lock pool)中。</li>
-<li>其他阻塞：运行(running)的线程执行Thread.sleep(long ms)或t.join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入可运行(runnable)状态。</li>
-</ul>
-</li>
-<li><p><strong>等待(WAITING)</strong>：一个线程进入了锁，但是需要等待其他线程执行某些操作。时间不确定，当wait，join，park方法调用时，进入waiting状态。前提是这个线程已经拥有锁了。 </p>
-</li>
-<li><p><strong>死亡(DEAD)</strong>：线程run()、main() 方法执行结束，或者因异常退出了run()方法，则该线程结束生命周期。死亡的线程不可再次复生。</p>
-</li>
-</ol>
-<hr>
-<h3 id="什么情况会形成死锁？-Java怎么避免死锁？"><a href="#什么情况会形成死锁？-Java怎么避免死锁？" class="headerlink" title="什么情况会形成死锁？ Java怎么避免死锁？"></a>什么情况会形成死锁？ Java怎么避免死锁？</h3><ol>
-<li><p>多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放。由于线程被无限期地阻塞，因此程序不可能正常终止。 比如线程 A 持有资源 2，线程 B 持有资源 1，他们同时都想申请对方的资源，所以这两个线程就会互相等待而进入死锁状态。 </p>
-<p>产生<strong>死锁</strong>必须具备的四个条件：</p>
-<ul>
-<li>互斥条件：该资源任意一个时刻只能由一个线程占用</li>
-<li>请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放</li>
-<li>不剥夺条件：线程已经获得的资源再未使用完之前不能被其他线程强行剥夺，只能自己使用完毕后才释放资源</li>
-<li>循环等待条件：若干进程之间形成一种头尾相接的循环等待资源关系</li>
-</ul>
-</li>
-<li><p>避免死锁：</p>
-<p><strong>破坏互斥条件</strong></p>
-<p>这个条件我们没有办法破坏，因为我们用锁本来就是想让他们互斥的（临界资源需要互斥访问）。</p>
-<p><strong>破坏请求与保持条件</strong></p>
-<p>一次性申请所有的资源。</p>
-<p><strong>破坏不剥夺条件</strong></p>
-<p>占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源。</p>
-<p><strong>破坏循环等待条件</strong></p>
-<p>靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件。</p>
-<hr>
-<h3 id="线程怎么安全退出？"><a href="#线程怎么安全退出？" class="headerlink" title="线程怎么安全退出？"></a>线程怎么安全退出？</h3><p>Thread提供了一个stop()方法，但是stop()方法是一个被废弃的方法。为什么stop()方法被废弃而不被使用呢？原因是stop()方法太过于暴力，会强行把执行一半的线程终止。  这样会就不会保证线程的资源正确释放，通常是没有给与线程完成资源释放工作的机会，因此会导致程序工作在不确定的状态下 。</p>
-<p>Thread.interrupt(),我们可以用他来停止线程，他是安全的，可是使用他的时候并不会真的停止了线程，只是会给线程打上了一个记号，至于这个记号有什么用呢我们可以这样来用。 </p>
-<h4 id="用什么方法去看什么状态呢"><a href="#用什么方法去看什么状态呢" class="headerlink" title="用什么方法去看什么状态呢"></a>用什么方法去看什么状态呢</h4><ol>
-<li>this.interrupted():看看当前线程是否是中断状态，执行后将状态表示改为false； interrupted()是静态方法：内部实现是调用的当前线程的isInterrupted()，并且会重置当前线程的中断状态 </li>
-<li>this.isInterrupeted():看看线程对象是否已经是中断状态，但是不清除中断状态标记。 isInterrupted()是实例方法，是调用该方法的对象所表示的那个线程的isInterrupted()，不会重置当前线程的中断状态 </li>
-</ol>
-<hr>
-<h3 id="什么是线程池，线程池的好处？"><a href="#什么是线程池，线程池的好处？" class="headerlink" title="什么是线程池，线程池的好处？"></a>什么是线程池，线程池的好处？</h3><p><strong>线程池是一种多线程处理形式，处理过程中将任务添加队列，然后在创建线程后自动启动这些任务</strong>，每个线程都使用默认的堆栈大小，以默认的优先级运行，并处在多线程单元中，如果某个线程在托管代码中空闲，则线程池将插入另一个辅助线程来使所有处理器保持繁忙。如果所有线程池都始终保持繁忙，但队列中包含挂起的工作，则线程池将在一段时间后辅助线程的数目永远不会超过最大值。超过最大值的线程可以排队，但他们要等到其他线程完成后才能启动。</p>
-<p>java里面的线程池的顶级接口是Executor，Executor并不是一个线程池，而只是一个执行线程的工具，而真正的线程池是ExecutorService。</p>
-<p>java中的有哪些线程池？</p>
-<ol>
-<li><p>newCachedThreadPool创建一个可缓存线程池程</p>
-<p>是一种线程数量不定的线程池，并且其最大线程数Integer.MAX_VALUE，这个数是很大的，一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。但是线程池中的空闲线程都有超时限制，这个超时时长是60秒，超过60秒闲置线程就会被回收。调用execute将重用以前构造的线程(如果线程可用)。这类线程池比较适合执行大量的耗时较少的任务，当整个线程池都处于闲置状态时，线程池中的线程都会超时被停止。</p>
-</li>
-<li><p>newFixedThreadPool 创建一个定长线程池</p>
-<p>创建一个指定工作线程数量的线程池，每当提交一个任务就创建一个工作线程，当线程 处于空闲状态时，它们并不会被回收，除非线程池被关闭了，如果工作线程数量达到线程池初始的最大数，则将提交的任务存入到池队列（没有大小限制）中。由于newFixedThreadPool只有核心线程并且这些核心线程不会被回收，这样它更加快速底相应外界的请求。</p>
-</li>
-<li><p>newScheduledThreadPool 创建一个定长线程池</p>
-<p> 创建一个线程池，它的核心线程数量是固定的，而非核心线程数是没有限制的，并且当非核心线程闲置时会被立即回收，它可安排给定延迟后运行命令或者定期地执行。这类线程池主要用于执行定时任务和具有固定周期的重复任务。 </p>
-</li>
-<li><p>newSingleThreadExecutor 创建一个单线程化的线程池</p>
-<p> 这类线程池内部只有一个核心线程，以无界队列方式来执行该线程，这使得这些任务之间不需要处理线程同步的问题，它确保所有的任务都在同一个线程中按顺序中执行，并且可以在任意给定的时间不会有多个线程是活动的。 </p>
-</li>
-</ol>
-<p><strong>使用线程池的好处</strong>：</p>
-<ul>
-<li><strong>降低资源消耗</strong>。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。</li>
-<li><strong>提高响应速度</strong>。当任务到达时，任务可以不需要的等到线程创建就能立即执行。</li>
-<li><strong>提高线程的可管理性</strong>。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h3 id="Java线程消费者与生产者中的相关问题，怎么实现？"><a href="#Java线程消费者与生产者中的相关问题，怎么实现？" class="headerlink" title="Java线程消费者与生产者中的相关问题，怎么实现？"></a>Java线程消费者与生产者中的相关问题，怎么实现？</h3><h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>生产者消费者问题（Producer-consumer problem），也称有限缓冲问题（Bounded-buffer problem），是一个多线程同步问题的经典案例。生产者生成一定量的数据放到缓冲区中，然后重复此过程；与此同时，消费者也在缓冲区消耗这些数据。生产者和消费者之间必须保持同步，要保证生产者不会在缓冲区满时放入数据，消费者也不会在缓冲区空时消耗数据。不够完善的解决方法容易出现死锁的情况，此时进程都在等待唤醒。</p>
-<h4 id="解决问题的核心"><a href="#解决问题的核心" class="headerlink" title="解决问题的核心"></a>解决问题的核心</h4><p>保证同一资源被多个线程并发访问时的完整性。常用的同步方法是采用信号或加锁机制，保证资源在任意时刻至多被一个线程访问。 </p>
-<h4 id="Java能实现的几种方法"><a href="#Java能实现的几种方法" class="headerlink" title="Java能实现的几种方法"></a>Java能实现的几种方法</h4><ol>
-<li><p><strong>wait() / notify()方法</strong></p>
-<p><strong>wait()用在以下场合:</strong><br>（1）当缓冲区满时，缓冲区调用wait()方法，使得生产者释放锁，当前线程阻塞，其他线程可以获得锁。</p>
-<p>（2）当缓冲区空时，缓冲区调用wait()方法，使得消费者释放锁，当前线程阻塞，其他线程可以获得锁。</p>
-<p><strong>notify()用在以下场合：</strong><br>（1）当缓冲区未满时，生产者生产商品放入缓冲区，然后缓冲区调用notify()方法，通知上一个因wait()方法释放锁的线程现在可以去获得锁了，同步块代码执行完成后，释放对象锁，此处的对象锁，锁住的是缓冲区。</p>
-<p>（2）当缓冲区不为空时，消费者从缓冲区中取出商品，然后缓冲区调用notify()方法，通知上一个因wait()方法释放锁的线程现在可以去获得锁了，同步块代码执行完成后，释放对象锁。</p>
-</li>
-<li><p><strong>await() / signal()方法</strong></p>
-<p> 在JDK5.0之后，Java提供了Lock与Condition机制。Condition接口的await()和signal()是用来做同步的两种方法 </p>
-</li>
-<li><p><strong>BlockingQueue阻塞队列方法</strong></p>
-<p><strong>什么是阻塞队列：</strong></p>
-<p>如果向一个已经满了的队列中添加元素或者从空队列中移除元素，都将会导致线程阻塞，线程一直等待到有旧元素被移除或新元素被添加的时候，才能继续执行。符合这种情况的队列，称为阻塞队列。</p>
-<p>JDK 1.5 以后新增BlockingQueue接口，我们采用它实现类的其中两个类，ArrayBlockingQueue或者是LinkedBlockingQueue。</p>
-<p><strong>怎么使用LinkedBlockingQueue？</strong><br>这里我们用LinkedBlockingQueue来解决生产者与消费者问题，主要用到它的两个方法，即put()与take()</p>
-<p>put():向阻塞队列中添加一个元素，队列满时，自动阻塞。</p>
-<p>take():从阻塞队列中取出一个元素，队列空时，自动阻塞。</p>
-<p>其实LinkedBlockingQueue底层使用的仍然是Lock与Condition机制，我们从源码就可以看出来</p>
-</li>
-<li><p><strong>信号量</strong></p>
-<p>Semaphore是一种基于计数的信号量。它可以设定一个阈值，基于此，多个线程竞争获取许可信号，做完自己的申请后归还，超过阈值后，线程申请许可信号将会被阻塞。Semaphore可以用来构建一些对象池，资源池之类的，比如数据库连接池，我们也可以创建计数为1的Semaphore，将其作为一种类似互斥锁的机制，这也叫二元信号量，表示两种互斥状态。计数为0的Semaphore是可以release的，然后就可以acquire（即一开始使线程阻塞从而完成其他执行。）。</p>
-</li>
-<li><p><strong>管道</strong></p>
-<p>一种特殊的流，用于不同线程间直接传送数据，一个线程发送数据到输出管道，另一个线程从输入管道中读数据。</p>
-<p>inputStream.connect(outputStream)或outputStream.connect(inputStream)作用是使两个Stream之间产生通信链接，这样才可以将数据进行输出与输入。</p>
-<p>这种方式只适用于两个线程之间通信，不适合多个线程之间通信。</p>
-</li>
-</ol>
-<hr>
-<h3 id="synchronized方法和synchronized同步块的区别？"><a href="#synchronized方法和synchronized同步块的区别？" class="headerlink" title="synchronized方法和synchronized同步块的区别？"></a>synchronized方法和synchronized同步块的区别？</h3><p><strong>同步方法默认用this或者当前类class对象作为锁；</strong><br><strong>同步代码块可以选择以什么来加锁，比同步方法要更细颗粒度，</strong>我们可以选择只同步会发生同步问题的部分代码而不是整个方法；<br>同步方法使用关键字 synchronized修饰方法，而同步代码块主要是修饰需要进行同步的代码，用 synchronized（object）{代码内容}进行修饰；</p>
-<p>对象锁: synchronized(object) 锁住的是对象,每个对象自己拥有一个锁<br>类锁: synchronized(Class) 锁住的是类，也就是同一个类的实例，任意时刻只会有一个线程能获得资源</p>
-<hr>
-<h3 id="wait-和-sleep-的区别？"><a href="#wait-和-sleep-的区别？" class="headerlink" title="wait() 和 sleep() 的区别？"></a>wait() 和 sleep() 的区别？</h3><p><strong>sleep()方法和wait()方法的区别?</strong></p>
-<ol>
-<li>sleep方法是Thread的静态方法，wait方法是Object类的普通方法</li>
-<li>sleep方法不释放同步锁，wait方法释放同步锁，(执行notify方法唤醒wait的线程时是不释放同步锁的)</li>
-<li>wait方法用于线程间通信，而sleep方法用于短暂的暂停线程</li>
-<li>sleep针对当前线程，而wait针对被同步代码块加锁的对象</li>
-<li>sleep方法是当前线程暂停指定时间，将执行机会让给其它线程，时间结束后进入就绪状态等待</li>
-<li>调用wait方法会暂停线程，当前线程释放对象的同步锁，进入等待池(wait pool)，只有调用对象的notify或者notifyAll方法唤醒时，线程进入等锁池(lock pool)，直到线程再次获得对象的锁才会进入就绪状态</li>
-<li>wait方法(notify，notifyAll)只能在同步方法或者同步块中使用(如果在non-synchronized函数或non-synchronizedblock中进行调用，虽然能编译通过，但在运行时会发生illegalMonitorStateException的异常)；sleep方法可以在任意位置使用</li>
-</ol>
-<p>注：如果线程A希望立即结束线程B，则可以对线程B对应的Thread实例调用interrupt方法。如果此刻线程B正在wait/sleep/join，则线程B会立刻抛出InterruptedException，在catch() {} 中直接return即可安全地结束线程</p>
-<p><strong>sleep()方法和yield()方法的区别?</strong></p>
-<ol>
-<li>sleep方法给其他线程机会时不考虑线程优先级(优先级低的也有可能)；而yield方法只会给相同优先级或者更高优先级线程机会(如果没有相同或者更高优先级的线程，该线程会继续运行)</li>
-<li>线程执行sleep方法进入阻塞状态，执行yield方法进入就绪状态</li>
-</ol>
-<hr>
-<h3 id="讲一讲HashMap"><a href="#讲一讲HashMap" class="headerlink" title="讲一讲HashMap?"></a>讲一讲HashMap?</h3><h5 id="1-常用实现类结构"><a href="#1-常用实现类结构" class="headerlink" title="1.常用实现类结构"></a>1.常用实现类结构</h5><p><strong>Map:</strong>双列数据，存储key-value对的数据   —类似于高中的函数：y = f(x)    </p>
-<p>​    <strong>HashMap:</strong>作为Map的主要实现类；线程不安全的，效率高；存储null的key和value        </p>
-<p>​         <strong>LinkedHashMap:</strong>保证在遍历map元素时，可以照添加的顺序实现遍历。原因：在原的HashMap底层结构基础上，添加了一对指针，指向前一个和后一个元素。对于频繁的遍历操作，此类执行效率高于HashMap。   </p>
-<p>​    <strong>TreeMap:</strong>保证照添加的key-value对进行排序，实现排序遍历。此时考虑key的自然排序或定制排序。底层使用红黑树    </p>
-<p>​    <strong>Hashtable:</strong>作为古老的实现类；线程安全的，效率低；不能存储null的key和value        </p>
-<p>​        <strong>Properties:</strong>常用来处理配置文件。key和value都是String类型 HashMap的底层：数组+链表  （jdk7及之前)   数组+链表+红黑树 （jdk 8)</p>
-<hr>
-<h5 id="2-存储结构的理解："><a href="#2-存储结构的理解：" class="headerlink" title="2.存储结构的理解："></a>2.存储结构的理解：</h5><blockquote>
-<p><strong>Map中的key:</strong>无序的、不可重复的，使用Set存储所的key —-&gt; key所在的类要重写equals()和hashCode() （以HashMap为例)</p>
-<p><strong>Map中的value:</strong>无序的、可重复的，使用Collection存储的value —-&gt;value所在的类要重写equals()</p>
-<p>一个键值对：key-value构成了一个Entry对象。</p>
-<p>Map中的entry:无序的、不可重复的，使用Set存储所的entry</p>
-</blockquote>
-<hr>
-<h5 id="3-常用方法"><a href="#3-常用方法" class="headerlink" title="3.常用方法"></a>3.常用方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">添加：put(Object key,Object value) </span><br><span class="line">删除：remove(Object key) </span><br><span class="line">修改：put(Object key,Object value) </span><br><span class="line">查询：get(Object key) </span><br><span class="line">长度：size() </span><br><span class="line">遍历：keySet() / values() / entrySet()</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h5 id="4-内存结构说明：（难点）"><a href="#4-内存结构说明：（难点）" class="headerlink" title="4. 内存结构说明：（难点）"></a>4. 内存结构说明：（难点）</h5><h6 id="4-1-HashMap在jdk7中实现原理："><a href="#4-1-HashMap在jdk7中实现原理：" class="headerlink" title="4.1 HashMap在jdk7中实现原理："></a>4.1 HashMap在jdk7中实现原理：</h6><p>HashMap map = new HashMap(): </p>
-<p>​    在实例化以后，底层创建了长度是16的一维数组Entry[] table。      </p>
-<p>​    ..可能已经执行过多次put…      </p>
-<p>​    map.put(key1,value1):首先，调用key1所在类的hashCode()计算key1哈希值，此哈希值经过某种算法计算以            后，得到在Entry数组中的存放位置。      </p>
-<p>​    如果此位置上的数据为空，此时的key1-value1添加成功。 —-情况1      </p>
-<p>​    如果此位置上的数据不为空，(意味着此位置上存在一个或多个数据(以链表形式存在)),比较key1和已经存在的         一个或多个数据的哈希值：      </p>
-<p>​         如果key1的哈希值与已经存在的数据的哈希值都不相同，此时key1-value1添加成功。—-情况2              </p>
-<p>​        如果key1的哈希值和已经存在的某一个数据(key2-value2)的哈希值相同，继续比较：调用key1所在类的                 equals(key2)方法，比较：                      </p>
-<p>​                如果equals()返回false:此时key1-value1添加成功。—-情况3                      </p>
-<p>​                如果equals()返回true:使用value1替换value2。     </p>
-<p>​        补充：关于情况2和情况3：此时key1-value1和原来的数据以链表的方式存储。     </p>
-<p>​        在不断的添加过程中，会涉及到扩容问题，当超出临界值(且要存放的位置非空)时，扩容。默认的扩容方式：        扩容为原来容量的2倍，并将原的数据复制过来。</p>
-<h6 id="4-2-HashMap在jdk8中相较于jdk7在底层实现方面的不同："><a href="#4-2-HashMap在jdk8中相较于jdk7在底层实现方面的不同：" class="headerlink" title="4.2 HashMap在jdk8中相较于jdk7在底层实现方面的不同："></a>4.2 HashMap在jdk8中相较于jdk7在底层实现方面的不同：</h6><ol>
-<li>new HashMap():底层没创建一个长度为16的数组</li>
-<li>jdk 8底层的数组是：Node[],而非Entry[]</li>
-<li>首次调用put()方法时，底层创建长度为16的数组</li>
-<li>jdk7底层结构只：数组+链表。jdk8中底层结构：数组+链表+红黑树。<br>4.1 形成链表时，七上八下（jdk7:新的元素指向旧的元素。jdk8：旧的元素指向新的元素）<br>4.2 当数组的某一个索引位置上的元素以链表形式存在的数据个数 &gt; 8 且当前数组的长度 &gt; 64时，此时此索引位置上的所数据改为使用红黑树存储。</li>
-</ol>
-<h6 id="4-3-HashMap底层典型属性的属性的说明："><a href="#4-3-HashMap底层典型属性的属性的说明：" class="headerlink" title="4.3 HashMap底层典型属性的属性的说明："></a>4.3 HashMap底层典型属性的属性的说明：</h6><p>DEFAULT_INITIAL_CAPACITY : HashMap的默认容量，16<br>DEFAULT_LOAD_FACTOR：HashMap的默认加载因子：0.75<br>threshold：扩容的临界值，=容量<em>填充因子：16</em> 0.75 =&gt; 12<br>TREEIFY_THRESHOLD：Bucket中链表长度大于该默认值，转化为红黑树:8<br>MIN_TREEIFY_CAPACITY：桶中的Node被树化时最小的hash表容量:64</p>
-<h6 id="4-4-LinkedHashMap的底层实现原理-了解"><a href="#4-4-LinkedHashMap的底层实现原理-了解" class="headerlink" title="4.4 LinkedHashMap的底层实现原理(了解)"></a>4.4 LinkedHashMap的底层实现原理(了解)</h6><p>LinkedHashMap底层使用的结构与HashMap相同，因为LinkedHashMap继承于HashMap.<br>区别就在于：LinkedHashMap内部提供了Entry，替换HashMap中的Node.</p>
-<hr>
-<h5 id="5-TreeMap的使用"><a href="#5-TreeMap的使用" class="headerlink" title="5. TreeMap的使用"></a>5. TreeMap的使用</h5><p>//向TreeMap中添加key-value，要求key必须是由同一个类创建的对象<br>//因为要照key进行排序：自然排序 、定制排序</p>
-<hr>
-<h3 id="介绍一下GC，什么是GC？"><a href="#介绍一下GC，什么是GC？" class="headerlink" title="介绍一下GC，什么是GC？"></a>介绍一下GC，什么是GC？</h3><h3 id="1-JVM-内存分配与回收"><a href="#1-JVM-内存分配与回收" class="headerlink" title="1 JVM 内存分配与回收"></a>1 JVM 内存分配与回收</h3><p> Java 堆是垃圾收集器管理的主要区域，因此也被称作<strong>GC 堆（Garbage Collected Heap）</strong>.从垃圾回收的角度，由于现在收集器基本都采用分代垃圾收集算法，所以 Java 堆还可以细分为：新生代和老年代：再细致一点有：Eden 空间、From Survivor、To Survivor 空间等。<strong>进一步划分的目的是更好地回收内存，或者更快地分配内存。</strong> </p>
-<p><strong>堆空间的基本结构：</strong></p>
-<p><a href="https://camo.githubusercontent.com/4012482f49926b35d8557b63952ee605fd259f62/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d33e5a086e7bb93e69e842e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/4012482f49926b35d8557b63952ee605fd259f62/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d33e5a086e7bb93e69e842e706e67" alt="img"></a></p>
-<p> 上图所示的 eden 区、s0(“From”) 区、s1(“To”) 区都属于新生代，tentired 区属于老年代。大部分情况，对象都会首先在 Eden 区域分配，在一次新生代垃圾回收后，如果对象还存活，则会进入 s1(“To”)，并且对象的年龄还会加 1(Eden 区-&gt;Survivor 区后对象的初始年龄变为 1)，当它的年龄增加到一定程度（默认为 15 岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数 <code>-XX:MaxTenuringThreshold</code> 来设置。经过这次GC后，Eden区和”From”区已经被清空。这个时候，”From”和”To”会交换他们的角色，也就是新的”To”就是上次GC前的“From”，新的”From”就是上次GC前的”To”。不管怎样，都会保证名为To的Survivor区域是空的。Minor GC会一直重复这样的过程，直到“To”区被填满，”To”区被填满之后，会将所有对象移动到老年代中。 </p>
-<p> <img src="https://camo.githubusercontent.com/6b0bb14d82c24d5d4b0302c69a11589b3d887adc/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545352541302538362545352538362538352545352541442539382e6a7067" alt="堆内存常见分配策略 "> </p>
-<h4 id="1-1-对象优先在-eden-区分配"><a href="#1-1-对象优先在-eden-区分配" class="headerlink" title="1.1 对象优先在 eden 区分配"></a>1.1 对象优先在 eden 区分配</h4><p>目前主流的垃圾收集器都会采用分代回收算法，因此需要将堆内存分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
-<p>大多数情况下，对象在新生代中 eden 区分配。当 eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC.下面我们来进行实际测试以下。</p>
-<p>在测试之前我们先来看看 <strong>Minor GC 和 Full GC 有什么不同呢？</strong></p>
-<ul>
-<li><strong>新生代 GC（Minor GC）</strong>:指发生新生代的的垃圾收集动作，Minor GC 非常频繁，回收速度一般也比较快。</li>
-<li><strong>老年代 GC（Major GC/Full GC）</strong>:指发生在老年代的 GC，出现了 Major GC 经常会伴随至少一次的 Minor GC（并非绝对），Major GC 的速度一般会比 Minor GC 的慢 10 倍以上。</li>
-</ul>
-<blockquote>
-<p><a href="https://github.com/Snailclimb/JavaGuide/issues/664" target="_blank" rel="noopener">issue#664 </a>:<strong><a href="https://github.com/guang19" target="_blank" rel="noopener">guang19</a></strong> 补充：个人在网上查阅相关资料的时候发现如题所说的观点。有的文章说 Full GC与Major GC一样是属于对老年代的GC，也有的文章说 Full GC 是对整个堆区的GC，所以这点需要各位同学自行分辨Full GC语义。见: <a href="https://www.zhihu.com/question/41922036" target="_blank" rel="noopener">知乎讨论</a></p>
-</blockquote>
-<p><strong>测试：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class GCTest &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		byte[] allocation1, allocation2;</span><br><span class="line">		allocation1 &#x3D; new byte[30900*1024];</span><br><span class="line">		&#x2F;&#x2F;allocation2 &#x3D; new byte[900*1024];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过以下方式运行： <a href="https://camo.githubusercontent.com/2713b77464413e9aeb63cdd9d8cd198cb3fea34a/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32353137383335302e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/2713b77464413e9aeb63cdd9d8cd198cb3fea34a/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32353137383335302e6a7067" alt="img"></a></p>
-<p>添加的参数：<code>-XX:+PrintGCDetails</code> <a href="https://camo.githubusercontent.com/9c349ba9ea4778b4c5f7cd0fb7e7efd812902330/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f31303331373134362e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/9c349ba9ea4778b4c5f7cd0fb7e7efd812902330/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f31303331373134362e6a7067" alt="img"></a></p>
-<p>运行结果 (红色字体描述有误，应该是对应于 JDK1.7 的永久代)：</p>
-<p><a href="https://camo.githubusercontent.com/42464b598a233d4319009cc06e3d199b6331c314/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32383935343238362e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/42464b598a233d4319009cc06e3d199b6331c314/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32383935343238362e6a7067" alt="img"></a></p>
-<p>从上图我们可以看出 eden 区内存几乎已经被分配完全（即使程序什么也不做，新生代也会使用 2000 多 k 内存）。假如我们再为 allocation2 分配内存会出现什么情况呢？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">allocation2 &#x3D; new byte[900*1024];</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://camo.githubusercontent.com/215514817e1b01cd89ba942c382d2f64cb6c9e3d/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32383132383738352e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/215514817e1b01cd89ba942c382d2f64cb6c9e3d/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32362f32383132383738352e6a7067" alt="img"></a></p>
-<p><strong>简单解释一下为什么会出现这种情况：</strong> 因为给 allocation2 分配内存的时候 eden 区内存几乎已经被分配完了，我们刚刚讲了当 Eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC.GC 期间虚拟机又发现 allocation1 无法存入 Survivor 空间，所以只好通过 <strong>分配担保机制</strong> 把新生代的对象提前转移到老年代中去，老年代上的空间足够存放 allocation1，所以不会出现 Full GC。执行 Minor GC 后，后面分配的对象如果能够存在 eden 区的话，还是会在 eden 区分配内存。可以执行如下代码验证：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class GCTest &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		byte[] allocation1, allocation2,allocation3,allocation4,allocation5;</span><br><span class="line">		allocation1 &#x3D; new byte[32000*1024];</span><br><span class="line">		allocation2 &#x3D; new byte[1000*1024];</span><br><span class="line">		allocation3 &#x3D; new byte[1000*1024];</span><br><span class="line">		allocation4 &#x3D; new byte[1000*1024];</span><br><span class="line">		allocation5 &#x3D; new byte[1000*1024];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-2-大对象直接进入老年代"><a href="#1-2-大对象直接进入老年代" class="headerlink" title="1.2 大对象直接进入老年代"></a>1.2 大对象直接进入老年代</h4><p>大对象就是需要大量连续内存空间的对象（比如：字符串、数组）。</p>
-<p><strong>为什么要这样呢？</strong></p>
-<p>为了避免为大对象分配内存时由于分配担保机制带来的复制而降低效率。</p>
-<h4 id="1-3-长期存活的对象将进入老年代"><a href="#1-3-长期存活的对象将进入老年代" class="headerlink" title="1.3 长期存活的对象将进入老年代"></a>1.3 长期存活的对象将进入老年代</h4><p>既然虚拟机采用了分代收集的思想来管理内存，那么内存回收时就必须能识别哪些对象应放在新生代，哪些对象应放在老年代中。为了做到这一点，虚拟机给每个对象一个对象年龄（Age）计数器。</p>
-<p>如果对象在 Eden 出生并经过第一次 Minor GC 后仍然能够存活，并且能被 Survivor 容纳的话，将被移动到 Survivor 空间中，并将对象年龄设为 1.对象在 Survivor 中每熬过一次 MinorGC,年龄就增加 1 岁，当它的年龄增加到一定程度（默认为 15 岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数 <code>-XX:MaxTenuringThreshold</code> 来设置。</p>
-<h4 id="1-4-动态对象年龄判定"><a href="#1-4-动态对象年龄判定" class="headerlink" title="1.4 动态对象年龄判定"></a>1.4 动态对象年龄判定</h4><p>大部分情况，对象都会首先在 Eden 区域分配，在一次新生代垃圾回收后，如果对象还存活，则会进入 s0 或者 s1，并且对象的年龄还会加 1(Eden 区-&gt;Survivor 区后对象的初始年龄变为 1)，当它的年龄增加到一定程度（默认为 15 岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数 <code>-XX:MaxTenuringThreshold</code> 来设置。</p>
-<blockquote>
-<p>修正（<a href="https://github.com/Snailclimb/JavaGuide/issues/552" target="_blank" rel="noopener">issue552</a>）：“Hotspot遍历所有对象时，按照年龄从小到大对其所占用的大小进行累积，当累积的某个年龄大小超过了survivor区的一半时，取这个年龄和MaxTenuringThreshold中更小的一个值，作为新的晋升年龄阈值”。</p>
-<p><strong>动态年龄计算的代码如下</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">uint ageTable::compute_tenuring_threshold(size_t survivor_capacity) &#123;</span><br><span class="line">	&#x2F;&#x2F;survivor_capacity是survivor空间的大小</span><br><span class="line">size_t desired_survivor_size &#x3D; (size_t)((((double) survivor_capacity)*TargetSurvivorRatio)&#x2F;100);</span><br><span class="line">size_t total &#x3D; 0;</span><br><span class="line">uint age &#x3D; 1;</span><br><span class="line">while (age &lt; table_size) &#123;</span><br><span class="line"> total +&#x3D; sizes[age];&#x2F;&#x2F;sizes数组是每个年龄段对象大小</span><br><span class="line"> if (total &gt; desired_survivor_size) break;</span><br><span class="line"> age++;</span><br><span class="line">&#125;</span><br><span class="line">uint result &#x3D; age &lt; MaxTenuringThreshold ? age : MaxTenuringThreshold;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>额外补充说明(<a href="https://github.com/Snailclimb/JavaGuide/issues/672" target="_blank" rel="noopener">issue672</a>)：<strong>关于默认的晋升年龄是15，这个说法的来源大部分都是《深入理解Java虚拟机》这本书。</strong> 如果你去Oracle的官网阅读<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html" target="_blank" rel="noopener">相关的虚拟机参数</a>，你会发现<code>-XX:MaxTenuringThreshold=threshold</code>这里有个说明</p>
-<p><strong>Sets the maximum tenuring threshold for use in adaptive GC sizing. The largest value is 15. The default value is 15 for the parallel (throughput) collector, and 6 for the CMS collector.默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.</strong></p>
-</blockquote>
-<h3 id="2-对象已经死亡？"><a href="#2-对象已经死亡？" class="headerlink" title="2 对象已经死亡？"></a>2 对象已经死亡？</h3><p>堆中几乎放着所有的对象实例，对堆垃圾回收前的第一步就是要判断那些对象已经死亡（即不能再被任何途径使用的对象）。</p>
-<p><a href="https://camo.githubusercontent.com/b3a4bf00f50b9981e3c7b933d54f276e20933b66/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f31313033343235392e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/b3a4bf00f50b9981e3c7b933d54f276e20933b66/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f31313033343235392e6a7067" alt="img"></a></p>
-<h4 id="2-1-引用计数法"><a href="#2-1-引用计数法" class="headerlink" title="2.1 引用计数法"></a>2.1 引用计数法</h4><p>给对象中添加一个引用计数器，每当有一个地方引用它，计数器就加 1；当引用失效，计数器就减 1；任何时候计数器为 0 的对象就是不可能再被使用的。</p>
-<p><strong>这个方法实现简单，效率高，但是目前主流的虚拟机中并没有选择这个算法来管理内存，其最主要的原因是它很难解决对象之间相互循环引用的问题。</strong> 所谓对象之间的相互引用问题，如下面代码所示：除了对象 objA 和 objB 相互引用着对方之外，这两个对象之间再无任何引用。但是他们因为互相引用对方，导致它们的引用计数器都不为 0，于是引用计数算法无法通知 GC 回收器回收他们。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class ReferenceCountingGc &#123;</span><br><span class="line">    Object instance &#x3D; null;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		ReferenceCountingGc objA &#x3D; new ReferenceCountingGc();</span><br><span class="line">		ReferenceCountingGc objB &#x3D; new ReferenceCountingGc();</span><br><span class="line">		objA.instance &#x3D; objB;</span><br><span class="line">		objB.instance &#x3D; objA;</span><br><span class="line">		objA &#x3D; null;</span><br><span class="line">		objB &#x3D; null;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-2-可达性分析算法"><a href="#2-2-可达性分析算法" class="headerlink" title="2.2 可达性分析算法"></a>2.2 可达性分析算法</h4><p>这个算法的基本思想就是通过一系列的称为 <strong>“GC Roots”</strong> 的对象作为起点，从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连的话，则证明此对象是不可用的。</p>
-<p><a href="https://camo.githubusercontent.com/6c6a9c7e2a7849cab8d5966ec1916115380e2842/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f37323736323034392e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/6c6a9c7e2a7849cab8d5966ec1916115380e2842/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f37323736323034392e6a7067" alt="可达性分析算法 "></a></p>
-<h4 id="2-3-再谈引用"><a href="#2-3-再谈引用" class="headerlink" title="2.3 再谈引用"></a>2.3 再谈引用</h4><p>无论是通过引用计数法判断对象引用数量，还是通过可达性分析法判断对象的引用链是否可达，判定对象的存活都与“引用”有关。</p>
-<p>JDK1.2 之前，Java 中引用的定义很传统：如果 reference 类型的数据存储的数值代表的是另一块内存的起始地址，就称这块内存代表一个引用。</p>
-<p>JDK1.2 以后，Java 对引用的概念进行了扩充，将引用分为强引用、软引用、弱引用、虚引用四种（引用强度逐渐减弱）</p>
-<p><strong>1．强引用（StrongReference）</strong></p>
-<p>以前我们使用的大部分引用实际上都是强引用，这是使用最普遍的引用。如果一个对象具有强引用，那就类似于<strong>必不可少的生活用品</strong>，垃圾回收器绝不会回收它。当内存空间不足，Java 虚拟机宁愿抛出 OutOfMemoryError 错误，使程序异常终止，也不会靠随意回收具有强引用的对象来解决内存不足问题。</p>
-<p><strong>2．软引用（SoftReference）</strong></p>
-<p>如果一个对象只具有软引用，那就类似于<strong>可有可无的生活用品</strong>。如果内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存。只要垃圾回收器没有回收它，该对象就可以被程序使用。软引用可用来实现内存敏感的高速缓存。</p>
-<p>软引用可以和一个引用队列（ReferenceQueue）联合使用，如果软引用所引用的对象被垃圾回收，JAVA 虚拟机就会把这个软引用加入到与之关联的引用队列中。</p>
-<p><strong>3．弱引用（WeakReference）</strong></p>
-<p>如果一个对象只具有弱引用，那就类似于<strong>可有可无的生活用品</strong>。弱引用与软引用的区别在于：只具有弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。不过，由于垃圾回收器是一个优先级很低的线程， 因此不一定会很快发现那些只具有弱引用的对象。</p>
-<p>弱引用可以和一个引用队列（ReferenceQueue）联合使用，如果弱引用所引用的对象被垃圾回收，Java 虚拟机就会把这个弱引用加入到与之关联的引用队列中。</p>
-<p><strong>4．虚引用（PhantomReference）</strong></p>
-<p>“虚引用”顾名思义，就是形同虚设，与其他几种引用都不同，虚引用并不会决定对象的生命周期。如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在任何时候都可能被垃圾回收。</p>
-<p><strong>虚引用主要用来跟踪对象被垃圾回收的活动</strong>。</p>
-<p><strong>虚引用与软引用和弱引用的一个区别在于：</strong> 虚引用必须和引用队列（ReferenceQueue）联合使用。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。程序如果发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。</p>
-<p>特别注意，在程序设计中一般很少使用弱引用与虚引用，使用软引用的情况较多，这是因为<strong>软引用可以加速 JVM 对垃圾内存的回收速度，可以维护系统的运行安全，防止内存溢出（OutOfMemory）等问题的产生</strong>。</p>
-<h4 id="2-4-不可达的对象并非“非死不可”"><a href="#2-4-不可达的对象并非“非死不可”" class="headerlink" title="2.4 不可达的对象并非“非死不可”"></a>2.4 不可达的对象并非“非死不可”</h4><p>即使在可达性分析法中不可达的对象，也并非是“非死不可”的，这时候它们暂时处于“缓刑阶段”，要真正宣告一个对象死亡，至少要经历两次标记过程；可达性分析法中不可达的对象被第一次标记并且进行一次筛选，筛选的条件是此对象是否有必要执行 finalize 方法。当对象没有覆盖 finalize 方法，或 finalize 方法已经被虚拟机调用过时，虚拟机将这两种情况视为没有必要执行。</p>
-<p>被判定为需要执行的对象将会被放在一个队列中进行第二次标记，除非这个对象与引用链上的任何一个对象建立关联，否则就会被真的回收。</p>
-<h4 id="2-5-如何判断一个常量是废弃常量"><a href="#2-5-如何判断一个常量是废弃常量" class="headerlink" title="2.5 如何判断一个常量是废弃常量"></a>2.5 如何判断一个常量是废弃常量</h4><p>运行时常量池主要回收的是废弃的常量。那么，我们如何判断一个常量是废弃常量呢？</p>
-<p>假如在常量池中存在字符串 “abc”，如果当前没有任何 String 对象引用该字符串常量的话，就说明常量 “abc” 就是废弃常量，如果这时发生内存回收的话而且有必要的话，”abc” 就会被系统清理出常量池。</p>
-<p>注意：我们在 <a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484303&idx=1&sn=af0fd436cef755463f59ee4dd0720cbd&chksm=fd9855eecaefdcf8d94ac581cfda4e16c8a730bda60c3b50bc55c124b92f23b6217f7f8e58d5&token=506869459&lang=zh_CN#rd" target="_blank" rel="noopener">可能是把 Java 内存区域讲的最清楚的一篇文章 </a>也讲了 JDK1.7 及之后版本的 JVM 已经将运行时常量池从方法区中移了出来，在 Java 堆（Heap）中开辟了一块区域存放运行时常量池。</p>
-<h4 id="2-6-如何判断一个类是无用的类"><a href="#2-6-如何判断一个类是无用的类" class="headerlink" title="2.6 如何判断一个类是无用的类"></a>2.6 如何判断一个类是无用的类</h4><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
-<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
-<ul>
-<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
-<li>加载该类的 ClassLoader 已经被回收。</li>
-<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
-</ul>
-<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
-<h3 id="3-垃圾收集算法"><a href="#3-垃圾收集算法" class="headerlink" title="3 垃圾收集算法"></a>3 垃圾收集算法</h3><p><a href="https://camo.githubusercontent.com/abe4956dea64d2661d54586797be1516f9166d0b/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545352539452538332545352539432542452545362539342542362545392539422538362545372541452539372545362542332539352e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/abe4956dea64d2661d54586797be1516f9166d0b/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545352539452538332545352539432542452545362539342542362545392539422538362545372541452539372545362542332539352e6a7067" alt="垃圾收集算法分类"></a></p>
-<h4 id="3-1-标记-清除算法"><a href="#3-1-标记-清除算法" class="headerlink" title="3.1 标记-清除算法"></a>3.1 标记-清除算法</h4><p>该算法分为“标记”和“清除”阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。它是最基础的收集算法，后续的算法都是对其不足进行改进得到。这种垃圾收集算法会带来两个明显的问题：</p>
-<ol>
-<li><strong>效率问题</strong></li>
-<li><strong>空间问题（标记清除后会产生大量不连续的碎片）</strong></li>
-</ol>
-<p><a href="https://camo.githubusercontent.com/dc1f798e7c7f9aa9a3ab692db10a6b1788e5d505/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f36333730373238312e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/dc1f798e7c7f9aa9a3ab692db10a6b1788e5d505/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f36333730373238312e6a7067" alt="公众号"></a></p>
-<h4 id="3-2-复制算法"><a href="#3-2-复制算法" class="headerlink" title="3.2 复制算法"></a>3.2 复制算法</h4><p>为了解决效率问题，“复制”收集算法出现了。它可以将内存分为大小相同的两块，每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉。这样就使每次的内存回收都是对内存区间的一半进行回收。</p>
-<p><a href="https://camo.githubusercontent.com/94cfc5e1fbe9d49b3ed056d2943fd86dac1833a2/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f39303938343632342e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/94cfc5e1fbe9d49b3ed056d2943fd86dac1833a2/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f39303938343632342e6a7067" alt="公众号"></a></p>
-<h4 id="3-3-标记-整理算法"><a href="#3-3-标记-整理算法" class="headerlink" title="3.3 标记-整理算法"></a>3.3 标记-整理算法</h4><p>根据老年代的特点提出的一种标记算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存。</p>
-<p><a href="https://camo.githubusercontent.com/e5223ec7b2460498e1934c14eeaf969bafdcab59/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f39343035373034392e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/e5223ec7b2460498e1934c14eeaf969bafdcab59/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f39343035373034392e6a7067" alt="标记-整理算法 "></a></p>
-<h4 id="3-4-分代收集算法"><a href="#3-4-分代收集算法" class="headerlink" title="3.4 分代收集算法"></a>3.4 分代收集算法</h4><p>当前虚拟机的垃圾收集都采用分代收集算法，这种算法没有什么新的思想，只是根据对象存活周期的不同将内存分为几块。一般将 java 堆分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
-<p><strong>比如在新生代中，每次收集都会有大量对象死去，所以可以选择复制算法，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集。</strong></p>
-<p><strong>延伸面试问题：</strong> HotSpot 为什么要分为新生代和老年代？</p>
-<p>根据上面的对分代收集算法的介绍回答。</p>
-<h3 id="4-垃圾收集器"><a href="#4-垃圾收集器" class="headerlink" title="4 垃圾收集器"></a>4 垃圾收集器</h3><p><a href="https://camo.githubusercontent.com/f769c52ae89d045695e8b41d4583dda4b921ca3e/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545352539452538332545352539432542452545362539342542362545392539422538362545352539392541382e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/f769c52ae89d045695e8b41d4583dda4b921ca3e/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545352539452538332545352539432542452545362539342542362545392539422538362545352539392541382e6a7067" alt="垃圾收集器分类"></a></p>
-<p><strong>如果说收集算法是内存回收的方法论，那么垃圾收集器就是内存回收的具体实现。</strong></p>
-<p>虽然我们对各个收集器进行比较，但并非要挑选出一个最好的收集器。因为直到现在为止还没有最好的垃圾收集器出现，更加没有万能的垃圾收集器，<strong>我们能做的就是根据具体应用场景选择适合自己的垃圾收集器</strong>。试想一下：如果有一种四海之内、任何场景下都适用的完美收集器存在，那么我们的 HotSpot 虚拟机就不会实现那么多不同的垃圾收集器了。</p>
-<h4 id="4-1-Serial-收集器"><a href="#4-1-Serial-收集器" class="headerlink" title="4.1 Serial 收集器"></a>4.1 Serial 收集器</h4><p>Serial（串行）收集器收集器是最基本、历史最悠久的垃圾收集器了。大家看名字就知道这个收集器是一个单线程收集器了。它的 <strong>“单线程”</strong> 的意义不仅仅意味着它只会使用一条垃圾收集线程去完成垃圾收集工作，更重要的是它在进行垃圾收集工作的时候必须暂停其他所有的工作线程（ <strong>“Stop The World”</strong> ），直到它收集结束。</p>
-<p><strong>新生代采用复制算法，老年代采用标记-整理算法。</strong> <a href="https://camo.githubusercontent.com/aba41c5c08ea9884554b9a69ea69c7ceeebc83ff/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f34363837333032362e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/aba41c5c08ea9884554b9a69ea69c7ceeebc83ff/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f34363837333032362e6a7067" alt=" Serial 收集器 "></a></p>
-<p>虚拟机的设计者们当然知道 Stop The World 带来的不良用户体验，所以在后续的垃圾收集器设计中停顿时间在不断缩短（仍然还有停顿，寻找最优秀的垃圾收集器的过程仍然在继续）。</p>
-<p>但是 Serial 收集器有没有优于其他垃圾收集器的地方呢？当然有，它<strong>简单而高效（与其他收集器的单线程相比）</strong>。Serial 收集器由于没有线程交互的开销，自然可以获得很高的单线程收集效率。Serial 收集器对于运行在 Client 模式下的虚拟机来说是个不错的选择。</p>
-<h4 id="4-2-ParNew-收集器"><a href="#4-2-ParNew-收集器" class="headerlink" title="4.2 ParNew 收集器"></a>4.2 ParNew 收集器</h4><p><strong>ParNew 收集器其实就是 Serial 收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为（控制参数、收集算法、回收策略等等）和 Serial 收集器完全一样。</strong></p>
-<p><strong>新生代采用复制算法，老年代采用标记-整理算法。</strong> <a href="https://camo.githubusercontent.com/f298ba56ec4667487fdf4acc987f2ef9e6df254e/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f32323031383336382e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/f298ba56ec4667487fdf4acc987f2ef9e6df254e/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f32323031383336382e6a7067" alt="ParNew 收集器 "></a></p>
-<p>它是许多运行在 Server 模式下的虚拟机的首要选择，除了 Serial 收集器外，只有它能与 CMS 收集器（真正意义上的并发收集器，后面会介绍到）配合工作。</p>
-<p><strong>并行和并发概念补充：</strong></p>
-<ul>
-<li><strong>并行（Parallel）</strong> ：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。</li>
-<li><strong>并发（Concurrent）</strong>：指用户线程与垃圾收集线程同时执行（但不一定是并行，可能会交替执行），用户程序在继续运行，而垃圾收集器运行在另一个 CPU 上。</li>
-</ul>
-<h4 id="4-3-Parallel-Scavenge-收集器"><a href="#4-3-Parallel-Scavenge-收集器" class="headerlink" title="4.3 Parallel Scavenge 收集器"></a>4.3 Parallel Scavenge 收集器</h4><p>Parallel Scavenge 收集器也是使用复制算法的多线程收集器，它看上去几乎和ParNew都一样。 <strong>那么它有什么特别之处呢？</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseParallelGC </span><br><span class="line"></span><br><span class="line">    使用 Parallel 收集器+ 老年代串行</span><br><span class="line"></span><br><span class="line">-XX:+UseParallelOldGC</span><br><span class="line"></span><br><span class="line">    使用 Parallel 收集器+ 老年代并行</span><br></pre></td></tr></table></figure>
-
-<p><strong>Parallel Scavenge 收集器关注点是吞吐量（高效率的利用 CPU）。CMS 等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。所谓吞吐量就是 CPU 中用于运行用户代码的时间与 CPU 总消耗时间的比值。</strong> Parallel Scavenge 收集器提供了很多参数供用户找到最合适的停顿时间或最大吞吐量，如果对于收集器运作不太了解的话，手工优化存在困难的话可以选择把内存管理优化交给虚拟机去完成也是一个不错的选择。</p>
-<p><strong>新生代采用复制算法，老年代采用标记-整理算法。</strong> <a href="https://camo.githubusercontent.com/f298ba56ec4667487fdf4acc987f2ef9e6df254e/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f32323031383336382e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/f298ba56ec4667487fdf4acc987f2ef9e6df254e/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f32323031383336382e6a7067" alt="Parallel Scavenge 收集器 "></a></p>
-<h4 id="4-4-Serial-Old-收集器"><a href="#4-4-Serial-Old-收集器" class="headerlink" title="4.4.Serial Old 收集器"></a>4.4.Serial Old 收集器</h4><p><strong>Serial 收集器的老年代版本</strong>，它同样是一个单线程收集器。它主要有两大用途：一种用途是在 JDK1.5 以及以前的版本中与 Parallel Scavenge 收集器搭配使用，另一种用途是作为 CMS 收集器的后备方案。</p>
-<h4 id="4-5-Parallel-Old-收集器"><a href="#4-5-Parallel-Old-收集器" class="headerlink" title="4.5 Parallel Old 收集器"></a>4.5 Parallel Old 收集器</h4><p><strong>Parallel Scavenge 收集器的老年代版本</strong>。使用多线程和“标记-整理”算法。在注重吞吐量以及 CPU 资源的场合，都可以优先考虑 Parallel Scavenge 收集器和 Parallel Old 收集器。</p>
-<h4 id="4-6-CMS-收集器"><a href="#4-6-CMS-收集器" class="headerlink" title="4.6 CMS 收集器"></a>4.6 CMS 收集器</h4><p><strong>CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。它非常符合在注重用户体验的应用上使用。</strong></p>
-<p><strong>CMS（Concurrent Mark Sweep）收集器是 HotSpot 虚拟机第一款真正意义上的并发收集器，它第一次实现了让垃圾收集线程与用户线程（基本上）同时工作。</strong></p>
-<p>从名字中的<strong>Mark Sweep</strong>这两个词可以看出，CMS 收集器是一种 <strong>“标记-清除”算法</strong>实现的，它的运作过程相比于前面几种垃圾收集器来说更加复杂一些。整个过程分为四个步骤：</p>
-<ul>
-<li><strong>初始标记：</strong> 暂停所有的其他线程，并记录下直接与 root 相连的对象，速度很快 ；</li>
-<li><strong>并发标记：</strong> 同时开启 GC 和用户线程，用一个闭包结构去记录可达对象。但在这个阶段结束，这个闭包结构并不能保证包含当前所有的可达对象。因为用户线程可能会不断的更新引用域，所以 GC 线程无法保证可达性分析的实时性。所以这个算法里会跟踪记录这些发生引用更新的地方。</li>
-<li><strong>重新标记：</strong> 重新标记阶段就是为了修正并发标记期间因为用户程序继续运行而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段的时间稍长，远远比并发标记阶段时间短</li>
-<li><strong>并发清除：</strong> 开启用户线程，同时 GC 线程开始对为标记的区域做清扫。</li>
-</ul>
-<p><a href="https://camo.githubusercontent.com/d74545af0f987d17b7f41a60bb237a113fff925b/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f38323832353037392e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/d74545af0f987d17b7f41a60bb237a113fff925b/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d382d32372f38323832353037392e6a7067" alt="CMS 垃圾收集器 "></a></p>
-<p>从它的名字就可以看出它是一款优秀的垃圾收集器，主要优点：<strong>并发收集、低停顿</strong>。但是它有下面三个明显的缺点：</p>
-<ul>
-<li><strong>对 CPU 资源敏感；</strong></li>
-<li><strong>无法处理浮动垃圾；</strong></li>
-<li><strong>它使用的回收算法-“标记-清除”算法会导致收集结束时会有大量空间碎片产生。</strong></li>
-</ul>
-<h4 id="4-7-G1-收集器"><a href="#4-7-G1-收集器" class="headerlink" title="4.7 G1 收集器"></a>4.7 G1 收集器</h4><p><strong>G1 (Garbage-First) 是一款面向服务器的垃圾收集器,主要针对配备多颗处理器及大容量内存的机器. 以极高概率满足 GC 停顿时间要求的同时,还具备高吞吐量性能特征.</strong></p>
-<p>被视为 JDK1.7 中 HotSpot 虚拟机的一个重要进化特征。它具备一下特点：</p>
-<ul>
-<li><strong>并行与并发</strong>：G1 能充分利用 CPU、多核环境下的硬件优势，使用多个 CPU（CPU 或者 CPU 核心）来缩短 Stop-The-World 停顿时间。部分其他收集器原本需要停顿 Java 线程执行的 GC 动作，G1 收集器仍然可以通过并发的方式让 java 程序继续执行。</li>
-<li><strong>分代收集</strong>：虽然 G1 可以不需要其他收集器配合就能独立管理整个 GC 堆，但是还是保留了分代的概念。</li>
-<li><strong>空间整合</strong>：与 CMS 的“标记–清理”算法不同，G1 从整体来看是基于“标记整理”算法实现的收集器；从局部上来看是基于“复制”算法实现的。</li>
-<li><strong>可预测的停顿</strong>：这是 G1 相对于 CMS 的另一个大优势，降低停顿时间是 G1 和 CMS 共同的关注点，但 G1 除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为 M 毫秒的时间片段内。</li>
-</ul>
-<p>G1 收集器的运作大致分为以下几个步骤：</p>
-<ul>
-<li><strong>初始标记</strong></li>
-<li><strong>并发标记</strong></li>
-<li><strong>最终标记</strong></li>
-<li><strong>筛选回收</strong></li>
-</ul>
-<p><strong>G1 收集器在后台维护了一个优先列表，每次根据允许的收集时间，优先选择回收价值最大的 Region(这也就是它的名字 Garbage-First 的由来)</strong>。这种使用 Region 划分内存空间以及有优先级的区域回收方式，保证了 G1 收集器在有限时间内可以尽可能高的收集效率（把内存化整为零）。</p>
-<p> 介绍一下GC，什么是GC？<br>14.JVM中的引用类型？<br>15.数据库存100条数据与存1条数据的区别（存储时间是否一致）<br>16.数据库（MySQL）瓶颈在哪儿？<br>17.数据库瓶颈现象如何解决？<br>18.HTTP哪个首部字段与断点续传有关（传输文件中断，怎么重新继续传输）？ </p>
-<p>1.讲一讲volatile关键字？<br>2.线程池理解，实现原理，源码？<br>3.SpringAOP实现原理+IOC实现原理(源码怎么实现)？<br>4.讲一讲动态代理？<br>5.反射及其实现原理？<br>6.sleep()和wait()的区别？<br>7.stop退出线程安全吗（正常退出吗）？<br>8.notify和notifyAll区别？<br>9.讲一讲线程之间怎么协作？<br>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？<br>12.讲一讲线程创建的时候发生了什么？<br>13.退出线程的方式，怎么退出线程？<br>14.nio了解吗？</p>
-<p>第一面：<br>1.多线程和多进程分别适用于什么场景？<br>2.并发和并行的区别？<br>3.TCP/IP协议的3次握手和4次挥手？原因？<br>4.设计平衡二叉树的原因？<br>5.问了快排、堆排、归并等排序的时间复杂度与空间复杂度？<br>6.索引的数据结构有哪些，讲一讲B+树？<br>7.MySQL的存储引擎知道吗？区别？<br>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）<br>9.介绍HashMap，说到红黑树，然后提问：介绍一下红黑树？</p>
+<h3 id="讲一讲volatile关键字？"><a href="#讲一讲volatile关键字？" class="headerlink" title="讲一讲volatile关键字？"></a>讲一讲volatile关键字？</h3><p>2.线程池理解，实现原理，源码？<br>3.SpringAOP实现原理+IOC实现原理(源码怎么实现)？<br>4.讲一讲动态代理？<br>5.反射及其实现原理？<br>6.sleep()和wait()的区别？<br>7.stop退出线程安全吗（正常退出吗）？<br>8.notify和notifyAll区别？<br>9.讲一讲线程之间怎么协作？<br>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？<br>12.讲一讲线程创建的时候发生了什么？<br>13.退出线程的方式，怎么退出线程？<br>14.nio了解吗？</p>
+<p>第一面：<br>1.多线程和多进程分别适用于什么场景？<br>2.并发和并行的区别？<br>3.TCP/IP协议的3次握手和4次挥手？原因？<br>4.设计平衡二叉树的原因？<br>5.快排、堆排、归并等排序的时间复杂度与空间复杂度？</p>
+<p> <img src="https://img-blog.csdn.net/20160924191851607" alt="这里写图片描述"> </p>
+<p>6.索引的数据结构有哪些，讲一讲B+树？<br>7.MySQL的存储引擎知道吗？区别？<br>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）<br>9.介绍HashMap，说到红黑树，然后提问：介绍一下红黑树？</p>
 <p>第二面：<br>1.介绍堆的数据结构和堆排序的思路，并手写堆排序代码（10分钟）<br>2.场景题：只有一台机器，10亿个ip地址（有重复）找出出现最多的10个ip，怎么处理？<br>3.HashMap冲突的解决方法以及原理分析？<br>4.Git的常用命令有哪些，merge时候出现冲突怎么处理？</p>
 <p>记录了一些出现比较多的面试的问题（套路）：</p>
 <p>1.面向对象的特性？<br>2.讲一讲Java多态？<br>3.抽象类与接口的区别？<br>4.讲一讲HashMap？<br>5.Java线程池好处以及实现原理？怎么创建线程池？<br>6.Java8新特性了解吗？，讲一讲流？<br>7.闭包了解吗？讲一讲lambda表达式？<br>8.比较Java锁(synchronized和ReentrantLock的区别)？<br>9.讲一讲JVM里面的GC？<br>10.JVM内存分配策略？<br>11.反射是什么，怎么实现的？<br>12.讲一讲事务的特性？解释一下ACID分别是什么？<br>13.知道哪些设计模式？平时或者项目里面用过哪些设计模式？<br>14.手写单例模式（双重检测机制）<br>15.MySQL 中 InnoDB 和 MyISAM 区别？<br>16.MySQL的默认隔离级别？<br>17.知道数据库优化吗？SQL优化？<br>18.讲一讲索引，说一说B+树<br>19.什么是SQL注入？怎么解决？<br>20.用过哪些SQL的函数？（写一个查找平均分SQL语句）<br>21.讲一讲spring事务，ioc，aop，bean声明周期？<br>22.hibernate和mybatis的区别，各自的优缺点<br>23.Linux常用命令有哪些，查看端口的命令是什么？<br>24.HTTP常用的首部字段有哪些？<br>25.GET和POST的区别？<br>26.HTTPS协议？什么是对称加密和非对称加密？<br>27.多线程join()和yield()方法的作用？<br>28.介绍一下juc里面常用的几个工具类<br>29.TCP/IP协议的3次握手和4次挥手<br>30.各种排序算法思路以及时间复杂度（主要是快排，冒泡，堆排，归并）<br>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
@@ -750,10 +428,7 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2020/02/25/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" rel="prev" title="面试总结">
-      <i class="fa fa-chevron-left"></i> 面试总结
-    </a></div>
+      <div class="post-nav-item"></div>
       <div class="post-nav-item">
     <a href="/2020/03/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="数据结构">
       数据结构 <i class="fa fa-chevron-right"></i>
@@ -817,7 +492,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><span class="nav-number">1.</span> <span class="nav-text">Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谈谈对-Java-注解的理解，解决了什么问题？"><span class="nav-number">2.</span> <span class="nav-text">谈谈对 Java 注解的理解，解决了什么问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部类了解吗？匿名内部类了解吗？"><span class="nav-number">3.</span> <span class="nav-text">内部类了解吗？匿名内部类了解吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><span class="nav-number">4.</span> <span class="nav-text">BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假如我们需要存500个数需要多大的HashMap？"><span class="nav-number">5.</span> <span class="nav-text">假如我们需要存500个数需要多大的HashMap？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap的负载因子"><span class="nav-number">6.</span> <span class="nav-text">HashMap的负载因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux文件的权限，如何设置可读可写权限"><span class="nav-number">7.</span> <span class="nav-text">Linux文件的权限，如何设置可读可写权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UUID是什么，如何生成的，-如何保证一致性"><span class="nav-number">8.</span> <span class="nav-text">UUID是什么，如何生成的， 如何保证一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义注解-应用场景"><span class="nav-number">9.</span> <span class="nav-text">自定义注解 应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-面向对象编程三大特性-封装-继承-多态"><span class="nav-number">10.</span> <span class="nav-text">Java 面向对象编程三大特性: 封装 继承 多态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">10.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">10.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">10.3.</span> <span class="nav-text">多态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目遇到的问题"><span class="nav-number">11.</span> <span class="nav-text">项目遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组与链表的区别？"><span class="nav-number">12.</span> <span class="nav-text">数组与链表的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的状态有哪些？阻塞和等待状态区别？"><span class="nav-number">13.</span> <span class="nav-text">线程的状态有哪些？阻塞和等待状态区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况会形成死锁？-Java怎么避免死锁？"><span class="nav-number">14.</span> <span class="nav-text">什么情况会形成死锁？ Java怎么避免死锁？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程怎么安全退出？"><span class="nav-number">15.</span> <span class="nav-text">线程怎么安全退出？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用什么方法去看什么状态呢"><span class="nav-number">15.1.</span> <span class="nav-text">用什么方法去看什么状态呢</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是线程池，线程池的好处？"><span class="nav-number">16.</span> <span class="nav-text">什么是线程池，线程池的好处？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java线程消费者与生产者中的相关问题，怎么实现？"><span class="nav-number">17.</span> <span class="nav-text">Java线程消费者与生产者中的相关问题，怎么实现？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题描述"><span class="nav-number">17.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决问题的核心"><span class="nav-number">17.2.</span> <span class="nav-text">解决问题的核心</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java能实现的几种方法"><span class="nav-number">17.3.</span> <span class="nav-text">Java能实现的几种方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized方法和synchronized同步块的区别？"><span class="nav-number">18.</span> <span class="nav-text">synchronized方法和synchronized同步块的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait-和-sleep-的区别？"><span class="nav-number">19.</span> <span class="nav-text">wait() 和 sleep() 的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲一讲HashMap"><span class="nav-number">20.</span> <span class="nav-text">讲一讲HashMap?</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-常用实现类结构"><span class="nav-number">20.0.1.</span> <span class="nav-text">1.常用实现类结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-存储结构的理解："><span class="nav-number">20.0.2.</span> <span class="nav-text">2.存储结构的理解：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-常用方法"><span class="nav-number">20.0.3.</span> <span class="nav-text">3.常用方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-内存结构说明：（难点）"><span class="nav-number">20.0.4.</span> <span class="nav-text">4. 内存结构说明：（难点）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-1-HashMap在jdk7中实现原理："><span class="nav-number">20.0.4.1.</span> <span class="nav-text">4.1 HashMap在jdk7中实现原理：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-HashMap在jdk8中相较于jdk7在底层实现方面的不同："><span class="nav-number">20.0.4.2.</span> <span class="nav-text">4.2 HashMap在jdk8中相较于jdk7在底层实现方面的不同：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-3-HashMap底层典型属性的属性的说明："><span class="nav-number">20.0.4.3.</span> <span class="nav-text">4.3 HashMap底层典型属性的属性的说明：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-4-LinkedHashMap的底层实现原理-了解"><span class="nav-number">20.0.4.4.</span> <span class="nav-text">4.4 LinkedHashMap的底层实现原理(了解)</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-TreeMap的使用"><span class="nav-number">20.0.5.</span> <span class="nav-text">5. TreeMap的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍一下GC，什么是GC？"><span class="nav-number">21.</span> <span class="nav-text">介绍一下GC，什么是GC？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-JVM-内存分配与回收"><span class="nav-number">22.</span> <span class="nav-text">1 JVM 内存分配与回收</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-对象优先在-eden-区分配"><span class="nav-number">22.1.</span> <span class="nav-text">1.1 对象优先在 eden 区分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-大对象直接进入老年代"><span class="nav-number">22.2.</span> <span class="nav-text">1.2 大对象直接进入老年代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-长期存活的对象将进入老年代"><span class="nav-number">22.3.</span> <span class="nav-text">1.3 长期存活的对象将进入老年代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-动态对象年龄判定"><span class="nav-number">22.4.</span> <span class="nav-text">1.4 动态对象年龄判定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-对象已经死亡？"><span class="nav-number">23.</span> <span class="nav-text">2 对象已经死亡？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-引用计数法"><span class="nav-number">23.1.</span> <span class="nav-text">2.1 引用计数法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-可达性分析算法"><span class="nav-number">23.2.</span> <span class="nav-text">2.2 可达性分析算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-再谈引用"><span class="nav-number">23.3.</span> <span class="nav-text">2.3 再谈引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-不可达的对象并非“非死不可”"><span class="nav-number">23.4.</span> <span class="nav-text">2.4 不可达的对象并非“非死不可”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-如何判断一个常量是废弃常量"><span class="nav-number">23.5.</span> <span class="nav-text">2.5 如何判断一个常量是废弃常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-如何判断一个类是无用的类"><span class="nav-number">23.6.</span> <span class="nav-text">2.6 如何判断一个类是无用的类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-垃圾收集算法"><span class="nav-number">24.</span> <span class="nav-text">3 垃圾收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-标记-清除算法"><span class="nav-number">24.1.</span> <span class="nav-text">3.1 标记-清除算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-复制算法"><span class="nav-number">24.2.</span> <span class="nav-text">3.2 复制算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-标记-整理算法"><span class="nav-number">24.3.</span> <span class="nav-text">3.3 标记-整理算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-分代收集算法"><span class="nav-number">24.4.</span> <span class="nav-text">3.4 分代收集算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-垃圾收集器"><span class="nav-number">25.</span> <span class="nav-text">4 垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Serial-收集器"><span class="nav-number">25.1.</span> <span class="nav-text">4.1 Serial 收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-ParNew-收集器"><span class="nav-number">25.2.</span> <span class="nav-text">4.2 ParNew 收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-Parallel-Scavenge-收集器"><span class="nav-number">25.3.</span> <span class="nav-text">4.3 Parallel Scavenge 收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-Serial-Old-收集器"><span class="nav-number">25.4.</span> <span class="nav-text">4.4.Serial Old 收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-Parallel-Old-收集器"><span class="nav-number">25.5.</span> <span class="nav-text">4.5 Parallel Old 收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-CMS-收集器"><span class="nav-number">25.6.</span> <span class="nav-text">4.6 CMS 收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-G1-收集器"><span class="nav-number">25.7.</span> <span class="nav-text">4.7 G1 收集器</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSP九个内置对象"><span class="nav-number">1.</span> <span class="nav-text">JSP九个内置对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie和Session的的区别"><span class="nav-number">2.</span> <span class="nav-text">Cookie和Session的的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式"><span class="nav-number">3.</span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><span class="nav-number">4.</span> <span class="nav-text">Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谈谈对-Java-注解的理解，解决了什么问题？"><span class="nav-number">5.</span> <span class="nav-text">谈谈对 Java 注解的理解，解决了什么问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部类了解吗？匿名内部类了解吗？"><span class="nav-number">6.</span> <span class="nav-text">内部类了解吗？匿名内部类了解吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><span class="nav-number">7.</span> <span class="nav-text">BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假如我们需要存500个数需要多大的HashMap？"><span class="nav-number">8.</span> <span class="nav-text">假如我们需要存500个数需要多大的HashMap？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义注解-应用场景"><span class="nav-number">9.</span> <span class="nav-text">自定义注解 应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-面向对象编程三大特性-封装-继承-多态"><span class="nav-number">10.</span> <span class="nav-text">Java 面向对象编程三大特性: 封装 继承 多态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">10.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">10.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">10.3.</span> <span class="nav-text">多态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲一讲volatile关键字？"><span class="nav-number">11.</span> <span class="nav-text">讲一讲volatile关键字？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -831,20 +506,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
