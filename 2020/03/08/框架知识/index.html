@@ -58,7 +58,7 @@
 <meta property="og:image" content="d:/Study/Notes/%E9%A2%9C%E7%BE%A4%E8%B5%84%E6%96%99/%E9%9D%A2%E8%AF%95%E6%8C%87%E5%AF%BC-%E7%9B%B4%E6%92%AD%E5%9B%9E%E6%94%BE/3%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6-%E9%9D%A2%E8%AF%95%E6%8C%87%E5%AF%BC.assets/1578052621363.png">
 <meta property="og:image" content="d:/Study/Notes/%E9%A2%9C%E7%BE%A4%E8%B5%84%E6%96%99/%E9%9D%A2%E8%AF%95%E6%8C%87%E5%AF%BC-%E7%9B%B4%E6%92%AD%E5%9B%9E%E6%94%BE/3%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6-%E9%9D%A2%E8%AF%95%E6%8C%87%E5%AF%BC.assets/1578052925399.png">
 <meta property="article:published_time" content="2020-03-08T13:14:59.000Z">
-<meta property="article:modified_time" content="2020-03-08T13:28:47.312Z">
+<meta property="article:modified_time" content="2020-03-09T01:39:06.780Z">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="SpringMVC">
 <meta property="article:tag" content="Spring Boot">
@@ -234,10 +234,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-08 21:14:59 / 修改时间：21:28:47" itemprop="dateCreated datePublished" datetime="2020-03-08T21:14:59+08:00">2020-03-08</time>
+              <time title="创建时间：2020-03-08 21:14:59" itemprop="dateCreated datePublished" datetime="2020-03-08T21:14:59+08:00">2020-03-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-09 09:39:06" itemprop="dateModified" datetime="2020-03-09T09:39:06+08:00">2020-03-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -265,6 +271,8 @@
 <p>将对象交给容器管理，只需要在 spring 配置文件中配置对应的 bean 以及设置相关的属性，让 spring 容器来生成类的实例对象以及管理对象。在 spring 容器启动的时候，spring 会把你在配置文件中配置的 bean 都初始化好，然后在你需要调用的时候，就把它已经初始化好的那些 bean 分配给你需要调用这些 bean 的类。</p>
 <p>IoC（Inverse of Control:控制反转）是一种<strong>设计思想</strong>，就是 <strong>将原本在程序中手动创建对象的控制权，交由Spring框架来管理。</strong> IoC 在其他语言中也有应用，并非 Spring 特有。 <strong>IoC 容器是 Spring 用来实现 IoC 的载体， IoC 容器实际上就是个Map（key，value）,Map 中存放的是各种对象。</strong></p>
 <p>将对象之间的相互依赖关系交给 IoC 容器来管理，并由 IoC 容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。 <strong>IoC 容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。</strong> 在实际项目中一个 Service 类可能有几百甚至上千个类作为它的底层，假如我们需要实例化这个 Service，你可能要每次都要搞清这个 Service 所有底层类的构造函数，这可能会把人逼疯。如果利用 IoC 的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
+ <a id="more"></a>
+
 <h4 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h4><p>多个业务中有同一个实例对象和方法，如果这个方法名改了，所有的引用处都得修改，如果修改了位置，也需要所有的引用出进行修改，针对这两个不足，通过AOP面向切面进行改进，将这个方法定义成切点，切点和通知组成切面，通知一般有Before、After、After-returning、After-throwing、Around通知。</p>
 <p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。 </p>
 <h4 id="Spring-bean"><a href="#Spring-bean" class="headerlink" title="Spring bean"></a>Spring bean</h4><h5 id="1-Spring-中的-bean-的作用域有哪些"><a href="#1-Spring-中的-bean-的作用域有哪些" class="headerlink" title="1. Spring 中的 bean 的作用域有哪些?"></a>1. Spring 中的 bean 的作用域有哪些?</h5><ul>

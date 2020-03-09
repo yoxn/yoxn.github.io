@@ -7,6 +7,8 @@
 <p>将对象交给容器管理，只需要在 spring 配置文件中配置对应的 bean 以及设置相关的属性，让 spring 容器来生成类的实例对象以及管理对象。在 spring 容器启动的时候，spring 会把你在配置文件中配置的 bean 都初始化好，然后在你需要调用的时候，就把它已经初始化好的那些 bean 分配给你需要调用这些 bean 的类。</p>
 <p>IoC（Inverse of Control:控制反转）是一种<strong>设计思想</strong>，就是 <strong>将原本在程序中手动创建对象的控制权，交由Spring框架来管理。</strong> IoC 在其他语言中也有应用，并非 Spring 特有。 <strong>IoC 容器是 Spring 用来实现 IoC 的载体， IoC 容器实际上就是个Map（key，value）,Map 中存放的是各种对象。</strong></p>
 <p>将对象之间的相互依赖关系交给 IoC 容器来管理，并由 IoC 容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。 <strong>IoC 容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。</strong> 在实际项目中一个 Service 类可能有几百甚至上千个类作为它的底层，假如我们需要实例化这个 Service，你可能要每次都要搞清这个 Service 所有底层类的构造函数，这可能会把人逼疯。如果利用 IoC 的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
+ <a id="more"></a>
+
 <h4 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h4><p>多个业务中有同一个实例对象和方法，如果这个方法名改了，所有的引用处都得修改，如果修改了位置，也需要所有的引用出进行修改，针对这两个不足，通过AOP面向切面进行改进，将这个方法定义成切点，切点和通知组成切面，通知一般有Before、After、After-returning、After-throwing、Around通知。</p>
 <p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。 </p>
 <h4 id="Spring-bean"><a href="#Spring-bean" class="headerlink" title="Spring bean"></a>Spring bean</h4><h5 id="1-Spring-中的-bean-的作用域有哪些"><a href="#1-Spring-中的-bean-的作用域有哪些" class="headerlink" title="1. Spring 中的 bean 的作用域有哪些?"></a>1. Spring 中的 bean 的作用域有哪些?</h5><ul>
@@ -192,6 +194,8 @@
 <p>w:写入 2</p>
 <p>x:执行或切换 1</p>
 <p>-：不具有任何权限 0</p>
+ <a id="more"></a>
+
 </li>
 </ul>
 <hr>
@@ -214,6 +218,8 @@
     <url>/2020/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
     <content><![CDATA[<h3 id="OSI与TCP-IP各层的结构与功能-都有哪些协议"><a href="#OSI与TCP-IP各层的结构与功能-都有哪些协议" class="headerlink" title="OSI与TCP/IP各层的结构与功能,都有哪些协议?"></a>OSI与TCP/IP各层的结构与功能,都有哪些协议?</h3><p>学习计算机网络时我们一般采用折中的办法，也就是中和 OSI 和 TCP/IP 的优点，采用一种只有五层协议的体系结构，这样既简洁又能将概念阐述清楚。</p>
 <p> <img src="https://camo.githubusercontent.com/5bf7c14046570425f50bca412a3cf3710514ccff/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392f372f2545342542412539342545352542312538322545342542442539332545372542332542422545372542422539332545362539452538342e706e67" alt="img"> </p>
+ <a id="more"></a>
+
 <hr>
 <h3 id="TCP-三次握手和四次挥手"><a href="#TCP-三次握手和四次挥手" class="headerlink" title="TCP 三次握手和四次挥手"></a>TCP 三次握手和四次挥手</h3><p>为了准确无误地把数据送达目标处，TCP协议采用了三次握手策略。</p>
 <h4 id="1-TCP-三次握手图解"><a href="#1-TCP-三次握手图解" class="headerlink" title="1. TCP 三次握手图解"></a>1. TCP 三次握手图解</h4><p><strong>简单示意图：</strong></p>
@@ -280,6 +286,8 @@
     <content><![CDATA[<h3 id="堆和栈的区别是什么"><a href="#堆和栈的区别是什么" class="headerlink" title="堆和栈的区别是什么"></a>堆和栈的区别是什么</h3><p><strong>1、堆栈空间分配区别</strong></p>
 <p>栈（操作系统）：由操作系统（编译器）自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。</p>
 <p>堆（操作系统）： 一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收，分配方式倒是类似于链表。</p>
+ <a id="more"></a>
+
 <p><strong>2、堆栈缓存方式区别</strong></p>
 <p>栈使用的是一级缓存， 它们通常都是被调用时处于存储空间中，调用完毕立即释放。</p>
 <p>堆则是存放在二级缓存中，生命周期由虚拟机的垃圾回收算法来决定（并不是一旦成为孤儿对象就能被回收）。所以调用这些对象的速度要相对来得低一些。</p>
@@ -470,6 +478,8 @@
     <title>并发知识</title>
     <url>/2020/03/08/%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h3 id="什么是线程阻塞？"><a href="#什么是线程阻塞？" class="headerlink" title="什么是线程阻塞？"></a>什么是线程阻塞？</h3><p>在某一时刻某一个线程在运行一段代码的时候，这时候另一个线程也需要运行，但是在运行过程中的那个线程执行完成之前，另一个线程是无法获取到CPU执行权的（调用sleep方法是进入到睡眠暂停状态，但是CPU执行权并没有交出去，而调用wait方法则是将CPU执行权交给另一个线程），这个时候就会造成线程阻塞。</p>
+ <a id="more"></a>
+
 <h4 id="为什么会出现线程阻塞？"><a href="#为什么会出现线程阻塞？" class="headerlink" title="为什么会出现线程阻塞？"></a>为什么会出现线程阻塞？</h4><p>1<strong>.睡眠状态</strong>：当一个线程执行代码的时候调用了sleep方法后，线程处于睡眠状态，需要设置一个睡眠时间，此时有其他线程需要执行时就会造成线程阻塞，而且sleep方法被调用之后，线程不会释放锁对象，也就是说锁还在该线程手里，CPU执行权还在自己手里，等睡眠时间一过，该线程就会进入就绪状态，典型的“占着茅坑不拉屎”；</p>
 <p>2.<strong>等待状态</strong>：当一个线程正在运行时，调用了wait方法，此时该线程需要交出CPU执行权，也就是将锁释放出去，交给另一个线程，该线程进入等待状态，但与睡眠状态不一样的是，进入等待状态的线程不需要设置睡眠时间，但是需要执行notify方法或者notifyall方法来对其唤醒，自己是不会主动醒来的，等被唤醒之后，该线程也会进入就绪状态，但是进入就绪状态的该线程手里是没有执行权的，也就是没有锁，而睡眠状态的线程一旦苏醒，进入就绪状态时是自己还拿着锁的。等待状态的线程苏醒后，就是典型的“物是人非，大权旁落“；</p>
 <p>3.<strong>礼让状态</strong>：当一个线程正在运行时，调用了yield方法之后，该线程会将执行权礼让给同等级的线程或者比它高一级的线程优先执行，此时该线程有可能只执行了一部分而此时把执行权礼让给了其他线程，这个时候也会进入阻塞状态，但是该线程会随时可能又被分配到执行权，这就很”中国化的线程“了，比较讲究谦让；</p>
@@ -676,6 +686,8 @@
 <p>所以负载因子越大则散列表的装填程度越高，也就是能容纳更多的元素，元素多了，链表大了，所以此时索引效率就会降低。</p>
 <p>反之，负载因子越小则链表中的数据量就越稀疏，此时会对空间造成烂费，但是此时索引效率高。</p>
 <p>HashMap的loadFactor为0.75，默认initailCapacity为16， hreshold：扩容的临界值，=容量<em>填充因子：16</em> 0.75 =&gt; 12 </p>
+ <a id="more"></a>
+
 <hr>
 <h3 id="讲一讲HashMap"><a href="#讲一讲HashMap" class="headerlink" title="讲一讲HashMap?"></a>讲一讲HashMap?</h3><h5 id="1-常用实现类结构"><a href="#1-常用实现类结构" class="headerlink" title="1.常用实现类结构"></a>1.常用实现类结构</h5><p><strong>Map:</strong>双列数据，存储key-value对的数据   —类似于高中的函数：y = f(x)    </p>
 <p>​    <strong>HashMap:</strong>作为Map的主要实现类；线程不安全的，效率高；存储null的key和value        </p>
@@ -732,6 +744,8 @@
     <content><![CDATA[<h3 id="1-数据库的创建"><a href="#1-数据库的创建" class="headerlink" title="1. 数据库的创建"></a>1. 数据库的创建</h3><h4 id="1-1创建一个名称为mydb1的数据库"><a href="#1-1创建一个名称为mydb1的数据库" class="headerlink" title="1.1创建一个名称为mydb1的数据库"></a>1.1创建一个名称为mydb1的数据库</h4><p>​        create dateabase mydb1;</p>
 <h4 id="1-2-创建一个使用utf8字符集的mydb2数据库。"><a href="#1-2-创建一个使用utf8字符集的mydb2数据库。" class="headerlink" title="1.2 创建一个使用utf8字符集的mydb2数据库。"></a>1.2 创建一个使用utf8字符集的mydb2数据库。</h4><p>​         create database mydb2 character set utf8;</p>
 <h4 id="1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。"><a href="#1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。" class="headerlink" title="1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。"></a>1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。</h4><p>​        create database mydb3 character set utf8 collate utf8_general_ci;</p>
+ <a id="more"></a>
+
 <h3 id="2-数据库的修改"><a href="#2-数据库的修改" class="headerlink" title="2. 数据库的修改"></a>2. 数据库的修改</h3><p>​      <strong>修改mydb2字符集为gbk</strong></p>
 <p>​        alter database mydb2 character set gbk;</p>
 <h3 id="3-数据库的删除"><a href="#3-数据库的删除" class="headerlink" title="3. 数据库的删除"></a>3. 数据库的删除</h3><p>​    <strong>删除数据库mydb3</strong> </p>
