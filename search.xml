@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>并发知识之线程池</title>
-    <url>/2020/03/11/%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>框架知识</title>
     <url>/2020/03/08/%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><h4 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h4><p> 为了解决对象之间的耦合度过高的问题，提出了IOC 这个概念，IOC是Inversion of Control的缩写，多数书籍翻译成“控制反转”， 依赖注入(DI)和控制反转(IOC)是从不同的角度的描述的同一件事情，就是指<strong>通过引入IOC容器，利用依赖关系注入的方式，实现对象之间的解耦</strong>。 </p>
@@ -16,6 +11,8 @@
 
 <h4 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h4><p>多个业务中有同一个实例对象和方法，如果这个方法名改了，所有的引用处都得修改，如果修改了位置，也需要所有的引用出进行修改，针对这两个不足，通过AOP面向切面进行改进，将这个方法定义成切点，切点和通知组成切面，通知一般有Before、After、After-returning、After-throwing、Around通知。</p>
 <p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。 </p>
+<hr>
+<h4 id="SpringAOP实现原理-IOC实现原理-源码怎么实现-？"><a href="#SpringAOP实现原理-IOC实现原理-源码怎么实现-？" class="headerlink" title="SpringAOP实现原理+IOC实现原理(源码怎么实现)？"></a>SpringAOP实现原理+IOC实现原理(源码怎么实现)？</h4><hr>
 <h4 id="Spring-bean"><a href="#Spring-bean" class="headerlink" title="Spring bean"></a>Spring bean</h4><h5 id="1-Spring-中的-bean-的作用域有哪些"><a href="#1-Spring-中的-bean-的作用域有哪些" class="headerlink" title="1. Spring 中的 bean 的作用域有哪些?"></a>1. Spring 中的 bean 的作用域有哪些?</h5><ul>
 <li>singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
 <li>prototype : 每次请求都会创建一个新的 bean 实例。</li>
@@ -64,6 +61,7 @@
 <li>当要销毁 Bean 的时候，如果 Bean 实现了 <code>DisposableBean</code> 接口，执行 <code>destroy()</code> 方法。</li>
 <li>当要销毁 Bean 的时候，如果 Bean 在配置文件中的定义包含 destroy-method 属性，执行指定的方法。</li>
 </ul>
+<hr>
 <h4 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h4><h5 id="1-说说自己对于-Spring-MVC-了解"><a href="#1-说说自己对于-Spring-MVC-了解" class="headerlink" title="1. 说说自己对于 Spring MVC 了解?"></a>1. 说说自己对于 Spring MVC 了解?</h5><p>谈到这个问题，我们不得不提提之前 Model1 和 Model2 这两个没有 Spring MVC 的时代。</p>
 <ul>
 <li><strong>Model1 时代</strong> : 很多学 Java 后端比较晚的朋友可能并没有接触过 Model1 模式下的 JavaWeb 应用开发。在 Model1 模式下，整个 Web 应用几乎全部用 JSP 页面组成，只用少量的 JavaBean 来处理数据库连接、访问等操作。这个模式下 JSP 即是控制层又是表现层。显而易见，这种模式存在很多问题。比如①将控制逻辑和表现逻辑混杂在一起，导致代码重用率极低；②前端和后端相互依赖，难以进行测试并且开发效率极低；</li>
@@ -97,6 +95,7 @@
 <li>数据转换组件（DataBinder） </li>
 <li>消息转换器组件（HttpMessageConverter） </li>
 </ol>
+<hr>
 <h4 id="Spring-框架中用到了哪些设计模式？"><a href="#Spring-框架中用到了哪些设计模式？" class="headerlink" title="Spring 框架中用到了哪些设计模式？"></a>Spring 框架中用到了哪些设计模式？</h4><ul>
 <li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</li>
 <li><strong>代理设计模式</strong> : Spring AOP 功能的实现。</li>
@@ -180,8 +179,180 @@
   <entry>
     <title>Linux知识</title>
     <url>/2020/03/08/Linux%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<h3 id="Linux文件的权限，如何设置可读可写权限"><a href="#Linux文件的权限，如何设置可读可写权限" class="headerlink" title="Linux文件的权限，如何设置可读可写权限"></a>Linux文件的权限，如何设置可读可写权限</h3><p>chmod(change mode)功能：变更文件或目录的权限</p>
-<p>chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ]</p>
+    <content><![CDATA[<ul>
+<li> <a id="more"></a>
+
+</li>
+</ul>
+<hr>
+<h3 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h3><h3 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令"></a>ls命令</h3><ul>
+<li><p>ls（list）功能：列出目录内容</p>
+</li>
+<li><p>格式： Is [参数］［文件或目录］</p>
+<p>-a或–all 下所有文件和目录。 注意隐藏文件、 特殊目录、 和 ．</p>
+<p>-I 使用详细格式列表。</p>
+<p>-t用文件和目录的更改时间排序。</p>
+<p>-r反向排序<br>–help 在线帮助。</p>
+</li>
+<li><p>常用</p>
+<p>ls -l 简化版：ll</p>
+<p>ls -al</p>
+</li>
+</ul>
+<h4 id="cd命令"><a href="#cd命令" class="headerlink" title="cd命令"></a>cd命令</h4><ul>
+<li>cd（change directory）：切换目录</li>
+<li>cd ~  当前用户目录</li>
+<li>cd /   根目录</li>
+<li>cd -   上一次访问的目录</li>
+<li>cd ..  上一级目录</li>
+<li>cd       缺省当前用户目录</li>
+</ul>
+<h4 id="pwd命令"><a href="#pwd命令" class="headerlink" title="pwd命令"></a>pwd命令</h4><ul>
+<li>pwd（print working directory）：显示工作目录</li>
+</ul>
+<h4 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a>mkdir命令</h4><ul>
+<li>mkdir（make directory）：创建目录</li>
+<li>-p 父目录不存在情况下先生成父目录</li>
+<li>-v 显示命令执行过程中的详细信息</li>
+</ul>
+<h4 id="cat命令"><a href="#cat命令" class="headerlink" title="cat命令"></a>cat命令</h4><ul>
+<li>cat（catenate）：显示文本文件内容</li>
+<li>cat 文件  显式指定文件的所有内容</li>
+</ul>
+<h4 id="more命令"><a href="#more命令" class="headerlink" title="more命令"></a>more命令</h4><ul>
+<li><p>more功能：分页显示文件内容，还支持直接跳转行等功能</p>
+</li>
+<li><p>语法：more file</p>
+</li>
+<li><p>操作</p>
+<p> Enter    向下 n 行， 衙要定义。 默认为 1 行</p>
+<p> 空格键  向下滚动一屏或 Ctrl+F </p>
+<p> B           返回上一屏或 Ctrl+B</p>
+<p> q           退出 more</p>
+</li>
+</ul>
+<h4 id="less命令"><a href="#less命令" class="headerlink" title="less命令"></a>less命令</h4><ul>
+<li><p>less功能：分页显示文件内容， 操作更详细</p>
+</li>
+<li><p>语法： less [参数] 文件</p>
+<p>-m  显示类似more命令的百分比</p>
+<p>-N   显示每行的行号</p>
+</li>
+<li><p>操作</p>
+<p>空格键           前进一页或page down</p>
+<p>b                    后退一页或page up</p>
+<p>d                    前进半页</p>
+<p>u                    后退半页</p>
+<p>Enter             前进一行或下方向键</p>
+<p>y                     后退一行或上方向键</p>
+<p>/字符串          向下搜索</p>
+<p>?字符串          向上搜索</p>
+<p>v                     进入vim编辑器</p>
+<p>左右方向键   相当于水平滚动条</p>
+<p>q                    退出</p>
+</li>
+</ul>
+<h4 id="tail命令"><a href="#tail命令" class="headerlink" title="tail命令"></a>tail命令</h4><ul>
+<li><p>功能： 用于显示指定文件末尾内容， 不指定文件时， 作为输入信息进行处理。 常用查看日志文 件。</p>
+</li>
+<li><p>格式： tail[必要参数] [选择参数] [文件]</p>
+<p>-n&lt;行数&gt;    显示行数</p>
+<p>-f                  循环读取</p>
+<p>&amp;                  表示后台运行，否则占用终端</p>
+<p>ctrl + c         退出</p>
+</li>
+</ul>
+<h4 id="cp命令"><a href="#cp命令" class="headerlink" title="cp命令"></a>cp命令</h4><ul>
+<li><p>cp(copy)功能· 复制文件或目录。</p>
+</li>
+<li><p>语法： cp [参数]  [源文件或目录]  [目标文件或目录]</p>
+<p>-r或–recursive   递归处理，将指定目录下的文件与子目录一并处理。</p>
+</li>
+</ul>
+<h4 id="mv命令"><a href="#mv命令" class="headerlink" title="mv命令"></a>mv命令</h4><ul>
+<li><p>mv(move)功能：移动或更名现有的文件或目录</p>
+</li>
+<li><p>语法： mv  [源文件或目录] [目标文件或目录]</p>
+<p>-f或-force    若目标文件或目录与现有的文件或目录重复，则直接覆盖现有的文件或目录</p>
+</li>
+</ul>
+<h4 id="rm命令"><a href="#rm命令" class="headerlink" title="rm命令"></a>rm命令</h4><ul>
+<li><p>rm(remove)功能：删除文件或目录</p>
+</li>
+<li><p>语法：rm [-dfirv] [–helo] [–version] [文件或目录]</p>
+<p>-f或–force                   强制删除文件或目录。</p>
+<p>-r或-R或–recursive    递归处理，将指定目录下的所有文件及子目录一并处理</p>
+</li>
+</ul>
+<h4 id="find命令"><a href="#find命令" class="headerlink" title="find命令"></a>find命令</h4><ul>
+<li><p>find：查找文件或目录</p>
+</li>
+<li><p>语法：find [目录] [参数]</p>
+<p>-name 指定字符串作为寻找文件或目录的范本样式</p>
+</li>
+</ul>
+<h4 id="vi或vim命令"><a href="#vi或vim命令" class="headerlink" title="vi或vim命令"></a>vi或vim命令</h4><ul>
+<li><p>输入”vim文件名 “ 进入”一般模式”</p>
+<p>按下”i”从一般模式， 进入 “插入膜式”</p>
+<p>按下”esc”从 “插入膜式”退出到 “一般模式”</p>
+<p>在”一般模式”下，输入”:wq”，退出编辑</p>
+<p><img src="C:%5CUsers%5CWLJ%5CPictures%5CScreenshots%5C%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(24).png" alt=""></p>
+<p><img src="C:%5CUsers%5CWLJ%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200315120427577.png" alt="image-20200315120427577"></p>
+</li>
+</ul>
+<h4 id="管道"><a href="#管道" class="headerlink" title="管道 |"></a>管道 |</h4><ul>
+<li>linux提供管道符号”|”，作用是 “命令1”的输出内容，将作为 “命令2”的输入内容。 一般与grep命令一起使用。</li>
+<li>格式： 命令1 | 命令2</li>
+</ul>
+<h4 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h4><ul>
+<li><p>grep全称是Global Regular Expression Print, 表示全局正则表达式版本</p>
+</li>
+<li><p>功能： 用于过滤／搜索的特定字符。 可使用正则表达式能多种命令配合使用， 使用上十分灵活。</p>
+</li>
+<li><p>格式： grep [option]  pattern [file]</p>
+<p>-i 或–ignore-case      #忽略字符大小写的差别 。</p>
+</li>
+</ul>
+<h4 id="ps命令"><a href="#ps命令" class="headerlink" title="ps命令"></a>ps命令</h4><ul>
+<li><p>功能： ps命令是Process Status的缩写。 提供对进程的一次性查看。 及执行ps命令的那个时刻进程信息。</p>
+</li>
+<li><p>格式： ps [参数]</p>
+<p>-e  此参数的效果和指定”A”参数相同 ， 显示所有程序</p>
+<p>-f  显示UID,PPIP,C与STIME栏位</p>
+</li>
+</ul>
+<h4 id="kill命令"><a href="#kill命令" class="headerlink" title="kill命令"></a>kill命令</h4><ul>
+<li><p>kill功能： 删除执行中的程序或工作。</p>
+</li>
+<li><p>语法： kill [参数] [程序]</p>
+<p>-I &lt;信息编号＞  若不加＜信息编驾＞选项， 则-l参数会列出全部的信息名称。</p>
+</li>
+</ul>
+<h4 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h4><ul>
+<li>功能：显示网络设备</li>
+<li>命令：ifconfig</li>
+</ul>
+<h4 id="ping命令"><a href="#ping命令" class="headerlink" title="ping命令"></a>ping命令</h4><ul>
+<li>功能：测试与目标主机的连通性</li>
+<li>命令：ping 主机名或ip地址</li>
+</ul>
+<h4 id="备份压缩：tar命令"><a href="#备份压缩：tar命令" class="headerlink" title="备份压缩：tar命令"></a>备份压缩：tar命令</h4><ul>
+<li><p>tar功能：文件备份压缩</p>
+</li>
+<li><p>语法：tar命令</p>
+<p>-c 建立一个压缩文件的参数指令（create） –压缩</p>
+<p>-x 解开一个压缩文件的参数指令（extract） – 解压</p>
+<p>-z 是否需要用gzip压缩</p>
+<p>-v 压缩的过程中显示文件（verbose）</p>
+<p>-f 使用档名，在f之后要立即接档名（file）、</p>
+<p>常用的解压参数组合：zxvf</p>
+<p>常用的压缩参数组合：zcvf</p>
+</li>
+</ul>
+<h4 id="Linux文件的权限，chmod命令"><a href="#Linux文件的权限，chmod命令" class="headerlink" title="Linux文件的权限，chmod命令"></a>Linux文件的权限，chmod命令</h4><ul>
+<li><p>chmod(change mode)功能：变更文件或目录的权限</p>
+</li>
+<li><p>chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ]</p>
 <p>-R 递归处理：将指定目录下的所有文件及子目录一并处理</p>
 <ul>
 <li><p>权限范围：</p>
@@ -199,17 +370,16 @@
 <p>w:写入 2</p>
 <p>x:执行或切换 1</p>
 <p>-：不具有任何权限 0</p>
- <a id="more"></a>
-
 </li>
 </ul>
-<hr>
-<p>Linux远程拷贝有几种方式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># scp php-7.2.4.tar.gz root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;   &#x2F;&#x2F;这里是从当前主机拷贝到IP位142的局域网主机目录&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Linux远程拷贝有几种方式"><a href="#Linux远程拷贝有几种方式" class="headerlink" title="Linux远程拷贝有几种方式"></a>Linux远程拷贝有几种方式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># scp php-7.2.4.tar.gz root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;   &#x2F;&#x2F;这里是从当前主机拷贝到IP位142的局域网主机目录&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># scp root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;redis.tar.gz &#x2F;usr&#x2F;local&#x2F;src&#x2F;  &#x2F;&#x2F;这里是从目标主机142拷贝文件到本机&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
 
-<hr>
+<h4 id="Linux查看进程端口"><a href="#Linux查看进程端口" class="headerlink" title="Linux查看进程端口"></a>Linux查看进程端口</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps - aux | grep java</span><br><span class="line">ps - ef | grep java</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Java面试</category>
@@ -601,6 +771,101 @@
 <li><strong>提高线程的可管理性</strong>。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</li>
 </ul>
 <hr>
+<h3 id="实现Runnable接口和Callable接口的区别"><a href="#实现Runnable接口和Callable接口的区别" class="headerlink" title="实现Runnable接口和Callable接口的区别"></a>实现Runnable接口和Callable接口的区别</h3><p><code>Runnable</code>自Java 1.0以来一直存在，但<code>Callable</code>仅在Java 1.5中引入,目的就是为了来处理<code>Runnable</code>不支持的用例。<strong><code>Runnable</code> 接口</strong>不会返回结果或抛出检查异常，但是<strong><code>Callable</code> 接口</strong>可以。所以，如果任务不需要返回结果或抛出异常推荐使用 <strong><code>Runnable</code> 接口</strong>，这样代码看起来会更加简洁。</p>
+<p>工具类 <code>Executors</code> 可以实现 <code>Runnable</code> 对象和 <code>Callable</code> 对象之间的相互转换。（<code>Executors.callable（Runnable task</code>）或 <code>Executors.callable（Runnable task，Object resule）</code>）。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Runnable.java</span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface Runnable &#123;</span><br><span class="line">   &#x2F;**</span><br><span class="line">    * 被线程执行，没有返回值也无法抛出异常</span><br><span class="line">    *&#x2F;</span><br><span class="line">    public abstract void run();</span><br><span class="line">&#125;</span><br><span class="line">Callable.java</span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface Callable&lt;V&gt; &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 计算结果，或在无法这样做时抛出异常。</span><br><span class="line">     * @return 计算得出的结果</span><br><span class="line">     * @throws 如果无法计算结果，则抛出异常</span><br><span class="line">     *&#x2F;</span><br><span class="line">    V call() throws Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="执行execute-方法和submit-方法的区别是什么呢？"><a href="#执行execute-方法和submit-方法的区别是什么呢？" class="headerlink" title="执行execute()方法和submit()方法的区别是什么呢？"></a>执行execute()方法和submit()方法的区别是什么呢？</h3><ol>
+<li><strong><code>execute()</code>方法用于提交不需要返回值的任务，所以无法判断任务是否被线程池执行成功与否；</strong></li>
+<li><strong><code>submit()</code>方法用于提交需要返回值的任务。线程池会返回一个 <code>Future</code> 类型的对象，通过这个 <code>Future</code> 对象可以判断任务是否执行成功</strong>，并且可以通过 <code>Future</code> 的 <code>get()</code>方法来获取返回值，<code>get()</code>方法会阻塞当前线程直到任务完成，而使用 <code>get（long timeout，TimeUnit unit）</code>方法则会阻塞当前线程一段时间后立即返回，这时候有可能任务没有执行完。</li>
+</ol>
+<p>我们以<strong><code>AbstractExecutorService</code></strong>接口中的一个 <code>submit</code> 方法为例子来看看源代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public Future&lt;?&gt; submit(Runnable task) &#123;</span><br><span class="line">    if (task &#x3D;&#x3D; null) throw new NullPointerException();</span><br><span class="line">    RunnableFuture&lt;Void&gt; ftask &#x3D; newTaskFor(task, null);</span><br><span class="line">    execute(ftask);</span><br><span class="line">    return ftask;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面方法调用的 <code>newTaskFor</code> 方法返回了一个 <code>FutureTask</code> 对象。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">protected &lt;T&gt; RunnableFuture&lt;T&gt; newTaskFor(Runnable runnable, T value) &#123;</span><br><span class="line">    return new FutureTask&lt;T&gt;(runnable, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们再来看看<code>execute()</code>方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void execute(Runnable command) &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="如何创建线程池"><a href="#如何创建线程池" class="headerlink" title="如何创建线程池"></a>如何创建线程池</h3><p>《阿里巴巴Java开发手册》中强制线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险</p>
+<blockquote>
+<p>Executors 返回线程池对象的弊端如下：</p>
+<ul>
+<li><strong>FixedThreadPool 和 SingleThreadExecutor</strong> ： 允许请求的队列长度为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致OOM。</li>
+<li><strong>CachedThreadPool 和 ScheduledThreadPool</strong> ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致OOM。</li>
+</ul>
+</blockquote>
+<p><strong>方式一：通过构造方法实现</strong> <a href="https://camo.githubusercontent.com/c1a87ea139bc0379f5c98484416594843ff29d6d/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f546872656164506f6f6c4578656375746f722545362539452538342545392538302541302545362539362542392545362542332539352e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/c1a87ea139bc0379f5c98484416594843ff29d6d/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f546872656164506f6f6c4578656375746f722545362539452538342545392538302541302545362539362542392545362542332539352e706e67" alt="ThreadPoolExecutor构造方法"></a> <strong>方式二：通过Executor 框架的工具类Executors来实现</strong> 我们可以创建三种类型的ThreadPoolExecutor：</p>
+<ul>
+<li><strong>FixedThreadPool</strong> ： 该方法返回一个固定线程数量的线程池。该线程池中的线程数量始终不变。当有一个新的任务提交时，线程池中若有空闲线程，则立即执行。若没有，则新的任务会被暂存在一个任务队列中，待有线程空闲时，便处理在任务队列中的任务。</li>
+<li><strong>SingleThreadExecutor：</strong> 方法返回一个只有一个线程的线程池。若多余一个任务被提交到该线程池，任务会被保存在一个任务队列中，待线程空闲，按先入先出的顺序执行队列中的任务。</li>
+<li><strong>CachedThreadPool：</strong> 该方法返回一个可根据实际情况调整线程数量的线程池。线程池的线程数量不确定，但若有空闲线程可以复用，则会优先使用可复用的线程。若所有线程均在工作，又有新的任务提交，则会创建新的线程处理任务。所有线程在当前任务执行完毕后，将返回线程池进行复用。</li>
+</ul>
+<p>对应Executors工具类中的方法如图所示： <a href="https://camo.githubusercontent.com/6cfe663a5033e0f4adcfa148e6c54cdbb97c00bb/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f4578656375746f722545362541312538362545362539452542362545372539412538342545352542372541352545352538352542372545372542312542422e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/6cfe663a5033e0f4adcfa148e6c54cdbb97c00bb/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f4578656375746f722545362541312538362545362539452542362545372539412538342545352542372541352545352538352542372545372542312542422e706e67" alt="Executor框架的工具类"></a></p>
+<hr>
+<h3 id="ThreadPoolExecutor-类分析"><a href="#ThreadPoolExecutor-类分析" class="headerlink" title="ThreadPoolExecutor 类分析"></a>ThreadPoolExecutor 类分析</h3><p><code>ThreadPoolExecutor</code> 类中提供的四个构造方法。我们来看最长的那个，其余三个都是在这个构造方法的基础上产生（其他几个构造方法说白点都是给定某些默认参数的构造方法比如默认制定拒绝策略是什么），这里就不贴代码讲了，比较简单。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * 用给定的初始参数创建一个新的ThreadPoolExecutor。</span><br><span class="line"> *&#x2F;</span><br><span class="line">public ThreadPoolExecutor(int corePoolSize,</span><br><span class="line">                          int maximumPoolSize,</span><br><span class="line">                          long keepAliveTime,</span><br><span class="line">                          TimeUnit unit,</span><br><span class="line">                          BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">                          ThreadFactory threadFactory,</span><br><span class="line">                          RejectedExecutionHandler handler) &#123;</span><br><span class="line">    if (corePoolSize &lt; 0 ||</span><br><span class="line">        maximumPoolSize &lt;&#x3D; 0 ||</span><br><span class="line">        maximumPoolSize &lt; corePoolSize ||</span><br><span class="line">        keepAliveTime &lt; 0)</span><br><span class="line">        throw new IllegalArgumentException();</span><br><span class="line">    if (workQueue &#x3D;&#x3D; null || threadFactory &#x3D;&#x3D; null || handler &#x3D;&#x3D; null)</span><br><span class="line">        throw new NullPointerException();</span><br><span class="line">    this.corePoolSize &#x3D; corePoolSize;</span><br><span class="line">    this.maximumPoolSize &#x3D; maximumPoolSize;</span><br><span class="line">    this.workQueue &#x3D; workQueue;</span><br><span class="line">    this.keepAliveTime &#x3D; unit.toNanos(keepAliveTime);</span><br><span class="line">    this.threadFactory &#x3D; threadFactory;</span><br><span class="line">    this.handler &#x3D; handler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>下面这些对创建 非常重要，在后面使用线程池的过程中你一定会用到！所以，务必拿着小本本记清楚。</strong></p>
+<h4 id="1-ThreadPoolExecutor构造函数重要参数分析"><a href="#1-ThreadPoolExecutor构造函数重要参数分析" class="headerlink" title="1. ThreadPoolExecutor构造函数重要参数分析"></a>1. <code>ThreadPoolExecutor</code>构造函数重要参数分析</h4><p><strong><code>ThreadPoolExecutor</code> 3 个最重要的参数：</strong></p>
+<ul>
+<li><strong><code>corePoolSize</code> :</strong> 核心线程数线程数定义了最小可以同时运行的线程数量。</li>
+<li><strong><code>maximumPoolSize</code> :</strong> 当队列中存放的任务达到队列容量的时候，当前可以同时运行的线程数量变为最大线程数。</li>
+<li><strong><code>workQueue</code>:</strong> 当新任务来的时候会先判断当前运行的线程数量是否达到核心线程数，如果达到的话，新任务就会被存放在队列中。</li>
+</ul>
+<p><code>ThreadPoolExecutor</code>其他常见参数:</p>
+<ol>
+<li><strong><code>keepAliveTime</code></strong>:当线程池中的线程数量大于 <code>corePoolSize</code> 的时候，如果这时没有新的任务提交，核心线程外的线程不会立即销毁，而是会等待，直到等待的时间超过了 <code>keepAliveTime</code>才会被回收销毁；</li>
+<li><strong><code>unit</code></strong> : <code>keepAliveTime</code> 参数的时间单位。</li>
+<li><strong><code>threadFactory</code></strong> :executor 创建新线程的时候会用到。</li>
+<li><strong><code>handler</code></strong> :饱和策略。关于饱和策略下面单独介绍一下。</li>
+</ol>
+<h4 id="2-ThreadPoolExecutor-饱和策略"><a href="#2-ThreadPoolExecutor-饱和策略" class="headerlink" title="2. ThreadPoolExecutor 饱和策略"></a>2. <code>ThreadPoolExecutor</code> 饱和策略</h4><p><strong><code>ThreadPoolExecutor</code> 饱和策略定义:</strong></p>
+<p>如果当前同时运行的线程数量达到最大线程数量并且队列也已经被放满了任时，<code>ThreadPoolTaskExecutor</code> 定义一些策略:</p>
+<ul>
+<li><strong><code>ThreadPoolExecutor.AbortPolicy</code></strong>：抛出 <code>RejectedExecutionException</code>来拒绝新任务的处理。</li>
+<li><strong><code>ThreadPoolExecutor.CallerRunsPolicy</code></strong>：调用执行自己的线程运行任务。您不会任务请求。但是这种策略会降低对于新任务提交速度，影响程序的整体性能。另外，这个策略喜欢增加队列容量。如果您的应用程序可以承受此延迟并且你不能任务丢弃任何一个任务请求的话，你可以选择这个策略。</li>
+<li><strong><code>ThreadPoolExecutor.DiscardPolicy</code>：</strong> 不处理新任务，直接丢弃掉。</li>
+<li><strong><code>ThreadPoolExecutor.DiscardOldestPolicy</code>：</strong> 此策略将丢弃最早的未处理的任务请求。</li>
+</ul>
+<p>举个例子： Spring 通过 <code>ThreadPoolTaskExecutor</code> 或者我们直接通过 <code>ThreadPoolExecutor</code> 的构造函数创建线程池的时候，当我们不指定 <code>RejectedExecutionHandler</code> 饱和策略的话来配置线程池的时候默认使用的是 <code>ThreadPoolExecutor.AbortPolicy</code>。在默认情况下，<code>ThreadPoolExecutor</code> 将抛出 <code>RejectedExecutionException</code> 来拒绝新来的任务 ，这代表你将丢失对这个任务的处理。 对于可伸缩的应用程序，建议使用 <code>ThreadPoolExecutor.CallerRunsPolicy</code>。当最大池被填满时，此策略为我们提供可伸缩队列。（这个直接查看 <code>ThreadPoolExecutor</code> 的构造函数源码就可以看出，比较简单的原因，这里就不贴代码了）</p>
+<hr>
+<h3 id="一个简单的线程池Demo-Runnable-ThreadPoolExecutor"><a href="#一个简单的线程池Demo-Runnable-ThreadPoolExecutor" class="headerlink" title="一个简单的线程池Demo:Runnable+ThreadPoolExecutor"></a>一个简单的线程池Demo:<code>Runnable</code>+<code>ThreadPoolExecutor</code></h3><p>为了让大家更清楚上面的面试题中的一些概念，我写了一个简单的线程池 Demo。</p>
+<p>首先创建一个 <code>Runnable</code> 接口的实现类（当然也可以是 <code>Callable</code> 接口，我们上面也说了两者的区别。）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MyRunnable.java</span><br><span class="line">import java.util.Date;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * 这是一个简单的Runnable类，需要大约5秒钟来执行其任务。</span><br><span class="line"> * @author shuang.kou</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class MyRunnable implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">    private String command;</span><br><span class="line"></span><br><span class="line">    public MyRunnable(String s) &#123;</span><br><span class="line">        this.command &#x3D; s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + &quot; Start. Time &#x3D; &quot; + new Date());</span><br><span class="line">        processCommand();</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + &quot; End. Time &#x3D; &quot; + new Date());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void processCommand() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(5000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return this.command;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写测试程序，我们这里以阿里巴巴推荐的使用 <code>ThreadPoolExecutor</code> 构造函数自定义参数的方式来创建线程池。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ThreadPoolExecutorDemo.java</span><br><span class="line">import java.util.concurrent.ArrayBlockingQueue;</span><br><span class="line">import java.util.concurrent.ThreadPoolExecutor;</span><br><span class="line">import java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line">public class ThreadPoolExecutorDemo &#123;</span><br><span class="line"></span><br><span class="line">    private static final int CORE_POOL_SIZE &#x3D; 5;</span><br><span class="line">    private static final int MAX_POOL_SIZE &#x3D; 10;</span><br><span class="line">    private static final int QUEUE_CAPACITY &#x3D; 100;</span><br><span class="line">    private static final Long KEEP_ALIVE_TIME &#x3D; 1L;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;使用阿里巴巴推荐的创建线程池的方式</span><br><span class="line">        &#x2F;&#x2F;通过ThreadPoolExecutor构造函数自定义参数创建</span><br><span class="line">        ThreadPoolExecutor executor &#x3D; new ThreadPoolExecutor(</span><br><span class="line">                CORE_POOL_SIZE,</span><br><span class="line">                MAX_POOL_SIZE,</span><br><span class="line">                KEEP_ALIVE_TIME,</span><br><span class="line">                TimeUnit.SECONDS,</span><br><span class="line">                new ArrayBlockingQueue&lt;&gt;(QUEUE_CAPACITY),</span><br><span class="line">                new ThreadPoolExecutor.CallerRunsPolicy());</span><br><span class="line"></span><br><span class="line">        for (int i &#x3D; 0; i &lt; 10; i++) &#123;</span><br><span class="line">            &#x2F;&#x2F;创建WorkerThread对象（WorkerThread类实现了Runnable 接口）</span><br><span class="line">            Runnable worker &#x3D; new MyRunnable(&quot;&quot; + i);</span><br><span class="line">            &#x2F;&#x2F;执行Runnable</span><br><span class="line">            executor.execute(worker);</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;终止线程池</span><br><span class="line">        executor.shutdown();</span><br><span class="line">        while (!executor.isTerminated()) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;Finished all threads&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们上面的代码指定了：</p>
+<ol>
+<li><code>corePoolSize</code>: 核心线程数为 5。</li>
+<li><code>maximumPoolSize</code> ：最大线程数 10</li>
+<li><code>keepAliveTime</code> : 等待时间为 1L。</li>
+<li><code>unit</code>: 等待时间的单位为 TimeUnit.SECONDS。</li>
+<li><code>workQueue</code>：任务队列为 <code>ArrayBlockingQueue</code>，并且容量为 100;</li>
+<li><code>handler</code>:饱和策略为 <code>CallerRunsPolicy</code>。</li>
+</ol>
+<p><strong>Output：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pool-1-thread-2 Start. Time &#x3D; Tue Nov 12 20:59:44 CST 2019</span><br><span class="line">pool-1-thread-5 Start. Time &#x3D; Tue Nov 12 20:59:44 CST 2019</span><br><span class="line">pool-1-thread-4 Start. Time &#x3D; Tue Nov 12 20:59:44 CST 2019</span><br><span class="line">pool-1-thread-1 Start. Time &#x3D; Tue Nov 12 20:59:44 CST 2019</span><br><span class="line">pool-1-thread-3 Start. Time &#x3D; Tue Nov 12 20:59:44 CST 2019</span><br><span class="line">pool-1-thread-5 End. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-3 End. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-2 End. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-4 End. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-1 End. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-2 Start. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-1 Start. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-4 Start. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-3 Start. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-5 Start. Time &#x3D; Tue Nov 12 20:59:49 CST 2019</span><br><span class="line">pool-1-thread-2 End. Time &#x3D; Tue Nov 12 20:59:54 CST 2019</span><br><span class="line">pool-1-thread-3 End. Time &#x3D; Tue Nov 12 20:59:54 CST 2019</span><br><span class="line">pool-1-thread-4 End. Time &#x3D; Tue Nov 12 20:59:54 CST 2019</span><br><span class="line">pool-1-thread-5 End. Time &#x3D; Tue Nov 12 20:59:54 CST 2019</span><br><span class="line">pool-1-thread-1 End. Time &#x3D; Tue Nov 12 20:59:54 CST 2019</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="线程池原理分析"><a href="#线程池原理分析" class="headerlink" title="线程池原理分析"></a>线程池原理分析</h3><p>承接上节，我们通过代码输出结果可以看出：<strong>线程池每次会同时执行 5 个任务，这 5 个任务执行完之后，剩余的 5 个任务才会被执行。</strong> 大家可以先通过上面讲解的内容，分析一下到底是咋回事？（自己独立思考一会）</p>
+<p>现在，我们就分析上面的输出内容来简单分析一下线程池原理。</p>
+<p><strong>为了搞懂线程池的原理，我们需要首先分析一下 <code>execute</code>方法。</strong>在 4.6 节中的 Demo 中我们使用 <code>executor.execute(worker)</code>来提交一个任务到线程池中去，这个方法非常重要，下面我们来看看它的源码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 存放线程池的运行状态 (runState) 和线程池内有效线程的数量 (workerCount)</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger ctl = <span class="keyword">new</span> AtomicInteger(ctlOf(RUNNING, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">workerCountOf</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> c &amp; CAPACITY;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">final</span> BlockingQueue&lt;Runnable&gt; workQueue;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>&#123;</span><br><span class="line">     <span class="comment">// 如果任务为null，则抛出异常。</span></span><br><span class="line">     <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">     <span class="comment">// ctl 中保存的线程池当前的一些状态信息</span></span><br><span class="line">     <span class="keyword">int</span> c = ctl.get();</span><br><span class="line"></span><br><span class="line">     <span class="comment">//  下面会涉及到 3 步 操作</span></span><br><span class="line">     <span class="comment">// 1.首先判断当前线程池中之行的任务数量是否小于 corePoolSize</span></span><br><span class="line">     <span class="comment">// 如果小于的话，通过addWorker(command, true)新建一个线程，并将任务(command)添加到该线程中；然后，启动该线程从而执行任务。</span></span><br><span class="line">     <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123;</span><br><span class="line">         <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>))</span><br><span class="line">             <span class="keyword">return</span>;</span><br><span class="line">         c = ctl.get();</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="comment">// 2.如果当前之行的任务数量大于等于 corePoolSize 的时候就会走到这里</span></span><br><span class="line">     <span class="comment">// 通过 isRunning 方法判断线程池状态，线程池处于 RUNNING 状态才会被并且队列可以加入任务，该任务才会被加入进去</span></span><br><span class="line">     <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;</span><br><span class="line">         <span class="keyword">int</span> recheck = ctl.get();</span><br><span class="line">         <span class="comment">// 再次获取线程池状态，如果线程池状态不是 RUNNING 状态就需要从任务队列中移除任务，并尝试判断线程是否全部执行完毕。同时执行拒绝策略。</span></span><br><span class="line">         <span class="keyword">if</span> (!isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">             reject(command);</span><br><span class="line">             <span class="comment">// 如果当前线程池为空就新创建一个线程并执行。</span></span><br><span class="line">         <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">             addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="comment">//3. 通过addWorker(command, false)新建一个线程，并将任务(command)添加到该线程中；然后，启动该线程从而执行任务。</span></span><br><span class="line">     <span class="comment">//如果addWorker(command, false)执行失败，则通过reject()执行相应的拒绝策略的内容。</span></span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))</span><br><span class="line">         reject(command);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过下图可以更好的对上面这 3 步做一个展示，下图是我为了省事直接从网上找到，原地址不明。</p>
+<p><a href="https://camo.githubusercontent.com/cf627f637b4c678cd77b815fbea8789dd3158b0c/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d372f2545352539422542452545382541372541332545372542412542462545372541382538422545362542312541302545352541452539452545372538452542302545352538452539462545372539302538362e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/cf627f637b4c678cd77b815fbea8789dd3158b0c/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d372f2545352539422542452545382541372541332545372542412542462545372541382538422545362542312541302545352541452539452545372538452542302545352538452539462545372539302538362e706e67" alt="图解线程池实现原理"></a></p>
+<p>现在，让我们在回到 4.6 节我们写的 Demo， 现在应该是不是很容易就可以搞懂它的原理了呢？</p>
+<p>没搞懂的话，也没关系，可以看看我的分析：</p>
+<blockquote>
+<p>我们在代码中模拟了 10 个任务，我们配置的核心线程数为 5 、等待队列容量为 100 ，所以每次只可能存在 5 个任务同时执行，剩下的 5 个任务会被放到等待队列中去。当前的 5 个任务之行完成后，才会之行剩下的 5 个任务。</p>
+</blockquote>
+<hr>
 <h3 id="Java线程消费者与生产者中的相关问题，怎么实现？"><a href="#Java线程消费者与生产者中的相关问题，怎么实现？" class="headerlink" title="Java线程消费者与生产者中的相关问题，怎么实现？"></a>Java线程消费者与生产者中的相关问题，怎么实现？</h3><h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>生产者消费者问题（Producer-consumer problem），也称有限缓冲问题（Bounded-buffer problem），是一个多线程同步问题的经典案例。生产者生成一定量的数据放到缓冲区中，然后重复此过程；与此同时，消费者也在缓冲区消耗这些数据。生产者和消费者之间必须保持同步，要保证生产者不会在缓冲区满时放入数据，消费者也不会在缓冲区空时消耗数据。不够完善的解决方法容易出现死锁的情况，此时进程都在等待唤醒。</p>
 <h4 id="解决问题的核心"><a href="#解决问题的核心" class="headerlink" title="解决问题的核心"></a>解决问题的核心</h4><p>保证同一资源被多个线程并发访问时的完整性。常用的同步方法是采用信号或加锁机制，保证资源在任意时刻至多被一个线程访问。 </p>
 <h4 id="Java能实现的几种方法"><a href="#Java能实现的几种方法" class="headerlink" title="Java能实现的几种方法"></a>Java能实现的几种方法</h4><ol>
@@ -714,15 +979,15 @@
 <h5 id="4-内存结构说明：（难点）"><a href="#4-内存结构说明：（难点）" class="headerlink" title="4. 内存结构说明：（难点）"></a>4. 内存结构说明：（难点）</h5><h6 id="4-1-HashMap在jdk7中实现原理："><a href="#4-1-HashMap在jdk7中实现原理：" class="headerlink" title="4.1 HashMap在jdk7中实现原理："></a>4.1 HashMap在jdk7中实现原理：</h6><p>HashMap map = new HashMap(): </p>
 <p>​    在实例化以后，底层创建了长度是16的一维数组Entry[] table。      </p>
 <p>​    ..可能已经执行过多次put…      </p>
-<p>​    map.put(key1,value1):首先，调用key1所在类的hashCode()计算key1哈希值，此哈希值经过某种算法计算以            后，得到在Entry数组中的存放位置。      </p>
+<p>​    map.put(key1,value1):首先，调用key1所在类的hashCode()计算key1哈希值，此哈希值经过某种算法计算以后，得到在Entry数组中的存放位置。      </p>
 <p>​    如果此位置上的数据为空，此时的key1-value1添加成功。 —-情况1      </p>
-<p>​    如果此位置上的数据不为空，(意味着此位置上存在一个或多个数据(以链表形式存在)),比较key1和已经存在的         一个或多个数据的哈希值：      </p>
+<p>​    如果此位置上的数据不为空，(意味着此位置上存在一个或多个数据(以链表形式存在)),比较key1和已经存在的一个或多个数据的哈希值：      </p>
 <p>​         如果key1的哈希值与已经存在的数据的哈希值都不相同，此时key1-value1添加成功。—-情况2              </p>
-<p>​        如果key1的哈希值和已经存在的某一个数据(key2-value2)的哈希值相同，继续比较：调用key1所在类的                 equals(key2)方法，比较：                      </p>
+<p>​        如果key1的哈希值和已经存在的某一个数据(key2-value2)的哈希值相同，继续比较：调用key1所在类的equals(key2)方法，比较：                      </p>
 <p>​                如果equals()返回false:此时key1-value1添加成功。—-情况3                      </p>
 <p>​                如果equals()返回true:使用value1替换value2。     </p>
 <p>​        补充：关于情况2和情况3：此时key1-value1和原来的数据以链表的方式存储。     </p>
-<p>​        在不断的添加过程中，会涉及到扩容问题，当超出临界值(且要存放的位置非空)时，扩容。默认的扩容方式：        扩容为原来容量的2倍，并将原的数据复制过来。</p>
+<p>​        在不断的添加过程中，会涉及到扩容问题，当超出临界值(且要存放的位置非空)时，扩容。默认的扩容方式：扩容为原来容量的2倍，并将原的数据复制过来。</p>
 <h6 id="4-2-HashMap在jdk8中相较于jdk7在底层实现方面的不同："><a href="#4-2-HashMap在jdk8中相较于jdk7在底层实现方面的不同：" class="headerlink" title="4.2 HashMap在jdk8中相较于jdk7在底层实现方面的不同："></a>4.2 HashMap在jdk8中相较于jdk7在底层实现方面的不同：</h6><ol>
 <li>new HashMap():底层没创建一个长度为16的数组</li>
 <li>jdk 8底层的数组是：Node[],而非Entry[]</li>
@@ -991,6 +1256,40 @@
 <p>Arrays.asList()返回一个List，通过阅读源码才发现，返回的List不是Collection中的那个List</p>
 <p>ArrayList提供了一个将List转为数组的方法：toArray</p>
 <hr>
+<h3 id="单点登录"><a href="#单点登录" class="headerlink" title="单点登录"></a>单点登录</h3><p>单点登录SSO（Single Sign On）说得简单点就是在一个多系统共存的环境下，用户在一处登录后，就不用在其他系统中登录，也就是用户的一次登录能得到其他所有系统的信任。单点登录在大型网站里使用得非常频繁，例如像阿里巴巴这样的网站，在网站的背后是成百上千的子系统，用户一次操作或交易可能涉及到几十个子系统的协作，如果每个子系统都需要用户认证，不仅用户会疯掉，各子系统也会为这种重复认证授权的逻辑搞疯掉。实现单点登录说到底就是要解决如何产生和存储那个信任，再就是其他系统如何验证这个信任的有效性，因此要点也就以下两个：</p>
+<ul>
+<li>存储信任</li>
+<li>验证信任</li>
+</ul>
+<p>如果一个系统做到了开头所讲的效果，也就算单点登录，单点登录有不同的实现方式，本文就罗列我开发中所遇见过的实现方式。</p>
+<p><strong>以Cookie作为凭证媒介</strong><br>最简单的单点登录实现方式，是使用cookie作为媒介，存放用户凭证。<br>用户登录父应用之后，应用返回一个加密的cookie，当用户访问子应用的时候，携带上这个cookie，授权应用解密cookie并进行校验，校验通过则登录当前用户。</p>
+<p>不难发现以上方式把信任存储在客户端的Cookie中，这种方式很容易令人质疑：</p>
+<ul>
+<li>Cookie不安全</li>
+<li>不能跨域实现免登</li>
+</ul>
+<p>对于第一个问题，通过加密Cookie可以保证安全性，当然这是在源代码不泄露的前提下。如果Cookie的加密算法泄露，攻击者通过伪造Cookie则可以伪造特定用户身份，这是很危险的。<br>对于第二个问题，更是硬伤。</p>
+<p><strong>通过JSONP实现</strong><br>对于跨域问题，可以使用JSONP实现。<br>用户在父应用中登录后，跟Session匹配的Cookie会存到客户端中，当用户需要登录子应用的时候，授权应用访问父应用提供的JSONP接口，并在请求中带上父应用域名下的Cookie，父应用接收到请求，验证用户的登录状态，返回加密的信息，子应用通过解析返回来的加密信息来验证用户，如果通过验证则登录用户。</p>
+<p>这种方式虽然能解决跨域问题，但是安全性其实跟把信任存储到Cookie是差不多的。如果一旦加密算法泄露了，攻击者可以在本地建立一个实现了登录接口的假冒父应用，通过绑定Host来把子应用发起的请求指向本地的假冒父应用，并作出回应。<br>因为攻击者完全可以按照加密算法来伪造响应请求，子应用接收到这个响应之后一样可以通过验证，并且登录特定用户。</p>
+<p><strong>通过页面重定向的方式</strong><br>最后一种介绍的方式，是通过父应用和子应用来回重定向中进行通信，实现信息的安全传递。<br>父应用提供一个GET方式的登录接口，用户通过子应用重定向连接的方式访问这个接口，如果用户还没有登录，则返回一个的登录页面，用户输入账号密码进行登录。如果用户已经登录了，则生成加密的Token，并且重定向到子应用提供的验证Token的接口，通过解密和校验之后，子应用登录当前用户。</p>
+<p>这种方式较前面两种方式，接解决了上面两种方法暴露出来的安全性问题和跨域的问题，但是并没有前面两种方式方便。<br>安全与方便，本来就是一对矛盾。</p>
+<p><strong>使用独立登录系统</strong><br>一般说来，大型应用会把授权的逻辑与用户信息的相关逻辑独立成一个应用，称为用户中心。<br>用户中心不处理业务逻辑，只是处理用户信息的管理以及授权给第三方应用。第三方应用需要登录的时候，则把用户的登录请求转发给用户中心进行处理，用户处理完毕返回凭证，第三方应用验证凭证，通过后就登录用户。</p>
+<h3 id="多点登录"><a href="#多点登录" class="headerlink" title="多点登录"></a>多点登录</h3><p>多点登录：同一账号可以在不同终端同时登录，同时收发信息。</p>
+<p>多点登录限制（禁止用户多点在线）：一个端同一个账号只能登录一个实例，例如一个账号在网站端登录后，后一个人使用这个账号在网站端登录，前一个人会被挤下去并会收到通知“你已在别处登录….”</p>
+<hr>
+<h3 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h3><h4 id="什么是-nginx-和可以做什么事情"><a href="#什么是-nginx-和可以做什么事情" class="headerlink" title="什么是 nginx 和可以做什么事情"></a>什么是 nginx 和可以做什么事情</h4><p>Nginx 是高性能的 HTTP 和反向代理的web服务器，处理高并发能力是十分强大的，能经受高负 载的考验,有报告表明能支持高达 50,000 个并发连接数。</p>
+<p>其特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好，中国大陆使用nginx网站用户有：百度、京东、新浪、网易、腾讯、淘宝等。</p>
+<h4 id="Nginx-作为-web-服务器"><a href="#Nginx-作为-web-服务器" class="headerlink" title="Nginx 作为 web 服务器"></a>Nginx 作为 web 服务器</h4><p>Nginx 可以作为静态页面的 web 服务器，同时还支持 CGI 协议的动态语言，比如 perl、php 等。但是不支持 java。Java 程序只能通过与 tomcat 配合完成。Nginx 专为性能优化而开发， 性能是其最重要的考量,实现上非常注重效率 ，能经受高负载的考验,有报告表明能支持高 达 50,000 个并发连接数。</p>
+<h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>Nginx 不仅可以做反向代理，实现负载均衡。还能用作正向代理来进行上网等功能。 正向代理：如果把局域网外的 Internet 想象成一个巨大的资源库，则局域网中的客户端要访 问 Internet，则需要通过代理服务器来访问，这种代理服务就称为正向代理。</p>
+<p>简单一点：通过代理服务器来访问服务器的过程 就叫 正向代理。<br>需要在客户端配置代理服务器进行指定网站访问</p>
+<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>反向代理，其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问。<br>我们只 需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，在返 回给客户端，此时反向代理服务器和目标服务器对外就是一个服务器，暴露的是代理服务器 地址，隐藏了真实服务器 IP 地址。</p>
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><p>增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的 情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，也就是我们所说的负 载均衡</p>
+<p>客户端发送多个请求到服务器，服务器处理请求，有一些可能要与数据库进行交互，服 务器处理完毕后，再将结果返回给客户端。</p>
+<h4 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h4><p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速 度。降低原来单个服务器的压力。</p>
+<h4 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h4><p>Nginx 作为负载均衡器，所有的请求都到 Nginx，可见 Nginx 处于非常重点的位置，如果 Nginx 服务器宕机后端 web 服务将无法提供服务，影响严重。</p>
+<p>为了屏蔽负载均衡服务器的宕机，需要建立一个备份机。主服务器和备份机上都运行高可用（Hight Availabillty）监控系统，通过传送诸如 “I am alive” 这样的信息来监控对方的运行状况。当备份机不能在一定的时间内收到这样的信息时，它就接管主服务器的服务IP并继续提供负载均衡服务；当备份管理器又从主服务器接收到 “I am alive” 这样的信息时，它就释放服务IP地址，这样主服务器就开始再次提供负载均衡服务。可以通过如下技术实现检测功能：</p>
+<p>keepalived：用于集群管理，保证集群搞可用的一个服务软件，用来防止单点故障。Keepalived 的作用是检测 Web 服务器的状态，如果有一台服务器死机或工作出现故障，Keepalived 的作用是检测到，并将有故障的 web 服务器从系统中剔除，当 web 服务器正常工作后 Keepalived 自动将 web 服务器加入到服务器群中，这些工作自动完成，无需人工干涉，需要人工做的是修复故障的 web 服务器。keepalived 是以 VRRP 协议为实现基础的，VRRP 全称 Virtual Router Redundancy Protocol，即虚拟路由冗余协议。虚拟路由冗余协议，可以认为是实现路由器高可用的协议，即将 N 台提供相同功能的路由器组成一个路由器组，这个组里面有一个 master 和多个 backup，master 上面有一个对外提供服务的 vip（VIP = Virtual IPAddress，虚拟 IP 地址，该路由器所在局域网内其他机器的默认路由为该 vip），master 会发组播，当 backup 收不到 VRRP 包时就认为 master 宕掉了，这时就需要根据 VRRP 的优先级来选举一个 backup 当 master。这样的话就可以保证路由器的高可用了。</p>
+<p>keepalived 主要有三个模块，分别是 core、check 和 VRRP。core 模块为 keepalived 的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。check 负责健康检查，包括常见的各种检查方式。VRRP 模块是来实现 VRRP 协议的。</p>
 ]]></content>
       <categories>
         <category>Java面试</category>
@@ -1186,13 +1485,139 @@
 <h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>所谓多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程时并不确定，而是在程序运行期间才确定，即一个引用变量到底会指向哪个类的实例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运行期间才能决定。</p>
 <p>在 Java 中有两种形式可以实现多态：继承（多个子类对同一方法的重写）和接口（实现接口并覆盖接口中同一方法）。</p>
 <hr>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>2.线程池理解，实现原理，源码？<br>3.SpringAOP实现原理+IOC实现原理(源码怎么实现)？<br>4.讲一讲动态代理？<br>5.反射及其实现原理？<br>6.sleep()和wait()的区别？<br>7.stop退出线程安全吗（正常退出吗）？<br>8.notify和notifyAll区别？<br>9.讲一讲线程之间怎么协作？<br>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？<br>12.讲一讲线程创建的时候发生了什么？<br>13.退出线程的方式，怎么退出线程？<br>14.nio了解吗？</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>3.SpringAOP实现原理+IOC实现原理(源码怎么实现)？<br>4.讲一讲动态代理？<br>5.反射及其实现原理？<br>6.sleep()和wait()的区别？<br>7.stop退出线程安全吗（正常退出吗）？<br>8.notify和notifyAll区别？<br>9.讲一讲线程之间怎么协作？<br>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？<br>12.讲一讲线程创建的时候发生了什么？<br>13.退出线程的方式，怎么退出线程？<br>14.nio了解吗？</p>
 <p>第一面：<br>1.多线程和多进程分别适用于什么场景？<br>2.并发和并行的区别？<br>3.TCP/IP协议的3次握手和4次挥手？原因？<br>4.设计平衡二叉树的原因？<br>5.快排、堆排、归并等排序的时间复杂度与空间复杂度？</p>
 <p> <img src="https://img-blog.csdn.net/20160924191851607" alt="这里写图片描述"> </p>
 <p>6.索引的数据结构有哪些，讲一讲B+树？<br>7.MySQL的存储引擎知道吗？区别？<br>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）<br>9.介绍HashMap，说到红黑树，然后提问：介绍一下红黑树？</p>
 <p>第二面：<br>1.介绍堆的数据结构和堆排序的思路，并手写堆排序代码（10分钟）<br>2.场景题：只有一台机器，10亿个ip地址（有重复）找出出现最多的10个ip，怎么处理？<br>3.HashMap冲突的解决方法以及原理分析？<br>4.Git的常用命令有哪些，merge时候出现冲突怎么处理？</p>
 <p>记录了一些出现比较多的面试的问题（套路）：</p>
 <p>1.面向对象的特性？<br>2.讲一讲Java多态？<br>3.抽象类与接口的区别？<br>4.讲一讲HashMap？<br>5.Java线程池好处以及实现原理？怎么创建线程池？<br>6.Java8新特性了解吗？，讲一讲流？<br>7.闭包了解吗？讲一讲lambda表达式？<br>8.比较Java锁(synchronized和ReentrantLock的区别)？<br>9.讲一讲JVM里面的GC？<br>10.JVM内存分配策略？<br>11.反射是什么，怎么实现的？<br>12.讲一讲事务的特性？解释一下ACID分别是什么？<br>13.知道哪些设计模式？平时或者项目里面用过哪些设计模式？<br>14.手写单例模式（双重检测机制）<br>15.MySQL 中 InnoDB 和 MyISAM 区别？<br>16.MySQL的默认隔离级别？<br>17.知道数据库优化吗？SQL优化？<br>18.讲一讲索引，说一说B+树<br>19.什么是SQL注入？怎么解决？<br>20.用过哪些SQL的函数？（写一个查找平均分SQL语句）<br>21.讲一讲spring事务，ioc，aop，bean声明周期？<br>22.hibernate和mybatis的区别，各自的优缺点<br>23.Linux常用命令有哪些，查看端口的命令是什么？<br>24.HTTP常用的首部字段有哪些？<br>25.GET和POST的区别？<br>26.HTTPS协议？什么是对称加密和非对称加密？<br>27.多线程join()和yield()方法的作用？<br>28.介绍一下juc里面常用的几个工具类<br>29.TCP/IP协议的3次握手和4次挥手<br>30.各种排序算法思路以及时间复杂度（主要是快排，冒泡，堆排，归并）<br>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
+<p><strong>基础：</strong></p>
+<ol>
+<li>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</li>
+<li>谈谈对 Java 注解的理解，解决了什么问题？</li>
+<li>内部类了解吗？匿名内部类了解吗？</li>
+<li>BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</li>
+<li>假如我们需要存500个数需要多大的HashMap？</li>
+<li>HashMap的负载因子。</li>
+</ol>
+<p><strong>jvm:</strong></p>
+<ol>
+<li>jvm 内存结构</li>
+<li>jvm 调优参数</li>
+<li>什么是类加载？</li>
+<li>何时类加载？</li>
+<li>java的类加载流程？</li>
+<li>知道哪些类加载器。类加载器之间的关系？</li>
+<li>类加载器之间的关系？</li>
+<li><strong>类加载器的双亲委派</strong> （结合tomcat说一下双亲委派）</li>
+<li><strong>为什么需要双亲委派</strong></li>
+<li>Java内存模型</li>
+<li>栈中存放什么数据，堆中呢？</li>
+<li>大对象放在哪个内存区域</li>
+<li>堆区如何分类</li>
+<li>垃圾回收有哪些算法</li>
+<li>GC的全流程</li>
+<li>GC中老年代用什么回收方法？</li>
+</ol>
+<p><strong>多线程：</strong></p>
+<ol>
+<li><strong>Java线程池有哪些参数？阻塞队列有几种？拒绝策略有几种？</strong></li>
+<li>死锁</li>
+</ol>
+<p><strong>设计模式：</strong></p>
+<ol>
+<li>阅读Spring源码的时候什么设计模式最让你影响深刻？如何使用？</li>
+<li>单例模式，单例模式的使用场景</li>
+<li>观察者模式，观察者模式的使用场景</li>
+</ol>
+<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><ol>
+<li>spring boot和spring的区别</li>
+<li>ioc 和 aop(ioc流程、aop实现原理)、spring aop异常处理、当一段代码被try catch后再发生异常时，aop的异常通知是否执行，为什么？</li>
+<li>spring bean的生命周期说一下</li>
+<li>spring data jpa底层是什么？</li>
+<li>hibernate和mybatis区别</li>
+<li>spring boot 过滤器</li>
+<li>spring boot 拦截器</li>
+<li>Spring动态代理默认用哪一种</li>
+<li>写出spring jdk动态代理的实现。</li>
+<li>画出spring boot处理一个http请求的全过程</li>
+</ol>
+<p><strong>推荐</strong></p>
+<ol>
+<li>手写实现Spring核心功能：<a href="https://github.com/jinzzzzz/spring-demo" target="_blank" rel="noopener">https://github.com/jinzzzzz/spring-demo</a></li>
+</ol>
+<h3 id="微服务-分布式"><a href="#微服务-分布式" class="headerlink" title="微服务/分布式"></a>微服务/分布式</h3><ol>
+<li>为什么要网关？</li>
+<li>限流的算法有哪些？</li>
+<li>为什么要分布式 id ？分布式 id 生成策略有哪些？</li>
+<li>了解RPC吗？有哪些常见的 RPC 框架？</li>
+<li>如果让你自己设计 RPC 框架你会如何设计？</li>
+<li>Dubbo 了解吗？Spring Cloud 了解吗？</li>
+</ol>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><ol>
+<li>非关系型数据库和关系型数据库的区别？</li>
+<li><strong>事务的四大特性</strong></li>
+<li><strong>MySQL 事务隔离级别？默认是什么级别？</strong></li>
+<li><strong>乐观锁与悲观锁的区别</strong></li>
+<li>数据库两种存储引擎的区别</li>
+<li>最左前缀匹配原则及它的原因</li>
+<li>大表优化的思路</li>
+<li><strong>where和having的区别</strong></li>
+<li>分库分表</li>
+<li><strong>explain 命令</strong></li>
+</ol>
+<p><strong>索引</strong></p>
+<ol>
+<li><strong>如何加快数据库查询速度</strong></li>
+<li><strong>聚集索引和非聚集索引的区别</strong></li>
+<li><strong>什么时候不该使用索引？</strong></li>
+<li><strong>索引底层的数据结构？</strong></li>
+<li><strong>B+树做索引比红黑树好在哪里？</strong></li>
+<li></li>
+</ol>
+<p><strong>Redis:</strong></p>
+<ol>
+<li>项目中 redis 是怎么用的？解决了什么问题？</li>
+<li>说一下有缓存情况下查询的流程以及有缓存情况下修改的流程。</li>
+<li>redis有哪些数据结构</li>
+<li>redis内存满了怎么办</li>
+<li>redis内存淘汰算法除了lru还有哪些</li>
+<li>分布式缓存可能出现的问题</li>
+<li>缓存穿透问题</li>
+</ol>
+<h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><ol>
+<li><strong>计算机网络的一些常见状态码</strong></li>
+<li>ping 所使用的协议</li>
+<li><strong>TCP的三次握手与四次挥手的内容</strong></li>
+<li><strong>TCP为什么连接是三次握手而断开是四次握手</strong></li>
+<li>TCP与UDP的区别及使用场景</li>
+<li><strong>一次完整的HTTP请求所经的步骤</strong></li>
+<li>http 如何保存登录信息(没太搞懂意思)</li>
+<li><strong>Cookie 和 Session的关系</strong></li>
+</ol>
+<h3 id="算法和数据结构"><a href="#算法和数据结构" class="headerlink" title="算法和数据结构"></a>算法和数据结构</h3><p><strong>算法</strong></p>
+<ol>
+<li>LRU 算法了解吗？你能实现一个吗？</li>
+<li>写排序算法（快排、堆排）</li>
+</ol>
+<p><strong>数据结构</strong></p>
+<ol>
+<li>布隆过滤器了解吗？</li>
+</ol>
+<h3 id="设计题"><a href="#设计题" class="headerlink" title="设计题"></a>设计题</h3><ol>
+<li>假如有10亿个数，只有一个重复，内存只能放下5亿个数，怎么找到这个重复的数字？</li>
+<li>如何设计一个秒杀系统（服务端、数据库、分布式）？分布式系统的设计？</li>
+<li>有一个服务器专门接收大量请求，怎么设计？</li>
+<li>如果让你自己设计 RPC 框架你会如何设计？</li>
+<li>怎么快速出现一个stackoverflow错误？</li>
+</ol>
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><ol>
+<li>自我介绍。</li>
+<li>说说你的项目中的亮点有哪些。</li>
+<li>画一下你的项目的架构图。</li>
+<li><strong>Restful 了解吗？简单说一下自己对它的认识，如果我要返回一个 boolean 类型的数据怎么办？</strong></li>
+</ol>
 ]]></content>
       <categories>
         <category>Java面试</category>

@@ -54,7 +54,7 @@
 <meta property="og:description" content="OAuth授权登陆模块 用户点击登陆按钮，请求github提供的authorize接口，需要提供的参数  client_id: github生成的 redirect_uri: 自己设置的回调接口地址 state&#x3D;1 scope&#x3D;user   github自动跳转到我们设置的callback接口中，并且携带参数code  我们继续调用github提供的access_token接口，需要提供参数，将数">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-05T01:13:48.000Z">
-<meta property="article:modified_time" content="2020-03-08T13:42:55.678Z">
+<meta property="article:modified_time" content="2020-03-15T10:26:09.316Z">
 <meta property="article:tag" content="项目">
 <meta name="twitter:card" content="summary">
 
@@ -234,7 +234,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-08 21:42:55" itemprop="dateModified" datetime="2020-03-08T21:42:55+08:00">2020-03-08</time>
+                <time title="修改时间：2020-03-15 18:26:09" itemprop="dateModified" datetime="2020-03-15T18:26:09+08:00">2020-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -387,6 +387,40 @@
 <p>Arrays.asList()返回一个List，通过阅读源码才发现，返回的List不是Collection中的那个List</p>
 <p>ArrayList提供了一个将List转为数组的方法：toArray</p>
 <hr>
+<h3 id="单点登录"><a href="#单点登录" class="headerlink" title="单点登录"></a>单点登录</h3><p>单点登录SSO（Single Sign On）说得简单点就是在一个多系统共存的环境下，用户在一处登录后，就不用在其他系统中登录，也就是用户的一次登录能得到其他所有系统的信任。单点登录在大型网站里使用得非常频繁，例如像阿里巴巴这样的网站，在网站的背后是成百上千的子系统，用户一次操作或交易可能涉及到几十个子系统的协作，如果每个子系统都需要用户认证，不仅用户会疯掉，各子系统也会为这种重复认证授权的逻辑搞疯掉。实现单点登录说到底就是要解决如何产生和存储那个信任，再就是其他系统如何验证这个信任的有效性，因此要点也就以下两个：</p>
+<ul>
+<li>存储信任</li>
+<li>验证信任</li>
+</ul>
+<p>如果一个系统做到了开头所讲的效果，也就算单点登录，单点登录有不同的实现方式，本文就罗列我开发中所遇见过的实现方式。</p>
+<p><strong>以Cookie作为凭证媒介</strong><br>最简单的单点登录实现方式，是使用cookie作为媒介，存放用户凭证。<br>用户登录父应用之后，应用返回一个加密的cookie，当用户访问子应用的时候，携带上这个cookie，授权应用解密cookie并进行校验，校验通过则登录当前用户。</p>
+<p>不难发现以上方式把信任存储在客户端的Cookie中，这种方式很容易令人质疑：</p>
+<ul>
+<li>Cookie不安全</li>
+<li>不能跨域实现免登</li>
+</ul>
+<p>对于第一个问题，通过加密Cookie可以保证安全性，当然这是在源代码不泄露的前提下。如果Cookie的加密算法泄露，攻击者通过伪造Cookie则可以伪造特定用户身份，这是很危险的。<br>对于第二个问题，更是硬伤。</p>
+<p><strong>通过JSONP实现</strong><br>对于跨域问题，可以使用JSONP实现。<br>用户在父应用中登录后，跟Session匹配的Cookie会存到客户端中，当用户需要登录子应用的时候，授权应用访问父应用提供的JSONP接口，并在请求中带上父应用域名下的Cookie，父应用接收到请求，验证用户的登录状态，返回加密的信息，子应用通过解析返回来的加密信息来验证用户，如果通过验证则登录用户。</p>
+<p>这种方式虽然能解决跨域问题，但是安全性其实跟把信任存储到Cookie是差不多的。如果一旦加密算法泄露了，攻击者可以在本地建立一个实现了登录接口的假冒父应用，通过绑定Host来把子应用发起的请求指向本地的假冒父应用，并作出回应。<br>因为攻击者完全可以按照加密算法来伪造响应请求，子应用接收到这个响应之后一样可以通过验证，并且登录特定用户。</p>
+<p><strong>通过页面重定向的方式</strong><br>最后一种介绍的方式，是通过父应用和子应用来回重定向中进行通信，实现信息的安全传递。<br>父应用提供一个GET方式的登录接口，用户通过子应用重定向连接的方式访问这个接口，如果用户还没有登录，则返回一个的登录页面，用户输入账号密码进行登录。如果用户已经登录了，则生成加密的Token，并且重定向到子应用提供的验证Token的接口，通过解密和校验之后，子应用登录当前用户。</p>
+<p>这种方式较前面两种方式，接解决了上面两种方法暴露出来的安全性问题和跨域的问题，但是并没有前面两种方式方便。<br>安全与方便，本来就是一对矛盾。</p>
+<p><strong>使用独立登录系统</strong><br>一般说来，大型应用会把授权的逻辑与用户信息的相关逻辑独立成一个应用，称为用户中心。<br>用户中心不处理业务逻辑，只是处理用户信息的管理以及授权给第三方应用。第三方应用需要登录的时候，则把用户的登录请求转发给用户中心进行处理，用户处理完毕返回凭证，第三方应用验证凭证，通过后就登录用户。</p>
+<h3 id="多点登录"><a href="#多点登录" class="headerlink" title="多点登录"></a>多点登录</h3><p>多点登录：同一账号可以在不同终端同时登录，同时收发信息。</p>
+<p>多点登录限制（禁止用户多点在线）：一个端同一个账号只能登录一个实例，例如一个账号在网站端登录后，后一个人使用这个账号在网站端登录，前一个人会被挤下去并会收到通知“你已在别处登录….”</p>
+<hr>
+<h3 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h3><h4 id="什么是-nginx-和可以做什么事情"><a href="#什么是-nginx-和可以做什么事情" class="headerlink" title="什么是 nginx 和可以做什么事情"></a>什么是 nginx 和可以做什么事情</h4><p>Nginx 是高性能的 HTTP 和反向代理的web服务器，处理高并发能力是十分强大的，能经受高负 载的考验,有报告表明能支持高达 50,000 个并发连接数。</p>
+<p>其特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好，中国大陆使用nginx网站用户有：百度、京东、新浪、网易、腾讯、淘宝等。</p>
+<h4 id="Nginx-作为-web-服务器"><a href="#Nginx-作为-web-服务器" class="headerlink" title="Nginx 作为 web 服务器"></a>Nginx 作为 web 服务器</h4><p>Nginx 可以作为静态页面的 web 服务器，同时还支持 CGI 协议的动态语言，比如 perl、php 等。但是不支持 java。Java 程序只能通过与 tomcat 配合完成。Nginx 专为性能优化而开发， 性能是其最重要的考量,实现上非常注重效率 ，能经受高负载的考验,有报告表明能支持高 达 50,000 个并发连接数。</p>
+<h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>Nginx 不仅可以做反向代理，实现负载均衡。还能用作正向代理来进行上网等功能。 正向代理：如果把局域网外的 Internet 想象成一个巨大的资源库，则局域网中的客户端要访 问 Internet，则需要通过代理服务器来访问，这种代理服务就称为正向代理。</p>
+<p>简单一点：通过代理服务器来访问服务器的过程 就叫 正向代理。<br>需要在客户端配置代理服务器进行指定网站访问</p>
+<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>反向代理，其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问。<br>我们只 需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，在返 回给客户端，此时反向代理服务器和目标服务器对外就是一个服务器，暴露的是代理服务器 地址，隐藏了真实服务器 IP 地址。</p>
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><p>增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的 情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，也就是我们所说的负 载均衡</p>
+<p>客户端发送多个请求到服务器，服务器处理请求，有一些可能要与数据库进行交互，服 务器处理完毕后，再将结果返回给客户端。</p>
+<h4 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h4><p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速 度。降低原来单个服务器的压力。</p>
+<h4 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h4><p>Nginx 作为负载均衡器，所有的请求都到 Nginx，可见 Nginx 处于非常重点的位置，如果 Nginx 服务器宕机后端 web 服务将无法提供服务，影响严重。</p>
+<p>为了屏蔽负载均衡服务器的宕机，需要建立一个备份机。主服务器和备份机上都运行高可用（Hight Availabillty）监控系统，通过传送诸如 “I am alive” 这样的信息来监控对方的运行状况。当备份机不能在一定的时间内收到这样的信息时，它就接管主服务器的服务IP并继续提供负载均衡服务；当备份管理器又从主服务器接收到 “I am alive” 这样的信息时，它就释放服务IP地址，这样主服务器就开始再次提供负载均衡服务。可以通过如下技术实现检测功能：</p>
+<p>keepalived：用于集群管理，保证集群搞可用的一个服务软件，用来防止单点故障。Keepalived 的作用是检测 Web 服务器的状态，如果有一台服务器死机或工作出现故障，Keepalived 的作用是检测到，并将有故障的 web 服务器从系统中剔除，当 web 服务器正常工作后 Keepalived 自动将 web 服务器加入到服务器群中，这些工作自动完成，无需人工干涉，需要人工做的是修复故障的 web 服务器。keepalived 是以 VRRP 协议为实现基础的，VRRP 全称 Virtual Router Redundancy Protocol，即虚拟路由冗余协议。虚拟路由冗余协议，可以认为是实现路由器高可用的协议，即将 N 台提供相同功能的路由器组成一个路由器组，这个组里面有一个 master 和多个 backup，master 上面有一个对外提供服务的 vip（VIP = Virtual IPAddress，虚拟 IP 地址，该路由器所在局域网内其他机器的默认路由为该 vip），master 会发组播，当 backup 收不到 VRRP 包时就认为 master 宕掉了，这时就需要根据 VRRP 的优先级来选举一个 backup 当 master。这样的话就可以保证路由器的高可用了。</p>
+<p>keepalived 主要有三个模块，分别是 core、check 和 VRRP。core 模块为 keepalived 的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。check 负责健康检查，包括常见的各种检查方式。VRRP 模块是来实现 VRRP 协议的。</p>
 
     </div>
 
@@ -471,7 +505,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OAuth授权登陆模块"><span class="nav-number">1.</span> <span class="nav-text">OAuth授权登陆模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis实现用户三天免登陆"><span class="nav-number">2.</span> <span class="nav-text">Redis实现用户三天免登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社区帖子发布-修改-分页展示模块"><span class="nav-number">3.</span> <span class="nav-text">社区帖子发布,修改,分页展示模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多级回复及评论观看数功能模块"><span class="nav-number">4.</span> <span class="nav-text">多级回复及评论观看数功能模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis中tag标签库完善"><span class="nav-number">5.</span> <span class="nav-text">Redis中tag标签库完善</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通知回复功能模块"><span class="nav-number">6.</span> <span class="nav-text">通知回复功能模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成富文本编辑器（支持Markdown）"><span class="nav-number">7.</span> <span class="nav-text">集成富文本编辑器（支持Markdown）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#每日热门标签"><span class="nav-number">8.</span> <span class="nav-text">每日热门标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一周最热话题-amp-点赞关系存储"><span class="nav-number">9.</span> <span class="nav-text">一周最热话题&amp;点赞关系存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">9.1.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UUID是什么，如何生成的，-如何保证一致性"><span class="nav-number">9.2.</span> <span class="nav-text">UUID是什么，如何生成的， 如何保证一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目遇到的问题"><span class="nav-number">9.3.</span> <span class="nav-text">项目遇到的问题</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OAuth授权登陆模块"><span class="nav-number">1.</span> <span class="nav-text">OAuth授权登陆模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis实现用户三天免登陆"><span class="nav-number">2.</span> <span class="nav-text">Redis实现用户三天免登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社区帖子发布-修改-分页展示模块"><span class="nav-number">3.</span> <span class="nav-text">社区帖子发布,修改,分页展示模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多级回复及评论观看数功能模块"><span class="nav-number">4.</span> <span class="nav-text">多级回复及评论观看数功能模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis中tag标签库完善"><span class="nav-number">5.</span> <span class="nav-text">Redis中tag标签库完善</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通知回复功能模块"><span class="nav-number">6.</span> <span class="nav-text">通知回复功能模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成富文本编辑器（支持Markdown）"><span class="nav-number">7.</span> <span class="nav-text">集成富文本编辑器（支持Markdown）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#每日热门标签"><span class="nav-number">8.</span> <span class="nav-text">每日热门标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一周最热话题-amp-点赞关系存储"><span class="nav-number">9.</span> <span class="nav-text">一周最热话题&amp;点赞关系存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">9.1.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UUID是什么，如何生成的，-如何保证一致性"><span class="nav-number">9.2.</span> <span class="nav-text">UUID是什么，如何生成的， 如何保证一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目遇到的问题"><span class="nav-number">9.3.</span> <span class="nav-text">项目遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单点登录"><span class="nav-number">9.4.</span> <span class="nav-text">单点登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多点登录"><span class="nav-number">9.5.</span> <span class="nav-text">多点登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx"><span class="nav-number">9.6.</span> <span class="nav-text">Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是-nginx-和可以做什么事情"><span class="nav-number">9.6.1.</span> <span class="nav-text">什么是 nginx 和可以做什么事情</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx-作为-web-服务器"><span class="nav-number">9.6.2.</span> <span class="nav-text">Nginx 作为 web 服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正向代理"><span class="nav-number">9.6.3.</span> <span class="nav-text">正向代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反向代理"><span class="nav-number">9.6.4.</span> <span class="nav-text">反向代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#负载均衡"><span class="nav-number">9.6.5.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动静分离"><span class="nav-number">9.6.6.</span> <span class="nav-text">动静分离</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高可用"><span class="nav-number">9.6.7.</span> <span class="nav-text">高可用</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -485,7 +519,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

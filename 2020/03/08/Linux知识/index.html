@@ -46,17 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="Linux文件的权限，如何设置可读可写权限chmod(change mode)功能：变更文件或目录的权限 chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ] -R 递归处理：将指定目录下的所有文件及子目录一并处理  权限范围： u:User g:Group o:Other a:All  符号： +添加权限 -取消权限  权限代号： r:读写 4">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="Linux知识">
 <meta property="og:url" content="http://yoursite.com/2020/03/08/Linux%E7%9F%A5%E8%AF%86/index.html">
 <meta property="og:site_name" content="YoXn&#39;s Blog">
-<meta property="og:description" content="Linux文件的权限，如何设置可读可写权限chmod(change mode)功能：变更文件或目录的权限 chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ] -R 递归处理：将指定目录下的所有文件及子目录一并处理  权限范围： u:User g:Group o:Other a:All  符号： +添加权限 -取消权限  权限代号： r:读写 4">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:%5CUsers%5CWLJ%5CPictures%5CScreenshots%5C%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(24).png">
+<meta property="og:image" content="c:%5CUsers%5CWLJ%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200315120427577.png">
 <meta property="article:published_time" content="2020-03-08T13:14:21.000Z">
-<meta property="article:modified_time" content="2020-03-09T01:39:00.259Z">
+<meta property="article:modified_time" content="2020-03-15T04:26:54.144Z">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:%5CUsers%5CWLJ%5CPictures%5CScreenshots%5C%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(24).png">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/08/Linux%E7%9F%A5%E8%AF%86/">
 
@@ -234,7 +235,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-09 09:39:00" itemprop="dateModified" datetime="2020-03-09T09:39:00+08:00">2020-03-09</time>
+                <time title="修改时间：2020-03-15 12:26:54" itemprop="dateModified" datetime="2020-03-15T12:26:54+08:00">2020-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,8 +260,180 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="Linux文件的权限，如何设置可读可写权限"><a href="#Linux文件的权限，如何设置可读可写权限" class="headerlink" title="Linux文件的权限，如何设置可读可写权限"></a>Linux文件的权限，如何设置可读可写权限</h3><p>chmod(change mode)功能：变更文件或目录的权限</p>
-<p>chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ]</p>
+        <ul>
+<li> <a id="more"></a>
+
+</li>
+</ul>
+<hr>
+<h3 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h3><h3 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令"></a>ls命令</h3><ul>
+<li><p>ls（list）功能：列出目录内容</p>
+</li>
+<li><p>格式： Is [参数］［文件或目录］</p>
+<p>-a或–all 下所有文件和目录。 注意隐藏文件、 特殊目录、 和 ．</p>
+<p>-I 使用详细格式列表。</p>
+<p>-t用文件和目录的更改时间排序。</p>
+<p>-r反向排序<br>–help 在线帮助。</p>
+</li>
+<li><p>常用</p>
+<p>ls -l 简化版：ll</p>
+<p>ls -al</p>
+</li>
+</ul>
+<h4 id="cd命令"><a href="#cd命令" class="headerlink" title="cd命令"></a>cd命令</h4><ul>
+<li>cd（change directory）：切换目录</li>
+<li>cd ~  当前用户目录</li>
+<li>cd /   根目录</li>
+<li>cd -   上一次访问的目录</li>
+<li>cd ..  上一级目录</li>
+<li>cd       缺省当前用户目录</li>
+</ul>
+<h4 id="pwd命令"><a href="#pwd命令" class="headerlink" title="pwd命令"></a>pwd命令</h4><ul>
+<li>pwd（print working directory）：显示工作目录</li>
+</ul>
+<h4 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a>mkdir命令</h4><ul>
+<li>mkdir（make directory）：创建目录</li>
+<li>-p 父目录不存在情况下先生成父目录</li>
+<li>-v 显示命令执行过程中的详细信息</li>
+</ul>
+<h4 id="cat命令"><a href="#cat命令" class="headerlink" title="cat命令"></a>cat命令</h4><ul>
+<li>cat（catenate）：显示文本文件内容</li>
+<li>cat 文件  显式指定文件的所有内容</li>
+</ul>
+<h4 id="more命令"><a href="#more命令" class="headerlink" title="more命令"></a>more命令</h4><ul>
+<li><p>more功能：分页显示文件内容，还支持直接跳转行等功能</p>
+</li>
+<li><p>语法：more file</p>
+</li>
+<li><p>操作</p>
+<p> Enter    向下 n 行， 衙要定义。 默认为 1 行</p>
+<p> 空格键  向下滚动一屏或 Ctrl+F </p>
+<p> B           返回上一屏或 Ctrl+B</p>
+<p> q           退出 more</p>
+</li>
+</ul>
+<h4 id="less命令"><a href="#less命令" class="headerlink" title="less命令"></a>less命令</h4><ul>
+<li><p>less功能：分页显示文件内容， 操作更详细</p>
+</li>
+<li><p>语法： less [参数] 文件</p>
+<p>-m  显示类似more命令的百分比</p>
+<p>-N   显示每行的行号</p>
+</li>
+<li><p>操作</p>
+<p>空格键           前进一页或page down</p>
+<p>b                    后退一页或page up</p>
+<p>d                    前进半页</p>
+<p>u                    后退半页</p>
+<p>Enter             前进一行或下方向键</p>
+<p>y                     后退一行或上方向键</p>
+<p>/字符串          向下搜索</p>
+<p>?字符串          向上搜索</p>
+<p>v                     进入vim编辑器</p>
+<p>左右方向键   相当于水平滚动条</p>
+<p>q                    退出</p>
+</li>
+</ul>
+<h4 id="tail命令"><a href="#tail命令" class="headerlink" title="tail命令"></a>tail命令</h4><ul>
+<li><p>功能： 用于显示指定文件末尾内容， 不指定文件时， 作为输入信息进行处理。 常用查看日志文 件。</p>
+</li>
+<li><p>格式： tail[必要参数] [选择参数] [文件]</p>
+<p>-n&lt;行数&gt;    显示行数</p>
+<p>-f                  循环读取</p>
+<p>&amp;                  表示后台运行，否则占用终端</p>
+<p>ctrl + c         退出</p>
+</li>
+</ul>
+<h4 id="cp命令"><a href="#cp命令" class="headerlink" title="cp命令"></a>cp命令</h4><ul>
+<li><p>cp(copy)功能· 复制文件或目录。</p>
+</li>
+<li><p>语法： cp [参数]  [源文件或目录]  [目标文件或目录]</p>
+<p>-r或–recursive   递归处理，将指定目录下的文件与子目录一并处理。</p>
+</li>
+</ul>
+<h4 id="mv命令"><a href="#mv命令" class="headerlink" title="mv命令"></a>mv命令</h4><ul>
+<li><p>mv(move)功能：移动或更名现有的文件或目录</p>
+</li>
+<li><p>语法： mv  [源文件或目录] [目标文件或目录]</p>
+<p>-f或-force    若目标文件或目录与现有的文件或目录重复，则直接覆盖现有的文件或目录</p>
+</li>
+</ul>
+<h4 id="rm命令"><a href="#rm命令" class="headerlink" title="rm命令"></a>rm命令</h4><ul>
+<li><p>rm(remove)功能：删除文件或目录</p>
+</li>
+<li><p>语法：rm [-dfirv] [–helo] [–version] [文件或目录]</p>
+<p>-f或–force                   强制删除文件或目录。</p>
+<p>-r或-R或–recursive    递归处理，将指定目录下的所有文件及子目录一并处理</p>
+</li>
+</ul>
+<h4 id="find命令"><a href="#find命令" class="headerlink" title="find命令"></a>find命令</h4><ul>
+<li><p>find：查找文件或目录</p>
+</li>
+<li><p>语法：find [目录] [参数]</p>
+<p>-name 指定字符串作为寻找文件或目录的范本样式</p>
+</li>
+</ul>
+<h4 id="vi或vim命令"><a href="#vi或vim命令" class="headerlink" title="vi或vim命令"></a>vi或vim命令</h4><ul>
+<li><p>输入”vim文件名 “ 进入”一般模式”</p>
+<p>按下”i”从一般模式， 进入 “插入膜式”</p>
+<p>按下”esc”从 “插入膜式”退出到 “一般模式”</p>
+<p>在”一般模式”下，输入”:wq”，退出编辑</p>
+<p><img src="C:%5CUsers%5CWLJ%5CPictures%5CScreenshots%5C%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(24).png" alt=""></p>
+<p><img src="C:%5CUsers%5CWLJ%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200315120427577.png" alt="image-20200315120427577"></p>
+</li>
+</ul>
+<h4 id="管道"><a href="#管道" class="headerlink" title="管道 |"></a>管道 |</h4><ul>
+<li>linux提供管道符号”|”，作用是 “命令1”的输出内容，将作为 “命令2”的输入内容。 一般与grep命令一起使用。</li>
+<li>格式： 命令1 | 命令2</li>
+</ul>
+<h4 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h4><ul>
+<li><p>grep全称是Global Regular Expression Print, 表示全局正则表达式版本</p>
+</li>
+<li><p>功能： 用于过滤／搜索的特定字符。 可使用正则表达式能多种命令配合使用， 使用上十分灵活。</p>
+</li>
+<li><p>格式： grep [option]  pattern [file]</p>
+<p>-i 或–ignore-case      #忽略字符大小写的差别 。</p>
+</li>
+</ul>
+<h4 id="ps命令"><a href="#ps命令" class="headerlink" title="ps命令"></a>ps命令</h4><ul>
+<li><p>功能： ps命令是Process Status的缩写。 提供对进程的一次性查看。 及执行ps命令的那个时刻进程信息。</p>
+</li>
+<li><p>格式： ps [参数]</p>
+<p>-e  此参数的效果和指定”A”参数相同 ， 显示所有程序</p>
+<p>-f  显示UID,PPIP,C与STIME栏位</p>
+</li>
+</ul>
+<h4 id="kill命令"><a href="#kill命令" class="headerlink" title="kill命令"></a>kill命令</h4><ul>
+<li><p>kill功能： 删除执行中的程序或工作。</p>
+</li>
+<li><p>语法： kill [参数] [程序]</p>
+<p>-I &lt;信息编号＞  若不加＜信息编驾＞选项， 则-l参数会列出全部的信息名称。</p>
+</li>
+</ul>
+<h4 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h4><ul>
+<li>功能：显示网络设备</li>
+<li>命令：ifconfig</li>
+</ul>
+<h4 id="ping命令"><a href="#ping命令" class="headerlink" title="ping命令"></a>ping命令</h4><ul>
+<li>功能：测试与目标主机的连通性</li>
+<li>命令：ping 主机名或ip地址</li>
+</ul>
+<h4 id="备份压缩：tar命令"><a href="#备份压缩：tar命令" class="headerlink" title="备份压缩：tar命令"></a>备份压缩：tar命令</h4><ul>
+<li><p>tar功能：文件备份压缩</p>
+</li>
+<li><p>语法：tar命令</p>
+<p>-c 建立一个压缩文件的参数指令（create） –压缩</p>
+<p>-x 解开一个压缩文件的参数指令（extract） – 解压</p>
+<p>-z 是否需要用gzip压缩</p>
+<p>-v 压缩的过程中显示文件（verbose）</p>
+<p>-f 使用档名，在f之后要立即接档名（file）、</p>
+<p>常用的解压参数组合：zxvf</p>
+<p>常用的压缩参数组合：zcvf</p>
+</li>
+</ul>
+<h4 id="Linux文件的权限，chmod命令"><a href="#Linux文件的权限，chmod命令" class="headerlink" title="Linux文件的权限，chmod命令"></a>Linux文件的权限，chmod命令</h4><ul>
+<li><p>chmod(change mode)功能：变更文件或目录的权限</p>
+</li>
+<li><p>chmod [ 参数 ] [ &lt;权限范围&gt;&lt;符号&gt;&lt;权限代号&gt; ]</p>
 <p>-R 递归处理：将指定目录下的所有文件及子目录一并处理</p>
 <ul>
 <li><p>权限范围：</p>
@@ -278,17 +451,16 @@
 <p>w:写入 2</p>
 <p>x:执行或切换 1</p>
 <p>-：不具有任何权限 0</p>
- <a id="more"></a>
-
 </li>
 </ul>
-<hr>
-<p>Linux远程拷贝有几种方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># scp php-7.2.4.tar.gz root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;   &#x2F;&#x2F;这里是从当前主机拷贝到IP位142的局域网主机目录&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Linux远程拷贝有几种方式"><a href="#Linux远程拷贝有几种方式" class="headerlink" title="Linux远程拷贝有几种方式"></a>Linux远程拷贝有几种方式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># scp php-7.2.4.tar.gz root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;   &#x2F;&#x2F;这里是从当前主机拷贝到IP位142的局域网主机目录&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># scp root@192.168.9.142:&#x2F;usr&#x2F;local&#x2F;src&#x2F;redis.tar.gz &#x2F;usr&#x2F;local&#x2F;src&#x2F;  &#x2F;&#x2F;这里是从目标主机142拷贝文件到本机&#x2F;usr&#x2F;local&#x2F;src下</span><br></pre></td></tr></table></figure>
 
-<hr>
+<h4 id="Linux查看进程端口"><a href="#Linux查看进程端口" class="headerlink" title="Linux查看进程端口"></a>Linux查看进程端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps - aux | grep java</span><br><span class="line">ps - ef | grep java</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -373,7 +545,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux文件的权限，如何设置可读可写权限"><span class="nav-number">1.</span> <span class="nav-text">Linux文件的权限，如何设置可读可写权限</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux命令"><span class="nav-number">1.</span> <span class="nav-text">Linux命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ls命令"><span class="nav-number">2.</span> <span class="nav-text">ls命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cd命令"><span class="nav-number">2.1.</span> <span class="nav-text">cd命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pwd命令"><span class="nav-number">2.2.</span> <span class="nav-text">pwd命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mkdir命令"><span class="nav-number">2.3.</span> <span class="nav-text">mkdir命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cat命令"><span class="nav-number">2.4.</span> <span class="nav-text">cat命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more命令"><span class="nav-number">2.5.</span> <span class="nav-text">more命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less命令"><span class="nav-number">2.6.</span> <span class="nav-text">less命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tail命令"><span class="nav-number">2.7.</span> <span class="nav-text">tail命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp命令"><span class="nav-number">2.8.</span> <span class="nav-text">cp命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv命令"><span class="nav-number">2.9.</span> <span class="nav-text">mv命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm命令"><span class="nav-number">2.10.</span> <span class="nav-text">rm命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find命令"><span class="nav-number">2.11.</span> <span class="nav-text">find命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vi或vim命令"><span class="nav-number">2.12.</span> <span class="nav-text">vi或vim命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管道"><span class="nav-number">2.13.</span> <span class="nav-text">管道 |</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep命令"><span class="nav-number">2.14.</span> <span class="nav-text">grep命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ps命令"><span class="nav-number">2.15.</span> <span class="nav-text">ps命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#kill命令"><span class="nav-number">2.16.</span> <span class="nav-text">kill命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ifconfig"><span class="nav-number">2.17.</span> <span class="nav-text">ifconfig</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ping命令"><span class="nav-number">2.18.</span> <span class="nav-text">ping命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#备份压缩：tar命令"><span class="nav-number">2.19.</span> <span class="nav-text">备份压缩：tar命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux文件的权限，chmod命令"><span class="nav-number">2.20.</span> <span class="nav-text">Linux文件的权限，chmod命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux远程拷贝有几种方式"><span class="nav-number">2.21.</span> <span class="nav-text">Linux远程拷贝有几种方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux查看进程端口"><span class="nav-number">2.22.</span> <span class="nav-text">Linux查看进程端口</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -387,7 +559,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
