@@ -59,7 +59,7 @@
 <meta property="og:image" content="https://camo.githubusercontent.com/2df61e9867d603bd3216c12851b2f7bcaec8847b/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545362539352542302545362538442541452545342542382538442545342542382538302545382538372542342e706e67">
 <meta property="og:image" content="https://camo.githubusercontent.com/9944baae059c325540072f4bb365a4d1591474c4/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f766f6c6174696c652545352538352542332545392539342541452545352541442539372545372539412538342545352538462541462545382541372538312545362538302541372e706e67">
 <meta property="article:published_time" content="2020-03-08T13:12:55.000Z">
-<meta property="article:modified_time" content="2020-03-12T15:46:08.417Z">
+<meta property="article:modified_time" content="2020-03-17T16:39:30.973Z">
 <meta property="article:tag" content="进程">
 <meta property="article:tag" content="线程">
 <meta name="twitter:card" content="summary">
@@ -241,7 +241,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-12 23:46:08" itemprop="dateModified" datetime="2020-03-12T23:46:08+08:00">2020-03-12</time>
+                <time title="修改时间：2020-03-18 00:39:30" itemprop="dateModified" datetime="2020-03-18T00:39:30+08:00">2020-03-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -354,8 +354,14 @@
 </li>
 </ol>
 <hr>
-<h3 id="线程怎么安全退出？"><a href="#线程怎么安全退出？" class="headerlink" title="线程怎么安全退出？"></a>线程怎么安全退出？</h3><p>Thread提供了一个stop()方法，但是stop()方法是一个被废弃的方法。为什么stop()方法被废弃而不被使用呢？原因是stop()方法太过于暴力，会强行把执行一半的线程终止。  这样会就不会保证线程的资源正确释放，通常是没有给与线程完成资源释放工作的机会，因此会导致程序工作在不确定的状态下 。</p>
-<p>Thread.interrupt(),我们可以用他来停止线程，他是安全的，可是使用他的时候并不会真的停止了线程，只是会给线程打上了一个记号，至于这个记号有什么用呢我们可以这样来用。 </p>
+<h3 id="线程怎么安全退出？"><a href="#线程怎么安全退出？" class="headerlink" title="线程怎么安全退出？"></a>线程怎么安全退出？</h3><ul>
+<li><p>使用退出标志，使线程正常退出，也就是当run方法完成后线程终止。 </p>
+</li>
+<li><p>Thread提供了一个stop()方法，但是stop()方法是一个被废弃的方法。为什么stop()方法被废弃而不被使用呢？原因是stop()方法太过于暴力，会强行把执行一半的线程终止。  这样会就不会保证线程的资源正确释放，通常是没有给与线程完成资源释放工作的机会，因此会导致程序工作在不确定的状态下 。</p>
+</li>
+<li><p>Thread.interrupt(),我们可以用他来停止线程，他是安全的，可是使用他的时候并不会真的停止了线程，只是会给线程打上了一个记号，至于这个记号有什么用呢我们可以这样来用。 </p>
+</li>
+</ul>
 <h4 id="用什么方法去看什么状态呢"><a href="#用什么方法去看什么状态呢" class="headerlink" title="用什么方法去看什么状态呢"></a>用什么方法去看什么状态呢</h4><ol>
 <li>this.interrupted():看看当前线程是否是中断状态，执行后将状态表示改为false； interrupted()是静态方法：内部实现是调用的当前线程的isInterrupted()，并且会重置当前线程的中断状态 </li>
 <li>this.isInterrupeted():看看线程对象是否已经是中断状态，但是不清除中断状态标记。 isInterrupted()是实例方法，是调用该方法的对象所表示的那个线程的isInterrupted()，不会重置当前线程的中断状态 </li>
@@ -491,6 +497,14 @@
 </li>
 <li><p><strong>await() / signal()方法</strong></p>
 <p>在JDK5.0之后，Java提供了Lock与Condition机制。Condition接口的await()和signal()是用来做同步的两种方法 </p>
+<ul>
+<li>Condition是个接口，基本的方法就是await()和signal()方法；</li>
+<li>Condition依赖于Lock接口，生成一个Condition的基本代码是lock.newCondition() </li>
+<li>调用Condition的await()和signal()方法，都必须在lock保护之内，就是说必须在lock.lock()和lock.unlock之间才可以使用</li>
+</ul>
+<p>　　Conditon中的await()对应Object的wait()；</p>
+<p>　　Condition中的signal()对应Object的notify()；</p>
+<p>　　Condition中的signalAll()对应Object的notifyAll()。</p>
 </li>
 <li><p><strong>BlockingQueue阻塞队列方法</strong></p>
 <p><strong>什么是阻塞队列：</strong></p>
@@ -539,6 +553,19 @@
 <li>sleep方法给其他线程机会时不考虑线程优先级(优先级低的也有可能)；而yield方法只会给相同优先级或者更高优先级线程机会(如果没有相同或者更高优先级的线程，该线程会继续运行)</li>
 <li>线程执行sleep方法进入阻塞状态，执行yield方法进入就绪状态</li>
 </ol>
+<p><strong>notify和notifyAll区别？</strong></p>
+<p>先说两个概念：<strong>锁池和等待池</strong></p>
+<ul>
+<li>锁池:假设线程A已经拥有了某个对象(注意:不是类)的锁，而其它的线程想要调用这个对象的某个synchronized方法(或者synchronized块)，由于这些线程在进入对象的synchronized方法之前必须先获得该对象的锁的拥有权，但是该对象的锁目前正被线程A拥有，所以这些线程就进入了该对象的锁池中。</li>
+<li>等待池:假设一个线程A调用了某个对象的wait()方法，线程A就会释放该对象的锁后，进入到了该对象的等待池中。</li>
+</ul>
+<p>然后再来说<strong>notify和notifyAll</strong>的区别</p>
+<ul>
+<li>如果线程调用了对象的 wait()方法，那么线程便会处于该对象的等待池中，等待池中的线程不会去竞争该对象的锁。</li>
+<li>当有线程调用了对象的 notifyAll()方法（唤醒所有 wait 线程）或 notify()方法（只随机唤醒一个 wait 线程），被唤醒的的线程便会进入该对象的锁池中，锁池中的线程会去竞争该对象锁。也就是说，调用了notify后只要一个线程会由等待池进入锁池，而notifyAll会将该对象等待池内的所有线程移动到锁池中，等待锁竞争</li>
+<li>优先级高的线程竞争到对象锁的概率大，假若某线程没有竞争到该对象锁，它还会留在锁池中，唯有线程再次调用 wait()方法，它才会重新回到等待池中。而竞争到对象锁的线程则继续往下执行，直到执行完了 synchronized 代码块，它会释放掉该对象锁，这时锁池中的线程会继续竞争该对象锁。</li>
+</ul>
+<p>综上，所谓唤醒线程，另一种解释可以说是将线程由等待池移动到锁池，notifyAll调用后，会将全部线程由等待池移到锁池，然后参与锁的竞争，竞争成功则继续执行，如果不成功则留在锁池等待锁被释放后再次参与竞争。而notify只会唤醒一个线程。</p>
 <hr>
 <p> ###讲一讲volatile关键字？</p>
 <h4 id="1-讲一下Java内存模型"><a href="#1-讲一下Java内存模型" class="headerlink" title="1. 讲一下Java内存模型"></a>1. 讲一下Java内存模型</h4><p>在 JDK1.2 之前，Java的内存模型实现总是从<strong>主存</strong>（即共享内存）读取变量，是不需要进行特别的注意的。而在当前的 Java 内存模型下，线程可以把变量保存<strong>本地内存</strong>（比如机器的寄存器）中，而不是直接在主存中进行读写。这就可能造成一个线程在主存中修改了一个变量的值，而另外一个线程还继续使用它在寄存器中的变量值的拷贝，造成<strong>数据的不一致</strong>。</p>

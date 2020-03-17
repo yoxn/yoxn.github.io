@@ -97,14 +97,53 @@
 </ol>
 <hr>
 <h4 id="Spring-框架中用到了哪些设计模式？"><a href="#Spring-框架中用到了哪些设计模式？" class="headerlink" title="Spring 框架中用到了哪些设计模式？"></a>Spring 框架中用到了哪些设计模式？</h4><ul>
-<li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</li>
-<li><strong>代理设计模式</strong> : Spring AOP 功能的实现。</li>
-<li><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</li>
-<li><strong>模板方法模式</strong> : Spring 中 <code>jdbcTemplate</code>、<code>hibernateTemplate</code> 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式。</li>
-<li><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</li>
-<li><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</li>
-<li><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</li>
-<li>……</li>
+<li><p><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</p>
+</li>
+<li><p><strong>代理设计模式</strong> : Spring AOP 功能的实现。</p>
+</li>
+<li><p><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</p>
+</li>
+<li><p><strong>模板方法模式</strong> : Spring 中 <code>jdbcTemplate</code>、<code>hibernateTemplate</code> 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式。</p>
+</li>
+<li><p><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</p>
+</li>
+<li><p><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</p>
+<p>观察者模式是一种对象行为型模式。它表示的是一种对象与对象之间具有依赖关系，当一个对象发生改变的时候，这个对象所依赖的对象也会做出反应。Spring 事件驱动模型就是观察者模式很经典的一个应用。Spring 事件驱动模型非常有用，在很多场景都可以解耦我们的代码。比如我们每次添加商品的时候都需要重新更新商品索引，这个时候就可以利用观察者模式来解决这个问题。</p>
+<h5 id="Spring-事件驱动模型中的三种角色"><a href="#Spring-事件驱动模型中的三种角色" class="headerlink" title="Spring 事件驱动模型中的三种角色"></a>Spring 事件驱动模型中的三种角色</h5><h6 id="事件角色"><a href="#事件角色" class="headerlink" title="事件角色"></a>事件角色</h6><p><code>ApplicationEvent</code> (<code>org.springframework.context</code>包下)充当事件的角色,这是一个抽象类，它继承了<code>java.util.EventObject</code>并实现了 <code>java.io.Serializable</code>接口。</p>
+<p>Spring 中默认存在以下事件，他们都是对 <code>ApplicationContextEvent</code> 的实现(继承自<code>ApplicationContextEvent</code>)：</p>
+<ul>
+<li><code>ContextStartedEvent</code>：<code>ApplicationContext</code> 启动后触发的事件;</li>
+<li><code>ContextStoppedEvent</code>：<code>ApplicationContext</code> 停止后触发的事件;</li>
+<li><code>ContextRefreshedEvent</code>：<code>ApplicationContext</code> 初始化或刷新完成后触发的事件;</li>
+<li><code>ContextClosedEvent</code>：<code>ApplicationContext</code> 关闭后触发的事件。</li>
+</ul>
+<p><a href="https://camo.githubusercontent.com/5250348d87c627a5bdd212fcdc73e109b3118d82/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f4170706c69636174696f6e4576656e742d537562636c6173732e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/5250348d87c627a5bdd212fcdc73e109b3118d82/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f4170706c69636174696f6e4576656e742d537562636c6173732e706e67" alt="ApplicationEvent-Subclass"></a></p>
+<h6 id="事件监听者角色"><a href="#事件监听者角色" class="headerlink" title="事件监听者角色"></a>事件监听者角色</h6><p><code>ApplicationListener</code> 充当了事件监听者角色，它是一个接口，里面只定义了一个 <code>onApplicationEvent（）</code>方法来处理<code>ApplicationEvent</code>。<code>ApplicationListener</code>接口类源码如下，可以看出接口定义看出接口中的事件只要实现了 <code>ApplicationEvent</code>就可以了。所以，在 Spring中我们只要实现 <code>ApplicationListener</code> 接口实现 <code>onApplicationEvent()</code> 方法即可完成监听事件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package org.springframework.context;</span><br><span class="line">import java.util.EventListener;</span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface ApplicationListener&lt;E extends ApplicationEvent&gt; extends EventListener &#123;</span><br><span class="line">    void onApplicationEvent(E var1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="事件发布者角色"><a href="#事件发布者角色" class="headerlink" title="事件发布者角色"></a>事件发布者角色</h6><p><code>ApplicationEventPublisher</code> 充当了事件的发布者，它也是一个接口。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@FunctionalInterface</span><br><span class="line">public interface ApplicationEventPublisher &#123;</span><br><span class="line">    default void publishEvent(ApplicationEvent event) &#123;</span><br><span class="line">        this.publishEvent((Object)event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void publishEvent(Object var1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ApplicationEventPublisher</code> 接口的<code>publishEvent（）</code>这个方法在<code>AbstractApplicationContext</code>类中被实现，阅读这个方法的实现，你会发现实际上事件真正是通过<code>ApplicationEventMulticaster</code>来广播出去的。具体内容过多，就不在这里分析了，后面可能会单独写一篇文章提到。</p>
+<h5 id="Spring-的事件流程总结"><a href="#Spring-的事件流程总结" class="headerlink" title="Spring 的事件流程总结"></a>Spring 的事件流程总结</h5><ol>
+<li>定义一个事件: 实现一个继承自 <code>ApplicationEvent</code>，并且写相应的构造函数；</li>
+<li>定义一个事件监听者：实现 <code>ApplicationListener</code> 接口，重写 <code>onApplicationEvent()</code> 方法；</li>
+<li>使用事件发布者发布消息: 可以通过 <code>ApplicationEventPublisher</code>的 <code>publishEvent()</code> 方法发布消息。</li>
+</ol>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个事件,继承自ApplicationEvent并且写相应的构造函数</span><br><span class="line">public class DemoEvent extends ApplicationEvent&#123;</span><br><span class="line">    private static final long serialVersionUID &#x3D; 1L;</span><br><span class="line"></span><br><span class="line">    private String message;</span><br><span class="line"></span><br><span class="line">    public DemoEvent(Object source,String message)&#123;</span><br><span class="line">        super(source);</span><br><span class="line">        this.message &#x3D; message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getMessage() &#123;</span><br><span class="line">         return message;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#x2F;&#x2F; 定义一个事件监听者,实现ApplicationListener接口，重写 onApplicationEvent() 方法；</span><br><span class="line">@Component</span><br><span class="line">public class DemoListener implements ApplicationListener&lt;DemoEvent&gt;&#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;使用onApplicationEvent接收消息</span><br><span class="line">    @Override</span><br><span class="line">    public void onApplicationEvent(DemoEvent event) &#123;</span><br><span class="line">        String msg &#x3D; event.getMessage();</span><br><span class="line">        System.out.println(&quot;接收到的信息是：&quot;+msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 发布事件，可以通过ApplicationEventPublisher  的 publishEvent() 方法发布消息。</span><br><span class="line">@Component</span><br><span class="line">public class DemoPublisher &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    ApplicationContext applicationContext;</span><br><span class="line"></span><br><span class="line">    public void publish(String message)&#123;</span><br><span class="line">        &#x2F;&#x2F;发布事件</span><br><span class="line">        applicationContext.publishEvent(new DemoEvent(this, message));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当调用 <code>DemoPublisher</code>的 <code>publish()</code> 方法的时候，比如 <code>demoPublisher.publish(&quot;你好&quot;)</code> ，控制台就会打印出:<code>接收到的信息是：你好</code> </p>
+</li>
+<li><p><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</p>
+<p>适配器模式(Adapter Pattern) 将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。</p>
+<h5 id="spring-AOP中的适配器模式"><a href="#spring-AOP中的适配器模式" class="headerlink" title="spring AOP中的适配器模式"></a>spring AOP中的适配器模式</h5><p>我们知道 Spring AOP 的实现是基于代理模式，但是 Spring AOP 的增强或通知(Advice)使用到了适配器模式，与之相关的接口是<code>AdvisorAdapter</code>。Advice 常用的类型有：<code>BeforeAdvice</code>（目标方法调用前,前置通知）、<code>AfterAdvice</code>（目标方法调用后,后置通知）、<code>AfterReturningAdvice</code>(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:<code>MethodBeforeAdviceInterceptor</code>、<code>AfterReturningAdviceAdapter</code>、<code>AfterReturningAdviceInterceptor</code>。Spring预定义的通知要通过对应的适配器，适配成 <code>MethodInterceptor</code>接口(方法拦截器)类型的对象（如：<code>MethodBeforeAdviceInterceptor</code> 负责适配 <code>MethodBeforeAdvice</code>）。</p>
+<h5 id="spring-MVC中的适配器模式"><a href="#spring-MVC中的适配器模式" class="headerlink" title="spring MVC中的适配器模式"></a>spring MVC中的适配器模式</h5><p>在Spring MVC中，<code>DispatcherServlet</code> 根据请求信息调用 <code>HandlerMapping</code>，解析请求对应的 <code>Handler</code>。解析到对应的 <code>Handler</code>（也就是我们平常说的 <code>Controller</code> 控制器）后，开始由<code>HandlerAdapter</code> 适配器处理。<code>HandlerAdapter</code> 作为期望接口，具体的适配器实现类用于对目标类进行适配，<code>Controller</code> 作为需要适配的类。</p>
+<p><strong>为什么要在 Spring MVC 中使用适配器模式？</strong> Spring MVC 中的 <code>Controller</code> 种类众多，不同类型的 <code>Controller</code> 通过不同的方法来对请求进行处理。如果不利用适配器模式的话，<code>DispatcherServlet</code> 直接获取对应类型的 <code>Controller</code>，需要的自行来判断，像下面这段代码一样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if(mappedHandler.getHandler() instanceof MultiActionController)&#123;  </span><br><span class="line">   ((MultiActionController)mappedHandler.getHandler()).xxx  </span><br><span class="line">&#125;else if(mappedHandler.getHandler() instanceof XXX)&#123;  </span><br><span class="line">    ...  </span><br><span class="line">&#125;else if(...)&#123;  </span><br><span class="line">   ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>假如我们再增加一个 <code>Controller</code>类型就要在上面代码中再加入一行 判断语句，这种形式就使得程序难以维护，也违反了设计模式中的开闭原则 – 对扩展开放，对修改关闭。</p>
+</li>
 </ul>
 <h4 id="Spring-事务"><a href="#Spring-事务" class="headerlink" title="Spring 事务"></a>Spring 事务</h4><h5 id="1-Spring事务管理接口"><a href="#1-Spring事务管理接口" class="headerlink" title="1. Spring事务管理接口"></a>1. Spring事务管理接口</h5><ul>
 <li><strong>PlatformTransactionManager：</strong> （平台）事务管理器</li>
@@ -740,8 +779,14 @@
 </li>
 </ol>
 <hr>
-<h3 id="线程怎么安全退出？"><a href="#线程怎么安全退出？" class="headerlink" title="线程怎么安全退出？"></a>线程怎么安全退出？</h3><p>Thread提供了一个stop()方法，但是stop()方法是一个被废弃的方法。为什么stop()方法被废弃而不被使用呢？原因是stop()方法太过于暴力，会强行把执行一半的线程终止。  这样会就不会保证线程的资源正确释放，通常是没有给与线程完成资源释放工作的机会，因此会导致程序工作在不确定的状态下 。</p>
-<p>Thread.interrupt(),我们可以用他来停止线程，他是安全的，可是使用他的时候并不会真的停止了线程，只是会给线程打上了一个记号，至于这个记号有什么用呢我们可以这样来用。 </p>
+<h3 id="线程怎么安全退出？"><a href="#线程怎么安全退出？" class="headerlink" title="线程怎么安全退出？"></a>线程怎么安全退出？</h3><ul>
+<li><p>使用退出标志，使线程正常退出，也就是当run方法完成后线程终止。 </p>
+</li>
+<li><p>Thread提供了一个stop()方法，但是stop()方法是一个被废弃的方法。为什么stop()方法被废弃而不被使用呢？原因是stop()方法太过于暴力，会强行把执行一半的线程终止。  这样会就不会保证线程的资源正确释放，通常是没有给与线程完成资源释放工作的机会，因此会导致程序工作在不确定的状态下 。</p>
+</li>
+<li><p>Thread.interrupt(),我们可以用他来停止线程，他是安全的，可是使用他的时候并不会真的停止了线程，只是会给线程打上了一个记号，至于这个记号有什么用呢我们可以这样来用。 </p>
+</li>
+</ul>
 <h4 id="用什么方法去看什么状态呢"><a href="#用什么方法去看什么状态呢" class="headerlink" title="用什么方法去看什么状态呢"></a>用什么方法去看什么状态呢</h4><ol>
 <li>this.interrupted():看看当前线程是否是中断状态，执行后将状态表示改为false； interrupted()是静态方法：内部实现是调用的当前线程的isInterrupted()，并且会重置当前线程的中断状态 </li>
 <li>this.isInterrupeted():看看线程对象是否已经是中断状态，但是不清除中断状态标记。 isInterrupted()是实例方法，是调用该方法的对象所表示的那个线程的isInterrupted()，不会重置当前线程的中断状态 </li>
@@ -877,6 +922,14 @@
 </li>
 <li><p><strong>await() / signal()方法</strong></p>
 <p>在JDK5.0之后，Java提供了Lock与Condition机制。Condition接口的await()和signal()是用来做同步的两种方法 </p>
+<ul>
+<li>Condition是个接口，基本的方法就是await()和signal()方法；</li>
+<li>Condition依赖于Lock接口，生成一个Condition的基本代码是lock.newCondition() </li>
+<li>调用Condition的await()和signal()方法，都必须在lock保护之内，就是说必须在lock.lock()和lock.unlock之间才可以使用</li>
+</ul>
+<p>　　Conditon中的await()对应Object的wait()；</p>
+<p>　　Condition中的signal()对应Object的notify()；</p>
+<p>　　Condition中的signalAll()对应Object的notifyAll()。</p>
 </li>
 <li><p><strong>BlockingQueue阻塞队列方法</strong></p>
 <p><strong>什么是阻塞队列：</strong></p>
@@ -925,6 +978,19 @@
 <li>sleep方法给其他线程机会时不考虑线程优先级(优先级低的也有可能)；而yield方法只会给相同优先级或者更高优先级线程机会(如果没有相同或者更高优先级的线程，该线程会继续运行)</li>
 <li>线程执行sleep方法进入阻塞状态，执行yield方法进入就绪状态</li>
 </ol>
+<p><strong>notify和notifyAll区别？</strong></p>
+<p>先说两个概念：<strong>锁池和等待池</strong></p>
+<ul>
+<li>锁池:假设线程A已经拥有了某个对象(注意:不是类)的锁，而其它的线程想要调用这个对象的某个synchronized方法(或者synchronized块)，由于这些线程在进入对象的synchronized方法之前必须先获得该对象的锁的拥有权，但是该对象的锁目前正被线程A拥有，所以这些线程就进入了该对象的锁池中。</li>
+<li>等待池:假设一个线程A调用了某个对象的wait()方法，线程A就会释放该对象的锁后，进入到了该对象的等待池中。</li>
+</ul>
+<p>然后再来说<strong>notify和notifyAll</strong>的区别</p>
+<ul>
+<li>如果线程调用了对象的 wait()方法，那么线程便会处于该对象的等待池中，等待池中的线程不会去竞争该对象的锁。</li>
+<li>当有线程调用了对象的 notifyAll()方法（唤醒所有 wait 线程）或 notify()方法（只随机唤醒一个 wait 线程），被唤醒的的线程便会进入该对象的锁池中，锁池中的线程会去竞争该对象锁。也就是说，调用了notify后只要一个线程会由等待池进入锁池，而notifyAll会将该对象等待池内的所有线程移动到锁池中，等待锁竞争</li>
+<li>优先级高的线程竞争到对象锁的概率大，假若某线程没有竞争到该对象锁，它还会留在锁池中，唯有线程再次调用 wait()方法，它才会重新回到等待池中。而竞争到对象锁的线程则继续往下执行，直到执行完了 synchronized 代码块，它会释放掉该对象锁，这时锁池中的线程会继续竞争该对象锁。</li>
+</ul>
+<p>综上，所谓唤醒线程，另一种解释可以说是将线程由等待池移动到锁池，notifyAll调用后，会将全部线程由等待池移到锁池，然后参与锁的竞争，竞争成功则继续执行，如果不成功则留在锁池等待锁被释放后再次参与竞争。而notify只会唤醒一个线程。</p>
 <hr>
 <p> ###讲一讲volatile关键字？</p>
 <h4 id="1-讲一下Java内存模型"><a href="#1-讲一下Java内存模型" class="headerlink" title="1. 讲一下Java内存模型"></a>1. 讲一下Java内存模型</h4><p>在 JDK1.2 之前，Java的内存模型实现总是从<strong>主存</strong>（即共享内存）读取变量，是不需要进行特别的注意的。而在当前的 Java 内存模型下，线程可以把变量保存<strong>本地内存</strong>（比如机器的寄存器）中，而不是直接在主存中进行读写。这就可能造成一个线程在主存中修改了一个变量的值，而另外一个线程还继续使用它在寄存器中的变量值的拷贝，造成<strong>数据的不一致</strong>。</p>
@@ -959,7 +1025,7 @@
  <a id="more"></a>
 
 <hr>
-<h3 id="讲一讲HashMap"><a href="#讲一讲HashMap" class="headerlink" title="讲一讲HashMap?"></a>讲一讲HashMap?</h3><h5 id="1-常用实现类结构"><a href="#1-常用实现类结构" class="headerlink" title="1.常用实现类结构"></a>1.常用实现类结构</h5><p><strong>Map:</strong>双列数据，存储key-value对的数据   —类似于高中的函数：y = f(x)    </p>
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><h5 id="1-常用实现类结构"><a href="#1-常用实现类结构" class="headerlink" title="1.常用实现类结构"></a>1.常用实现类结构</h5><p><strong>Map:</strong>双列数据，存储key-value对的数据   —类似于高中的函数：y = f(x)    </p>
 <p>​    <strong>HashMap:</strong>作为Map的主要实现类；线程不安全的，效率高；存储null的key和value        </p>
 <p>​         <strong>LinkedHashMap:</strong>保证在遍历map元素时，可以照添加的顺序实现遍历。原因：在原的HashMap底层结构基础上，添加了一对指针，指向前一个和后一个元素。对于频繁的遍历操作，此类执行效率高于HashMap。   </p>
 <p>​    <strong>TreeMap:</strong>保证照添加的key-value对进行排序，实现排序遍历。此时考虑key的自然排序或定制排序。底层使用红黑树    </p>
@@ -999,7 +1065,178 @@
 <hr>
 <h5 id="5-TreeMap的使用"><a href="#5-TreeMap的使用" class="headerlink" title="5. TreeMap的使用"></a>5. TreeMap的使用</h5><p>//向TreeMap中添加key-value，要求key必须是由同一个类创建的对象<br>//因为要照key进行排序：自然排序 、定制排序</p>
 <hr>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><h4 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Collection接口            </span><br><span class="line">    List接口：存储有序的、可重复的数据                </span><br><span class="line">   		 ArrayList:作为List接口的主要实现类；线程不安全的，效率高；底层使用Object[] elementData存储                </span><br><span class="line">  	     LinkedList:对于频繁的插入、删除操作，使用此类效率比ArrayList高；底层使用双向链表存储                </span><br><span class="line">  	     Vector:作为List接口的古老实现类；线程安全的，效率低；底层使用Object[] elementData存储            </span><br><span class="line">    Set接口：存储无序的、不可重复的数据                </span><br><span class="line">   		 HashSet:作为Set接口的主要实现类；线程不安全的；可以存储null值             	 LinkedHashSet:作为HashSet的子类；遍历其内部数据时，可以按照添加的顺序遍历，在添加数据的同时，每个数据还维护了两个引用，记录此数据前一个数据和后一个数据。对于频繁的遍历操作，LinkedHashSet效率高于HashSet。                  TreeSet：可以照添加对象的指定属性，进行排序。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="List接口常用方法："><a href="#List接口常用方法：" class="headerlink" title="List接口常用方法："></a>List接口常用方法：</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">增：add(Object obj)</span><br><span class="line">删：remove(int inex) &#x2F; remove(Object obj)</span><br><span class="line">改：set(int inex ,Object ele)</span><br><span class="line">查：get(int index)</span><br><span class="line">插：add(int inex,Object ele)</span><br><span class="line">长度：size()</span><br><span class="line">遍历：Iterator\foreach\for</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="ArrayList的源码分析："><a href="#ArrayList的源码分析：" class="headerlink" title="ArrayList的源码分析："></a>ArrayList的源码分析：</h4><h5 id="1-jdk-7情况下"><a href="#1-jdk-7情况下" class="headerlink" title="1 jdk 7情况下"></a>1 jdk 7情况下</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList list = <span class="keyword">new</span> ArrayList();<span class="comment">//底层创建了长度是10的Object[]数组elementData      </span></span><br><span class="line">list.add(<span class="number">123</span>);<span class="comment">//elementData[0] = new Integer(123);      </span></span><br><span class="line">...      </span><br><span class="line">list.add(<span class="number">11</span>);<span class="comment">//如果此次的添加导致底层elementData数组容量不够，则扩容。    默认情况下，扩容为原来的容量的1.5倍，同时需要将原有数组中的数据复制到新的数组中。      </span></span><br><span class="line">结论：建议开发中使用带参的构造器：ArrayList list = <span class="keyword">new</span> ArrayList(<span class="keyword">int</span> capacity)</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-jdk-8中ArrayList的变化："><a href="#2-jdk-8中ArrayList的变化：" class="headerlink" title="2 jdk 8中ArrayList的变化："></a>2 jdk 8中ArrayList的变化：</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList list = <span class="keyword">new</span> ArrayList();<span class="comment">//底层Object[] elementData初始化为&#123;&#125;.并没创建长度为10的数组      </span></span><br><span class="line">list.add(<span class="number">123</span>);<span class="comment">//第一次调用add()时，底层才创建了长度10的数组，并将数据123添加到elementData[0]     </span></span><br><span class="line">...</span><br><span class="line">后续的添加和扩容操作与jdk <span class="number">7</span> 无异。</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-小结："><a href="#3-小结：" class="headerlink" title="3 小结："></a>3 小结：</h5><p>jdk7中的ArrayList的对象的创建类似于单例的饿汉式，而jdk8中的ArrayList的对象的创建类似于单例的懒汉式，延迟了数组的创建，节省内存。</p>
+<hr>
+<h3 id="说说List-Set-Map三者的区别？"><a href="#说说List-Set-Map三者的区别？" class="headerlink" title="说说List,Set,Map三者的区别？"></a>说说List,Set,Map三者的区别？</h3><ul>
+<li><strong>List(对付顺序的好帮手)：</strong> List接口存储一组不唯一（可以有多个元素引用相同的对象），有序的对象</li>
+<li><strong>Set(注重独一无二的性质):</strong> 不允许重复的集合。不会有多个元素引用相同的对象。</li>
+<li><strong>Map(用Key来搜索的专家):</strong> 使用键值对存储。Map会维护与Key有关联的值。两个Key可以引用相同的对象，但Key不能重复，典型的Key是String类型，但也可以是任何对象。</li>
+</ul>
+<hr>
+<h3 id="Arraylist-与-LinkedList-区别"><a href="#Arraylist-与-LinkedList-区别" class="headerlink" title="Arraylist 与 LinkedList 区别?"></a>Arraylist 与 LinkedList 区别?</h3><ul>
+<li><strong>1. 是否保证线程安全：</strong> <code>ArrayList</code> 和 <code>LinkedList</code> 都是不同步的，也就是不保证线程安全；</li>
+<li><strong>2. 底层数据结构：</strong> <code>Arraylist</code> 底层使用的是 <strong><code>Object</code> 数组</strong>；<code>LinkedList</code> 底层使用的是 <strong>双向链表</strong> 数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）</li>
+<li><strong>3. 插入和删除是否受元素位置的影响：</strong> ① <strong><code>ArrayList</code> 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。</strong> 比如：执行<code>add(E e)</code>方法的时候， <code>ArrayList</code> 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置 i 插入和删除元素的话（<code>add(int index, E element)</code>）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 ② <strong><code>LinkedList</code> 采用链表存储，所以对于<code>add(�E e)</code>方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O（1），如果是要在指定位置<code>i</code>插入和删除元素的话（<code>(add(int index, E element)</code>） 时间复杂度近似为<code>o(n))</code>因为需要先移动到指定位置再插入。</strong></li>
+<li><strong>4. 是否支持快速随机访问：</strong> <code>LinkedList</code> 不支持高效的随机元素访问，而 <code>ArrayList</code> 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于<code>get(int index)</code>方法)。</li>
+<li><strong>5. 内存空间占用：</strong> ArrayList的空 间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。</li>
+</ul>
+<hr>
+<h3 id="ArrayList-与-Vector-区别呢-为什么要用Arraylist取代Vector呢？"><a href="#ArrayList-与-Vector-区别呢-为什么要用Arraylist取代Vector呢？" class="headerlink" title="ArrayList 与 Vector 区别呢?为什么要用Arraylist取代Vector呢？"></a>ArrayList 与 Vector 区别呢?为什么要用Arraylist取代Vector呢？</h3><p><code>Vector</code>类的所有方法都是同步的。可以由两个线程安全地访问一个Vector对象、但是一个线程访问Vector的话代码要在同步操作上耗费大量的时间。</p>
+<p><code>Arraylist</code>不是同步的，所以在不需要保证线程安全时建议使用Arraylist。</p>
+<hr>
+<h3 id="说一说-ArrayList-的扩容机制吧"><a href="#说一说-ArrayList-的扩容机制吧" class="headerlink" title="说一说 ArrayList 的扩容机制吧"></a>说一说 ArrayList 的扩容机制吧</h3><p><strong>ArrayList有三种方式来初始化，构造方法源码如下：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 默认初始容量大小</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  *默认构造函数，使用初始容量10构造一个空列表(无参数构造)</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 带初始容量参数的构造函数。（用户自己指定容量）</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (initialCapacity &gt; <span class="number">0</span>) &#123;<span class="comment">//初始容量大于0</span></span><br><span class="line">         <span class="comment">//创建initialCapacity大小的数组</span></span><br><span class="line">         <span class="keyword">this</span>.elementData = <span class="keyword">new</span> Object[initialCapacity];</span><br><span class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;<span class="comment">//初始容量等于0</span></span><br><span class="line">         <span class="comment">//创建空数组</span></span><br><span class="line">         <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;<span class="comment">//初始容量小于0，抛出异常</span></span><br><span class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal Capacity: "</span>+</span><br><span class="line">                                            initialCapacity);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *构造包含指定collection元素的列表，这些元素利用该集合的迭代器按顺序返回</span></span><br><span class="line"><span class="comment"> *如果指定的集合为null，throws NullPointerException。 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">     elementData = c.toArray();</span><br><span class="line">     <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span></span><br><span class="line">         <span class="keyword">if</span> (elementData.getClass() != Object[]<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">             <span class="title">elementData</span> </span>= Arrays.copyOf(elementData, size, Object[]<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="comment">// replace with empty array.</span></span><br><span class="line">         <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p> 以无参构造函数创建的 ArrayList 为例分析 ：</p>
+<ul>
+<li>当我们要 add 进第1个元素到 ArrayList 时，elementData.length 为0 （因为还是一个空的 list），因为执行了 <code>ensureCapacityInternal()</code> 方法 ，所以 minCapacity 此时为10。此时，<code>minCapacity - elementData.length &gt; 0</code>成立，所以会进入 <code>grow(minCapacity)</code> 方法。</li>
+<li>当add第2个元素时，minCapacity 为2，此时e lementData.length(容量)在添加第一个元素后扩容成 10 了。此时，<code>minCapacity - elementData.length &gt; 0</code>不成立，所以不会进入 （执行）<code>grow(minCapacity)</code> 方法。</li>
+<li>添加第3、4···到第10个元素时，依然不会执行grow方法，数组容量都为10。</li>
+</ul>
+<p>直到添加第11个元素，minCapacity(为11)比elementData.length（为10）要大。进入grow方法进行扩容。</p>
+<p><strong>grow（）方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 要分配的最大数组大小</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_ARRAY_SIZE = Integer.MAX_VALUE - <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * ArrayList扩容的核心方法。</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// oldCapacity为旧容量，newCapacity为新容量</span></span><br><span class="line">       <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">       <span class="comment">//将oldCapacity 右移一位，其效果相当于oldCapacity /2，</span></span><br><span class="line">       <span class="comment">//我们知道位运算的速度远远快于整除运算，整句运算式的结果就是将新容量更新为旧容量的1.5倍，</span></span><br><span class="line">       <span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br><span class="line">       <span class="comment">//然后检查新容量是否大于最小需要容量，若还是小于最小需要容量，那么就把最小需要容量当作数组的新容量，</span></span><br><span class="line">       <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">           newCapacity = minCapacity;</span><br><span class="line">      <span class="comment">// 如果新容量大于 MAX_ARRAY_SIZE,进入(执行) `hugeCapacity()` 方法来比较 minCapacity 和 MAX_ARRAY_SIZE，</span></span><br><span class="line">      <span class="comment">//如果minCapacity大于最大容量，则新容量则为`Integer.MAX_VALUE`，否则，新容量大小则为 MAX_ARRAY_SIZE 即为 `Integer.MAX_VALUE - 8`。</span></span><br><span class="line">       <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="number">0</span>)</span><br><span class="line">           newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">       <span class="comment">// minCapacity is usually close to size, so this is a win:</span></span><br><span class="line">       elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1),所以 ArrayList 每次扩容之后容量都会变为原来的 1.5 倍左右（oldCapacity为偶数就是1.5倍，否则是1.5倍左右）！</strong> 奇偶不同，比如 ：10+10/2 = 15, 33+33/2=49。如果是奇数的话会丢掉小数.</p>
+<blockquote>
+<p>“&gt;&gt;”（移位运算符）：&gt;&gt;1 右移一位相当于除2，右移n位相当于除以 2 的 n 次方。这里 oldCapacity 明显右移了1位所以相当于oldCapacity /2。对于大数据的2进制运算,位移运算符比那些普通运算符的运算要快很多,因为程序仅仅移动一下而已,不去计算,这样提高了效率,节省了资源 　</p>
+</blockquote>
+<p><strong>我们再来通过例子探究一下<code>grow()</code> 方法 ：</strong></p>
+<ul>
+<li>当add第1个元素时，oldCapacity 为0，经比较后第一个if判断成立，newCapacity = minCapacity(为10)。但是第二个if判断不会成立，即newCapacity 不比 MAX_ARRAY_SIZE大，则不会进入 <code>hugeCapacity</code> 方法。数组容量为10，add方法中 return true,size增为1。</li>
+<li>当add第11个元素进入grow方法时，newCapacity为15，比minCapacity（为11）大，第一个if判断不成立。新容量没有大于数组最大size，不会进入hugeCapacity方法。数组容量扩为15，add方法中return true,size增为11。</li>
+<li>以此类推······</li>
+</ul>
+<p><strong>这里补充一点比较重要，但是容易被忽视掉的知识点：</strong></p>
+<ul>
+<li>java 中的 <code>length</code>属性是针对数组说的,比如说你声明了一个数组,想知道这个数组的长度则用到了 length 这个属性.</li>
+<li>java 中的 <code>length()</code> 方法是针对字符串说的,如果想看这个字符串的长度则用到 <code>length()</code> 这个方法.</li>
+<li>java 中的 <code>size()</code> 方法是针对泛型集合说的,如果想看这个泛型有多少个元素,就调用此方法来查看!</li>
+</ul>
+<p><strong><code>hugeCapacity()</code> 方法</strong></p>
+<p>从上面 <code>grow()</code> 方法源码我们知道： 如果新容量大于 MAX_ARRAY_SIZE,进入(执行) <code>hugeCapacity()</code> 方法来比较 minCapacity 和 MAX_ARRAY_SIZE，如果minCapacity大于最大容量，则新容量则为<code>Integer.MAX_VALUE</code>，否则，新容量大小则为 MAX_ARRAY_SIZE 即为 <code>Integer.MAX_VALUE - 8</code>。</p>
+<hr>
+<h3 id="HashMap-和-Hashtable-的区别"><a href="#HashMap-和-Hashtable-的区别" class="headerlink" title="HashMap 和 Hashtable 的区别"></a>HashMap 和 Hashtable 的区别</h3><ol>
+<li><strong>线程是否安全：</strong> HashMap 是非线程安全的，HashTable 是线程安全的；HashTable 内部的方法基本都经过<code>synchronized</code> 修饰。（如果你要保证线程安全的话就使用 ConcurrentHashMap 吧！）；</li>
+<li><strong>效率：</strong> 因为线程安全的问题，HashMap 要比 HashTable 效率高一点。另外，HashTable 基本被淘汰，不要在代码中使用它；</li>
+<li><strong>对Null key 和Null value的支持：</strong> HashMap 中，null 可以作为键，这样的键只有一个，可以有一个或多个键所对应的值为 null。。但是在 HashTable 中 put 进的键值只要有一个 null，直接抛出 NullPointerException。</li>
+<li><strong>初始容量大小和每次扩充容量大小的不同 ：</strong> ①创建时如果不指定容量初始值，Hashtable 默认的初始大小为11，之后每次扩充，容量变为原来的2n+1。HashMap 默认的初始化大小为16。之后每次扩充，容量变为原来的2倍。②创建时如果给定了容量初始值，那么 Hashtable 会直接使用你给定的大小，而 HashMap 会将其扩充为2的幂次方大小（HashMap 中的<code>tableSizeFor()</code>方法保证，下面给出了源代码）。也就是说 HashMap 总是使用2的幂作为哈希表的大小,后面会介绍到为什么是2的幂次方。</li>
+<li><strong>底层数据结构：</strong> JDK1.8 以后的 HashMap 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</li>
+</ol>
+<hr>
+<h3 id="HashMap-和-HashSet区别"><a href="#HashMap-和-HashSet区别" class="headerlink" title="HashMap 和 HashSet区别"></a>HashMap 和 HashSet区别</h3><p>如果你看过 <code>HashSet</code> 源码的话就应该知道：HashSet 底层就是基于 HashMap 实现的。（HashSet 的源码非常非常少，因为除了 <code>clone()</code>、<code>writeObject()</code>、<code>readObject()</code>是 HashSet 自己不得不实现之外，其他方法都是直接调用 HashMap 中的方法。</p>
+<table>
+<thead>
+<tr>
+<th>HashMap</th>
+<th>HashSet</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>实现了Map接口</td>
+<td>实现Set接口</td>
+</tr>
+<tr>
+<td>存储键值对</td>
+<td>仅存储对象</td>
+</tr>
+<tr>
+<td>调用 <code>put（）</code>向map中添加元素</td>
+<td>调用 <code>add（）</code>方法向Set中添加元素</td>
+</tr>
+<tr>
+<td>HashMap使用键（Key）计算Hashcode</td>
+<td>HashSet使用成员对象来计算hashcode值，对于两个对象来说hashcode可能相同，所以equals()方法用来判断对象的相等性，</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="HashSet如何检查重复"><a href="#HashSet如何检查重复" class="headerlink" title="HashSet如何检查重复"></a>HashSet如何检查重复</h3><p>当你把对象加入<code>HashSet</code>时，HashSet会先计算对象的<code>hashcode</code>值来判断对象加入的位置，同时也会与其他加入的对象的hashcode值作比较，如果没有相符的hashcode，HashSet会假设对象没有重复出现。但是如果发现有相同hashcode值的对象，这时会调用<code>equals（）</code>方法来检查hashcode相等的对象是否真的相同。如果两者相同，HashSet就不会让加入操作成功。（摘自我的Java启蒙书《Head fist java》第二版）</p>
+<p><strong>hashCode（）与equals（）的相关规定：</strong></p>
+<ol>
+<li>如果两个对象相等，则hashcode一定也是相同的</li>
+<li>两个对象相等,对两个equals方法返回true</li>
+<li>两个对象有相同的hashcode值，它们也不一定是相等的</li>
+<li>综上，equals方法被覆盖过，则hashCode方法也必须被覆盖</li>
+<li>hashCode()的默认行为是对堆上的对象产生独特值。如果没有重写hashCode()，则该class的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）。</li>
+</ol>
+<p><strong>==与equals的区别</strong></p>
+<ol>
+<li>==是判断两个变量或实例是不是指向同一个内存空间 equals是判断两个变量或实例所指向的内存空间的值是不是相同</li>
+<li>==是指对内存地址进行比较 equals()是对字符串的内容进行比较</li>
+<li>==指引用是否相同 equals()指的是值是否相同</li>
+</ol>
+<hr>
+<h3 id="HashMap-的长度为什么是2的幂次方"><a href="#HashMap-的长度为什么是2的幂次方" class="headerlink" title="HashMap 的长度为什么是2的幂次方"></a>HashMap 的长度为什么是2的幂次方</h3><p>为了能让 HashMap 存取高效，尽量较少碰撞，也就是要尽量把数据分配均匀。我们上面也讲到了过了，Hash 值的范围值-2147483648到2147483647，前后加起来大概40亿的映射空间，只要哈希函数映射得比较均匀松散，一般应用是很难出现碰撞的。但问题是一个40亿长度的数组，内存是放不下的。所以这个散列值是不能直接拿来用的。用之前还要先做对数组的长度取模运算，得到的余数才能用来要存放的位置也就是对应的数组下标。这个数组下标的计算方法是“ <code>(n - 1) &amp; hash</code>”。（n代表数组长度）。这也就解释了 HashMap 的长度为什么是2的幂次方。</p>
+<p><strong>这个算法应该如何设计呢？</strong></p>
+<p>我们首先可能会想到采用%取余的操作来实现。但是，重点来了：<strong>“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作（也就是说 hash%length==hash&amp;(length-1)的前提是 length 是2的 n 次方；）。”</strong> 并且 <strong>采用二进制位操作 &amp;，相对于%能够提高运算效率，这就解释了 HashMap 的长度为什么是2的幂次方。</strong></p>
+<hr>
+<h3 id="ConcurrentHashMap-和-Hashtable-的区别"><a href="#ConcurrentHashMap-和-Hashtable-的区别" class="headerlink" title="ConcurrentHashMap 和 Hashtable 的区别"></a>ConcurrentHashMap 和 Hashtable 的区别</h3><p>ConcurrentHashMap 和 Hashtable 的区别主要体现在实现线程安全的方式上不同。</p>
+<ul>
+<li><strong>底层数据结构：</strong> JDK1.7的 ConcurrentHashMap 底层采用 <strong>分段的数组+链表</strong> 实现，JDK1.8 采用的数据结构跟HashMap1.8的结构一样，数组+链表/红黑二叉树。Hashtable 和 JDK1.8 之前的 HashMap 的底层数据结构类似都是采用 <strong>数组+链表</strong> 的形式，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的；</li>
+<li><strong>实现线程安全的方式（重要）：</strong> ① <strong>在JDK1.7的时候，ConcurrentHashMap（分段锁）</strong> 对整个桶数组进行了分割分段(Segment)，每一把锁只锁容器其中一部分数据，多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。 <strong>到了 JDK1.8 的时候已经摒弃了Segment的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。（JDK1.6以后 对 synchronized锁做了很多优化）</strong> 整个看起来就像是优化过且线程安全的 HashMap，虽然在JDK1.8中还能看到 Segment 的数据结构，但是已经简化了属性，只是为了兼容旧版本；② <strong>Hashtable(同一把锁)</strong> :使用 synchronized 来保证线程安全，效率非常低下。当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或轮询状态，如使用 put 添加元素，另一个线程不能使用 put 添加元素，也不能使用 get，竞争会越来越激烈效率越低。</li>
+</ul>
+<p><strong>两者的对比图：</strong></p>
+<p><strong>HashTable:</strong></p>
+<p><a href="https://camo.githubusercontent.com/60920968c0e19878ca2a3a153cbe4872f950b571/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f486173685461626c652545352538352541382545382541312541382545392539342538312e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/60920968c0e19878ca2a3a153cbe4872f950b571/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f486173685461626c652545352538352541382545382541312541382545392539342538312e706e67" alt="HashTable全表锁"></a></p>
+<p><strong>JDK1.7的ConcurrentHashMap：</strong></p>
+<p><a href="https://camo.githubusercontent.com/092aae16c3a38854b4cea8b7e42dc6720df4441f/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f436f6e63757272656e74486173684d61702545352538382538362545362541452542352545392539342538312e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/092aae16c3a38854b4cea8b7e42dc6720df4441f/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f436f6e63757272656e74486173684d61702545352538382538362545362541452542352545392539342538312e6a7067" alt="JDK1.7的ConcurrentHashMap"></a></p>
+<p><strong>JDK1.8的ConcurrentHashMap（TreeBin: 红黑二叉树节点 Node: 链表节点）：</strong></p>
+<p><a href="https://camo.githubusercontent.com/b823c5f2cf18e7e27da70409d2b5e18fed820364/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f4a444b312e382d436f6e63757272656e74486173684d61702d5374727563747572652e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/b823c5f2cf18e7e27da70409d2b5e18fed820364/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f4a444b312e382d436f6e63757272656e74486173684d61702d5374727563747572652e6a7067" alt="JDK1.8的ConcurrentHashMap"></a></p>
+<hr>
+<h3 id="ConcurrentHashMap线程安全的具体实现方式-底层具体实现"><a href="#ConcurrentHashMap线程安全的具体实现方式-底层具体实现" class="headerlink" title="ConcurrentHashMap线程安全的具体实现方式/底层具体实现"></a>ConcurrentHashMap线程安全的具体实现方式/底层具体实现</h3><h4 id="JDK1-7（上面有示意图）"><a href="#JDK1-7（上面有示意图）" class="headerlink" title="JDK1.7（上面有示意图）"></a>JDK1.7（上面有示意图）</h4><p>首先将数据分为一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据时，其他段的数据也能被其他线程访问。</p>
+<p><strong>ConcurrentHashMap 是由 Segment 数组结构和 HashEntry 数组结构组成</strong>。</p>
+<p>Segment 实现了 ReentrantLock,所以 Segment 是一种可重入锁，扮演锁的角色。HashEntry 用于存储键值对数据。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static class Segment&lt;K,V&gt; extends ReentrantLock implements Serializable &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个 ConcurrentHashMap 里包含一个 Segment 数组。Segment 的结构和HashMap类似，是一种数组和链表结构，一个 Segment 包含一个 HashEntry 数组，每个 HashEntry 是一个链表结构的元素，每个 Segment 守护着一个HashEntry数组里的元素，当对 HashEntry 数组的数据进行修改时，必须首先获得对应的 Segment的锁。</p>
+<h4 id="JDK1-8-（上面有示意图）"><a href="#JDK1-8-（上面有示意图）" class="headerlink" title="JDK1.8 （上面有示意图）"></a>JDK1.8 （上面有示意图）</h4><p>ConcurrentHashMap取消了Segment分段锁，采用CAS和synchronized来保证并发安全。数据结构跟HashMap1.8的结构类似，数组+链表/红黑二叉树。Java 8在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为O(N)）转换为红黑树（寻址时间复杂度为O(log(N))）</p>
+<p>synchronized只锁定当前链表或红黑二叉树的首节点，这样只要hash不冲突，就不会产生并发，效率又提升N倍。</p>
+<hr>
+<h3 id="comparable-和-Comparator的区别"><a href="#comparable-和-Comparator的区别" class="headerlink" title="comparable 和 Comparator的区别"></a>comparable 和 Comparator的区别</h3><ul>
+<li>comparable接口实际上是出自java.lang包 它有一个 <code>compareTo(Object obj)</code>方法用来排序</li>
+<li>comparator接口实际上是出自 java.util 包它有一个<code>compare(Object obj1, Object obj2)</code>方法用来排序</li>
+</ul>
+<p>一般我们需要对一个集合使用自定义排序时，我们就要重写<code>compareTo()</code>方法或<code>compare()</code>方法，当我们需要对某一个集合实现两种排序方式，比如一个song对象中的歌名和歌手名分别采用一种排序方法的话，我们可以重写<code>compareTo()</code>方法和使用自制的Comparator方法或者以两个Comparator来实现歌名排序和歌星名排序，第二种代表我们只能使用两个参数版的 <code>Collections.sort()</code>.</p>
+<h4 id="Comparator定制排序"><a href="#Comparator定制排序" class="headerlink" title="Comparator定制排序"></a>Comparator定制排序</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt; arrayList &#x3D; new ArrayList&lt;Integer&gt;();</span><br><span class="line">arrayList.add(-1);</span><br><span class="line">arrayList.add(3);</span><br><span class="line">arrayList.add(3);</span><br><span class="line">arrayList.add(-5);</span><br><span class="line">arrayList.add(7);</span><br><span class="line">arrayList.add(4);</span><br><span class="line">arrayList.add(-9);</span><br><span class="line">arrayList.add(-7);</span><br><span class="line">System.out.println(&quot;原始数组:&quot;);</span><br><span class="line">System.out.println(arrayList);</span><br><span class="line">&#x2F;&#x2F; void reverse(List list)：反转</span><br><span class="line">Collections.reverse(arrayList);</span><br><span class="line">System.out.println(&quot;Collections.reverse(arrayList):&quot;);</span><br><span class="line">System.out.println(arrayList);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; void sort(List list),按自然排序的升序排序</span><br><span class="line">Collections.sort(arrayList);</span><br><span class="line">System.out.println(&quot;Collections.sort(arrayList):&quot;);</span><br><span class="line">System.out.println(arrayList);</span><br><span class="line">&#x2F;&#x2F; 定制排序的用法</span><br><span class="line">Collections.sort(arrayList, new Comparator&lt;Integer&gt;() &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int compare(Integer o1, Integer o2) &#123;</span><br><span class="line">        return o2.compareTo(o1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">System.out.println(&quot;定制排序后：&quot;);</span><br><span class="line">System.out.println(arrayList);</span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">原始数组:</span><br><span class="line">[-1, 3, 3, -5, 7, 4, -9, -7]</span><br><span class="line">Collections.reverse(arrayList):</span><br><span class="line">[-7, -9, 4, 7, -5, 3, 3, -1]</span><br><span class="line">Collections.sort(arrayList):</span><br><span class="line">[-9, -7, -5, -1, 3, 3, 4, 7]</span><br><span class="line">定制排序后：</span><br><span class="line">[7, 4, 3, 3, -1, -5, -7, -9]</span><br></pre></td></tr></table></figure>
+
+<h4 id="重写compareTo方法实现按年龄来排序"><a href="#重写compareTo方法实现按年龄来排序" class="headerlink" title="重写compareTo方法实现按年龄来排序"></a>重写compareTo方法实现按年龄来排序</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; person对象没有实现Comparable接口，所以必须实现，这样才不会出错，才可以使treemap中的数据按顺序排列</span><br><span class="line">&#x2F;&#x2F; 前面一个例子的String类已经默认实现了Comparable接口，详细可以查看String类的API文档，另外其他</span><br><span class="line">&#x2F;&#x2F; 像Integer类等都已经实现了Comparable接口，所以不需要另外实现了</span><br><span class="line"></span><br><span class="line">public  class Person implements Comparable&lt;Person&gt; &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line"></span><br><span class="line">    public Person(String name, int age) &#123;</span><br><span class="line">        super();</span><br><span class="line">        this.name &#x3D; name;</span><br><span class="line">        this.age &#x3D; age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name &#x3D; name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getAge() &#123;</span><br><span class="line">        return age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setAge(int age) &#123;</span><br><span class="line">        this.age &#x3D; age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * TODO重写compareTo方法实现按年龄来排序</span><br><span class="line">     *&#x2F;</span><br><span class="line">    @Override</span><br><span class="line">    public int compareTo(Person o) &#123;</span><br><span class="line">        &#x2F;&#x2F; TODO Auto-generated method stub</span><br><span class="line">        if (this.age &gt; o.getAge()) &#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125; else if (this.age &lt; o.getAge()) &#123;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">        return age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        TreeMap&lt;Person, String&gt; pdata &#x3D; new TreeMap&lt;Person, String&gt;();</span><br><span class="line">        pdata.put(new Person(&quot;张三&quot;, 30), &quot;zhangsan&quot;);</span><br><span class="line">        pdata.put(new Person(&quot;李四&quot;, 20), &quot;lisi&quot;);</span><br><span class="line">        pdata.put(new Person(&quot;王五&quot;, 10), &quot;wangwu&quot;);</span><br><span class="line">        pdata.put(new Person(&quot;小红&quot;, 5), &quot;xiaohong&quot;);</span><br><span class="line">        &#x2F;&#x2F; 得到key的值的同时得到key所对应的值</span><br><span class="line">        Set&lt;Person&gt; keys &#x3D; pdata.keySet();</span><br><span class="line">        for (Person key : keys) &#123;</span><br><span class="line">            System.out.println(key.getAge() + &quot;-&quot; + key.getName());</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Output：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">5-小红</span><br><span class="line">10-王五</span><br><span class="line">20-李四</span><br><span class="line">30-张三</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="集合框架底层数据结构总结"><a href="#集合框架底层数据结构总结" class="headerlink" title="集合框架底层数据结构总结"></a>集合框架底层数据结构总结</h3><h4 id="Collection-1"><a href="#Collection-1" class="headerlink" title="Collection"></a>Collection</h4><h4 id="1-List"><a href="#1-List" class="headerlink" title="1. List"></a>1. List</h4><ul>
+<li><strong>Arraylist：</strong> Object数组</li>
+<li><strong>Vector：</strong> Object数组</li>
+<li><strong>LinkedList：</strong> 双向链表(JDK1.6之前为循环链表，JDK1.7取消了循环)</li>
+</ul>
+<h4 id="2-Set"><a href="#2-Set" class="headerlink" title="2. Set"></a>2. Set</h4><ul>
+<li><strong>HashSet（无序，唯一）:</strong> 基于 HashMap 实现的，底层采用 HashMap 来保存元素</li>
+<li><strong>LinkedHashSet：</strong> LinkedHashSet 继承于 HashSet，并且其内部是通过 LinkedHashMap 来实现的。有点类似于我们之前说的LinkedHashMap 其内部是基于 HashMap 实现一样，不过还是有一点点区别的</li>
+<li><strong>TreeSet（有序，唯一）：</strong> 红黑树(自平衡的排序二叉树)</li>
+</ul>
+<h4 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h4><ul>
+<li><strong>HashMap：</strong> JDK1.8之前HashMap由数组+链表组成的，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间</li>
+<li><strong>LinkedHashMap：</strong> LinkedHashMap 继承自 HashMap，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，LinkedHashMap 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。详细可以查看：<a href="https://www.imooc.com/article/22931" target="_blank" rel="noopener">《LinkedHashMap 源码详细分析（JDK1.8）》</a></li>
+<li><strong>Hashtable：</strong> 数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的</li>
+<li><strong>TreeMap：</strong> 红黑树（自平衡的排序二叉树）</li>
+</ul>
+<hr>
+<h3 id="如何选用集合"><a href="#如何选用集合" class="headerlink" title="如何选用集合?"></a>如何选用集合?</h3><p>主要根据集合的特点来选用，比如我们需要根据键值获取到元素值时就选用Map接口下的集合，需要排序时选择TreeMap,不需要排序时就选择HashMap,需要保证线程安全就选用ConcurrentHashMap.当我们只需要存放元素值时，就选择实现Collection接口的集合，需要保证元素唯一时选择实现Set接口的集合比如TreeSet或HashSet，不需要就选择实现List接口的比如ArrayList或LinkedList，然后再根据实现这些接口的集合的特点来选用。</p>
+]]></content>
       <categories>
         <category>Java面试</category>
       </categories>
@@ -1116,7 +1353,28 @@
 <li>使用数据库连接池技术。 </li>
 </ol>
 <hr>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+<p>###MySQL存储引擎</p>
+<h4 id="MyISAM和InnoDB区别"><a href="#MyISAM和InnoDB区别" class="headerlink" title="MyISAM和InnoDB区别"></a>MyISAM和InnoDB区别</h4><p>MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。</p>
+<p>大多数时候我们使用的都是 InnoDB 存储引擎，但是在某些情况下使用 MyISAM 也是合适的比如读密集的情况下。（如果你不介意 MyISAM 崩溃恢复问题的话）。</p>
+<p><strong>两者的对比：</strong></p>
+<ol>
+<li><strong>是否支持行级锁</strong> : MyISAM 只有表级锁(table-level locking)，而InnoDB 支持行级锁(row-level locking)和表级锁,默认为行级锁。</li>
+<li><strong>是否支持事务和崩溃后的安全恢复： MyISAM</strong> 强调的是性能，每次查询具有原子性,其执行速度比InnoDB类型更快，但是不提供事务支持。但是<strong>InnoDB</strong> 提供事务支持事务，外部键等高级数据库功能。 具有事务(commit)、回滚(rollback)和崩溃修复能力(crash recovery capabilities)的事务安全(transaction-safe (ACID compliant))型表。</li>
+<li><strong>是否支持外键：</strong> MyISAM不支持，而InnoDB支持。</li>
+<li><strong>是否支持MVCC</strong> ：仅 InnoDB 支持。应对高并发事务, MVCC比单纯的加锁更高效;MVCC只在 <code>READ COMMITTED</code> 和 <code>REPEATABLE READ</code> 两个隔离级别下工作;MVCC可以使用 乐观(optimistic)锁 和 悲观(pessimistic)锁来实现;各数据库中MVCC实现并不统一。</li>
+</ol>
+<hr>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><h4 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a><strong>哈希索引</strong></h4><p>对于哈希索引来说，底层的数据结构就是哈希表，因此在绝大多数需求为单条记录查询的时候，可以选择哈希索引，查询性能最快；其余大部分场景，建议选择BTree索引。</p>
+<h4 id="BTree索引"><a href="#BTree索引" class="headerlink" title="BTree索引"></a><strong>BTree</strong>索引</h4><p><strong>MyISAM和InnoDB实现BTree索引方式的区别</strong></p>
+<ul>
+<li><p>MyISAM</p>
+<p>B+Tree叶节点的data域存放的是数据记录的地址。在索引检索的时候，首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其 data 域的值，然后以 data 域的值为地址读取相应的数据记录。这被称为“非聚簇索引”。</p>
+</li>
+<li><p>InnoDB</p>
+<p>其数据文件本身就是索引文件。相比MyISAM，索引文件和数据文件是分离的，其表数据文件本身就是按B+Tree组织的一个索引结构，树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。这被称为“聚簇索引（或聚集索引）”，而其余的索引都作为辅助索引，辅助索引的data域存储相应记录主键的值而不是地址，这也是和MyISAM不同的地方。在根据主索引搜索时，直接找到key所在的节点即可取出数据；在根据辅助索引查找时，则需要先取出主键的值，在走一遍主索引。 因此，在设计表的时候，不建议使用过长的字段作为主键，也不建议使用非单调的字段作为主键，这样会造成主索引频繁分裂。</p>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>数据库</category>
       </categories>
@@ -1335,7 +1593,7 @@
 
 <h4 id="基数排序队列实现"><a href="#基数排序队列实现" class="headerlink" title="基数排序队列实现"></a>基数排序队列实现</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RadixSortQueue</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">23</span>, <span class="number">6</span>, <span class="number">189</span>, <span class="number">45</span>, <span class="number">9</span>, <span class="number">287</span>, <span class="number">56</span>, <span class="number">1</span>, <span class="number">798</span>, <span class="number">34</span>, <span class="number">65</span>, <span class="number">652</span>, <span class="number">5</span>&#125;;</span><br><span class="line">        radixSort(arr);</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">radixSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//存数组中最大的数字</span></span><br><span class="line">        <span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] &gt; max) &#123;</span><br><span class="line">                max = arr[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//计算最大数字位数</span></span><br><span class="line">        <span class="keyword">int</span> maxLength = (max + <span class="string">""</span>).length();</span><br><span class="line">        <span class="comment">//用于临时存储数据的队列</span></span><br><span class="line">        MyQueue[] temp = <span class="keyword">new</span> MyQueue[<span class="number">10</span>];</span><br><span class="line">        <span class="comment">//为队列数组赋值</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; temp.length;i++)&#123;</span><br><span class="line">            temp[i] = <span class="keyword">new</span> MyQueue();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//根据最大数字的位数决定比较的次数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, n = <span class="number">1</span>; i &lt; maxLength; i++, n *= <span class="number">10</span>) &#123;</span><br><span class="line">            <span class="comment">//把每一个数字分别计算余数</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">                <span class="comment">//计算余数</span></span><br><span class="line">                <span class="keyword">int</span> ys = arr[j] / n % <span class="number">10</span>;</span><br><span class="line">                <span class="comment">//把当前遍历的数据放入指定的队列中</span></span><br><span class="line">                temp[ys].add(arr[j]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//记录取的元素需要放的位置</span></span><br><span class="line">            <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//把数字取出来</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; temp.length; k++) &#123;</span><br><span class="line">                <span class="comment">//循环取出元素</span></span><br><span class="line">                <span class="keyword">while</span>(!temp[k].isEmpty())&#123;</span><br><span class="line">                    <span class="comment">//取出元素</span></span><br><span class="line">                    arr[index] = temp[k].poll();</span><br><span class="line">                    <span class="comment">//记录下一个位置</span></span><br><span class="line">                    index++;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:%5CUsers%5CWLJ%5CPictures%5CScreenshots%5C%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(19).png" alt=""></p>
+<p> <img src="https://img-blog.csdn.net/20171031145151172?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjk3MjA2NTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"> </p>
 ]]></content>
       <categories>
         <category>Java面试</category>
@@ -1428,6 +1686,9 @@
 <p><strong>缺点</strong>：</p>
 <p>对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于只直接执行相同的操作。</p>
 </li>
+<li><p><strong>原理</strong></p>
+<p>反射首先是能够获取到Java中的反射类的字节码，然后将字节码中的方法，变量，构造函数等映射成相应的Method、Filed、Constructor等类 </p>
+</li>
 </ol>
 <hr>
 <h3 id="谈谈对-Java-注解的理解，解决了什么问题？"><a href="#谈谈对-Java-注解的理解，解决了什么问题？" class="headerlink" title="谈谈对 Java 注解的理解，解决了什么问题？"></a>谈谈对 Java 注解的理解，解决了什么问题？</h3><ol>
@@ -1485,7 +1746,45 @@
 <h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>所谓多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程时并不确定，而是在程序运行期间才确定，即一个引用变量到底会指向哪个类的实例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运行期间才能决定。</p>
 <p>在 Java 中有两种形式可以实现多态：继承（多个子类对同一方法的重写）和接口（实现接口并覆盖接口中同一方法）。</p>
 <hr>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>3.SpringAOP实现原理+IOC实现原理(源码怎么实现)？<br>4.讲一讲动态代理？<br>5.反射及其实现原理？<br>6.sleep()和wait()的区别？<br>7.stop退出线程安全吗（正常退出吗）？<br>8.notify和notifyAll区别？<br>9.讲一讲线程之间怎么协作？<br>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？<br>12.讲一讲线程创建的时候发生了什么？<br>13.退出线程的方式，怎么退出线程？<br>14.nio了解吗？</p>
+<p>###动态代理</p>
+<p>动态代理具体步骤：</p>
+<ol>
+<li>通过实现 InvocationHandler 接口创建自己的调用处理器；</li>
+<li>通过为 Proxy 类指定 ClassLoader 对象和一组 interface 来创建动态代理类；</li>
+<li>通过反射机制获得动态代理类的构造函数，其唯一参数类型是调用处理器接口类型；</li>
+<li>通过构造函数创建动态代理类实例，构造时调用处理器对象作为参数被传入。</li>
+</ol>
+<hr>
+<h3 id="BIO、NIO和AIO总结"><a href="#BIO、NIO和AIO总结" class="headerlink" title="BIO、NIO和AIO总结"></a>BIO、NIO和AIO总结</h3><p><strong>同步</strong> ：两个同步任务相互依赖，并且一个任务必须以依赖于另一任务的某种方式执行。 比如在A-&gt;B事件模型中，你需要先完成 A 才能执行B。 再换句话说，同步调用种被调用者未处理完请求之前，调用不返回，调用者会一直等待结果的返回。</p>
+<p><strong>异步</strong>： 两个异步的任务完全独立的，一方的执行不需要等待另外一方的执行。再换句话说，异步调用种一调用就返回结果不需要等待结果返回，当结果返回的时候通过回调函数或者其他方式拿着结果再做相关事情，</p>
+<p><strong>阻塞</strong>： 阻塞就是发起一个请求，调用者一直等待请求结果返回，也就是当前线程会被挂起，无法从事其他任务，只有当条件就绪才能继续。</p>
+<p><strong>非阻塞</strong>： 非阻塞就是发起一个请求，调用者不用一直等着结果返回，可以先去干其他事情。</p>
+<ul>
+<li><p>BIO</p>
+<p>同步阻塞I/O模式，数据的读取写入必须阻塞在一个线程内等待其完成。 </p>
+</li>
+<li><p>NIO</p>
+<p>NIO是一种同步非阻塞的I/O模型，在Java 1.4 中引入了 NIO 框架，对应 java.nio 包，提供了 Channel , Selector，Buffer等抽象。</p>
+<p><strong>IO流是阻塞的，NIO流是不阻塞的。</strong></p>
+<p>Java NIO使我们可以进行非阻塞IO操作。比如说，单线程中从通道读取数据到buffer，同时可以继续做别的事情，当数据读取到buffer中后，线程再继续处理数据。写数据也是一样的。另外，非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。</p>
+<p>Java IO的各种流是阻塞的。这意味着，当一个线程调用 <code>read()</code> 或 <code>write()</code> 时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情了</p>
+<p><strong>Buffer(缓冲区)</strong></p>
+<p><strong>IO 面向流(Stream oriented)，而 NIO 面向缓冲区(Buffer oriented)。</strong></p>
+<p>Buffer是一个对象，它包含一些要写入或者要读出的数据。在NIO类库中加入Buffer对象，体现了新库与原I/O的一个重要区别。在面向流的I/O中·可以将数据直接写入或者将数据直接读到 Stream 对象中。虽然 Stream 中也有 Buffer 开头的扩展类，但只是流的包装类，还是从流读到缓冲区，而 NIO 却是直接读到 Buffer 中进行操作。</p>
+<p>在NIO厍中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的; 在写入数据时，写入到缓冲区中。任何时候访问NIO中的数据，都是通过缓冲区进行操作。</p>
+<p>最常用的缓冲区是 ByteBuffer,一个 ByteBuffer 提供了一组功能用于操作 byte 数组。除了ByteBuffer,还有其他的一些缓冲区，事实上，每一种Java基本类型（除了Boolean类型）都对应有一种缓冲区。</p>
+<p><strong>Channel (通道)</strong></p>
+<p>NIO 通过Channel（通道） 进行读写。</p>
+<p>通道是双向的，可读也可写，而流的读写是单向的。无论读写，通道只能和Buffer交互。因为 Buffer，通道可以异步地读写。</p>
+<p><strong>Selector</strong> <strong>(选择器)</strong></p>
+<p>NIO有选择器，而IO没有。</p>
+<p>选择器用于使用单个线程处理多个通道。因此，它需要较少的线程来处理这些通道。线程之间的切换对于操作系统来说是昂贵的。 因此，为了提高系统效率选择器是有用的。</p>
+<p><a href="https://camo.githubusercontent.com/3a68153ce17be90275df07a47409afaea91aff83/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d322f536c6563746f722e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/3a68153ce17be90275df07a47409afaea91aff83/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d322f536c6563746f722e706e67" alt="一个单线程中Selector维护3个Channel的示意图"></a></p>
+</li>
+</ul>
+<p>SpringAOP实现原理+IOC实现原理(源码怎么实现)？</p>
+<p>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？</p>
+<p>12.讲一讲线程创建的时候发生了什么？</p>
 <p>第一面：<br>1.多线程和多进程分别适用于什么场景？<br>2.并发和并行的区别？<br>3.TCP/IP协议的3次握手和4次挥手？原因？<br>4.设计平衡二叉树的原因？<br>5.快排、堆排、归并等排序的时间复杂度与空间复杂度？</p>
 <p> <img src="https://img-blog.csdn.net/20160924191851607" alt="这里写图片描述"> </p>
 <p>6.索引的数据结构有哪些，讲一讲B+树？<br>7.MySQL的存储引擎知道吗？区别？<br>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）<br>9.介绍HashMap，说到红黑树，然后提问：介绍一下红黑树？</p>
