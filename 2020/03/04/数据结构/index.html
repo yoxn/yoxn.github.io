@@ -55,7 +55,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20171031145151172?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjk3MjA2NTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="article:published_time" content="2020-03-04T03:11:18.000Z">
-<meta property="article:modified_time" content="2020-03-17T16:51:26.496Z">
+<meta property="article:modified_time" content="2020-03-18T16:13:01.812Z">
 <meta property="article:tag" content="栈">
 <meta property="article:tag" content="队列">
 <meta property="article:tag" content="数组">
@@ -239,7 +239,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-18 00:51:26" itemprop="dateModified" datetime="2020-03-18T00:51:26+08:00">2020-03-18</time>
+                <time title="修改时间：2020-03-19 00:13:01" itemprop="dateModified" datetime="2020-03-19T00:13:01+08:00">2020-03-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,7 +275,25 @@
 <p>（3）左、右子树也分别为二叉排序树；</p>
 <p>（4）没有键值相等的结点。</p>
 <h4 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h4><p>它是一棵二叉排序树，且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。</p>
-<h4 id="B树、B-数"><a href="#B树、B-数" class="headerlink" title="B树、B+数"></a>B树、B+数</h4><h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><hr>
+<h4 id="B树、B-数"><a href="#B树、B-数" class="headerlink" title="B树、B+数"></a>B树、B+数</h4><p>B树： B树中所有的叶节点都在同一层</p>
+<p>​            有两个子节点的节点叫二节点，二节点要么有两个子节点，要么没有子节点；有三个子节点的节点叫三节点，三节点要么有两个子节点，要么没有子节点</p>
+<p>B树的阶，2-3树是3阶的树，2-3-4树是4阶的树</p>
+<p>B+树：非叶节点只存储索引信息，不存储数据</p>
+<p>​            叶子节点最右边的指针指向下一个相邻的叶节点</p>
+<p>​            所有的叶节点组成了一个有序列表</p>
+<h4 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h4><p>红黑树是一种含有红黑结点并能自平衡的二叉查找树。它必须满足下面性质：</p>
+<ul>
+<li>性质1：每个节点要么是黑色，要么是红色。</li>
+<li>性质2：根节点是黑色。</li>
+<li>性质3：每个叶子节点（NIL）是黑色。</li>
+<li>性质4：每个红色结点的两个子结点一定都是黑色。</li>
+<li><strong>性质5：任意一结点到每个叶子结点的路径都包含数量相同的黑结点。</strong></li>
+</ul>
+<p>从性质5又可以推出：</p>
+<ul>
+<li>性质5.1：如果一个结点存在黑子结点，那么该结点肯定有两个子结点</li>
+</ul>
+<h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><hr>
 <h3 id="数组与链表的区别？"><a href="#数组与链表的区别？" class="headerlink" title="数组与链表的区别？"></a>数组与链表的区别？</h3><p>链表：上一个元素的引用指向下一个元素的存储结构。</p>
 <p>区别：<strong>链表</strong>是链式存储结构，数组是顺序存储结构；链表通过指针来连接元素和元素，数组则是把所有的元素按次序依次存储；链表的插入和删除元素相对数组较为简单，不需要移动元素，且较为实现长度扩充，但是寻找某个元素较为困难。<strong>数组</strong>寻找某个元素较为简单，但是插入与删除较为复杂 由于最大长度需要再编程一开始时指定，故当达到最大长度时，扩充长度不如链表方便。</p>
 <p>相同：两种结构均可实现数据的顺序存储，构造出来的模型呈线性结构。</p>
@@ -386,7 +404,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">1.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈"><span class="nav-number">2.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列"><span class="nav-number">3.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表"><span class="nav-number">4.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树"><span class="nav-number">5.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树"><span class="nav-number">5.1.</span> <span class="nav-text">二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完全二叉树"><span class="nav-number">5.2.</span> <span class="nav-text">完全二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#满二叉树"><span class="nav-number">5.3.</span> <span class="nav-text">满二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线索二叉树"><span class="nav-number">5.4.</span> <span class="nav-text">线索二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉排序树"><span class="nav-number">5.5.</span> <span class="nav-text">二叉排序树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#平衡二叉树"><span class="nav-number">5.6.</span> <span class="nav-text">平衡二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B树、B-数"><span class="nav-number">5.7.</span> <span class="nav-text">B树、B+数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希表"><span class="nav-number">6.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图"><span class="nav-number">7.</span> <span class="nav-text">图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组与链表的区别？"><span class="nav-number">8.</span> <span class="nav-text">数组与链表的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序算法"><span class="nav-number">9.</span> <span class="nav-text">排序算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#冒泡排序"><span class="nav-number">9.1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆排序"><span class="nav-number">9.2.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入排序"><span class="nav-number">9.3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#归并排序"><span class="nav-number">9.4.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快速排序"><span class="nav-number">9.5.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择排序"><span class="nav-number">9.6.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#希尔排序"><span class="nav-number">9.7.</span> <span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基数排序"><span class="nav-number">9.8.</span> <span class="nav-text">基数排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基数排序队列实现"><span class="nav-number">9.9.</span> <span class="nav-text">基数排序队列实现</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">1.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈"><span class="nav-number">2.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列"><span class="nav-number">3.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表"><span class="nav-number">4.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树"><span class="nav-number">5.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树"><span class="nav-number">5.1.</span> <span class="nav-text">二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完全二叉树"><span class="nav-number">5.2.</span> <span class="nav-text">完全二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#满二叉树"><span class="nav-number">5.3.</span> <span class="nav-text">满二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线索二叉树"><span class="nav-number">5.4.</span> <span class="nav-text">线索二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉排序树"><span class="nav-number">5.5.</span> <span class="nav-text">二叉排序树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#平衡二叉树"><span class="nav-number">5.6.</span> <span class="nav-text">平衡二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B树、B-数"><span class="nav-number">5.7.</span> <span class="nav-text">B树、B+数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#红黑树"><span class="nav-number">5.8.</span> <span class="nav-text">红黑树</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希表"><span class="nav-number">6.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图"><span class="nav-number">7.</span> <span class="nav-text">图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组与链表的区别？"><span class="nav-number">8.</span> <span class="nav-text">数组与链表的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序算法"><span class="nav-number">9.</span> <span class="nav-text">排序算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#冒泡排序"><span class="nav-number">9.1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆排序"><span class="nav-number">9.2.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入排序"><span class="nav-number">9.3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#归并排序"><span class="nav-number">9.4.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快速排序"><span class="nav-number">9.5.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择排序"><span class="nav-number">9.6.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#希尔排序"><span class="nav-number">9.7.</span> <span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基数排序"><span class="nav-number">9.8.</span> <span class="nav-text">基数排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基数排序队列实现"><span class="nav-number">9.9.</span> <span class="nav-text">基数排序队列实现</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

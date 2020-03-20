@@ -432,6 +432,10 @@
     <url>/2020/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
     <content><![CDATA[<h3 id="OSI与TCP-IP各层的结构与功能-都有哪些协议"><a href="#OSI与TCP-IP各层的结构与功能-都有哪些协议" class="headerlink" title="OSI与TCP/IP各层的结构与功能,都有哪些协议?"></a>OSI与TCP/IP各层的结构与功能,都有哪些协议?</h3><p>学习计算机网络时我们一般采用折中的办法，也就是中和 OSI 和 TCP/IP 的优点，采用一种只有五层协议的体系结构，这样既简洁又能将概念阐述清楚。</p>
 <p> <img src="https://camo.githubusercontent.com/5bf7c14046570425f50bca412a3cf3710514ccff/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392f372f2545342542412539342545352542312538322545342542442539332545372542332542422545372542422539332545362539452538342e706e67" alt="img"> </p>
+<p> <img src="https://uploadfiles.nowcoder.com/images/20170221/3376963_1487669784925_BE9C8D014E82DE000B3F6885F96CCF90" alt="img"> </p>
+<p>  TCP/IP模型：应用层、传输层、网络层、网络接口层 </p>
+<p>  应用层协议(常用)：HTTP、RTSP、FTP </p>
+<p>  传输层协议：TCP、UDP</p>
  <a id="more"></a>
 
 <hr>
@@ -484,7 +488,44 @@
 <p>###HTTP哪个首部字段与断点续传有关（传输文件中断，怎么重新继续传输）？ </p>
 <p>在Http的请求上多定义了断点续传相关的HTTP头 <strong>Range和Content-Range</strong>字段</p>
 <hr>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+<h3 id="HTTP和HTTPS"><a href="#HTTP和HTTPS" class="headerlink" title="HTTP和HTTPS"></a>HTTP和HTTPS</h3><p>超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息，HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此，HTTP协议不适合传输一些敏感信息，比如：信用卡号、密码等支付信息。</p>
+<p>为了解决HTTP协议的这一缺陷，需要使用另一种协议：安全套接字层超文本传输协议HTTPS，为了数据传输的安全，HTTPS在HTTP的基础上加入了SSL协议，SSL依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。</p>
+<p><strong>一、HTTP和HTTPS的基本概念</strong></p>
+<p>　　HTTP：是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。</p>
+<p>　　HTTPS：是以安全为目标的HTTP通道，简单讲是HTTP的安全版，即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。</p>
+<p>　　HTTPS协议的主要作用可以分为两种：一种是建立一个信息安全通道，来保证数据传输的安全；另一种就是确认网站的真实性。</p>
+<p><strong>二、HTTP与HTTPS有什么区别？</strong></p>
+<p>　　HTTP协议传输的数据都是未加密的，也就是明文的，因此使用HTTP协议传输隐私信息非常不安全，为了保证这些隐私数据能加密传输，于是网景公司设计了SSL（Secure Sockets Layer）协议用于对HTTP协议传输的数据进行加密，从而就诞生了HTTPS。简单来说，HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全。</p>
+<p>　　HTTPS和HTTP的区别主要如下：</p>
+<p>　　1、https协议需要到ca申请证书，一般免费证书较少，因而需要一定费用。</p>
+<p>　　2、http是超文本传输协议，信息是明文传输，https则是具有安全性的ssl加密传输协议。</p>
+<p>　　3、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</p>
+<p>　　4、http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。</p>
+<p><strong>三、HTTPS的工作原理</strong></p>
+<p>　　我们都知道HTTPS能够加密信息，以免敏感信息被第三方获取，所以很多银行网站或电子邮箱等等安全级别较高的服务都会采用HTTPS协议。</p>
+<p><img src="http://www.mahaixiang.cn/uploads/allimg/1507/1-150H120343I41.jpg" alt="HTTP与HTTPS的区别-马海祥博客"></p>
+<p>　客户端在使用HTTPS方式与Web服务器通信时有以下几个步骤，如图所示。</p>
+<p>　　（1）客户使用https的URL访问Web服务器，要求与Web服务器建立SSL连接。</p>
+<p>　　（2）Web服务器收到客户端请求后，会将网站的证书信息（证书中包含公钥）传送一份给客户端。</p>
+<p>　　（3）客户端的浏览器与Web服务器开始协商SSL连接的安全等级，也就是信息加密的等级。</p>
+<p>　　（4）客户端的浏览器根据双方同意的安全等级，建立会话密钥，然后利用网站的公钥将会话密钥加密，并传送给网站。</p>
+<p>　　（5）Web服务器利用自己的私钥解密出会话密钥。</p>
+<p>　　（6）Web服务器利用会话密钥加密与客户端之间的通信。</p>
+<p> <img src="https://pic002.cnblogs.com/images/2012/339704/2012071410212142.gif" alt="img"></p>
+<p><strong>四、HTTPS的优点</strong></p>
+<p>　　尽管HTTPS并非绝对安全，掌握根证书的机构、掌握加密算法的组织同样可以进行中间人形式的攻击，但HTTPS仍是现行架构下最安全的解决方案，主要有以下几个好处：</p>
+<p>　　（1）使用HTTPS协议可认证用户和服务器，确保数据发送到正确的客户机和服务器；</p>
+<p>　　（2）HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全，可防止数据在传输过程中不被窃取、改变，确保数据的完整性。</p>
+<p>　　（3）HTTPS是现行架构下最安全的解决方案，虽然不是绝对安全，但它大幅增加了中间人攻击的成本。</p>
+<p>　　（4）谷歌曾在2014年8月份调整搜索引擎算法，并称“比起同等HTTP网站，采用HTTPS加密的网站在搜索结果中的排名将会更高”。</p>
+<p><strong>五、HTTPS的缺点</strong></p>
+<p>　　虽然说HTTPS有很大的优势，但其相对来说，还是存在不足之处的：</p>
+<p>　　（1）HTTPS协议握手阶段比较费时，会使页面的加载时间延长近50%，增加10%到20%的耗电；</p>
+<p>　　（2）HTTPS连接缓存不如HTTP高效，会增加数据开销和功耗，甚至已有的安全措施也会因此而受到影响；</p>
+<p>　　（3）SSL证书需要钱，功能越强大的证书费用越高，个人网站、小网站没有必要一般不会用。</p>
+<p>　  （4）SSL证书通常需要绑定IP，不能在同一IP上绑定多个域名，IPv4资源不可能支撑这个消耗。</p>
+<p>　　（5）HTTPS协议的加密范围也比较有限，在黑客攻击、拒绝服务攻击、服务器劫持等方面几乎起不到什么作用。最关键的，SSL证书的信用链体系并不安全，特别是在某些国家可以控制CA根证书的情况下，中间人攻击一样可行。</p>
+]]></content>
       <categories>
         <category>Java面试</category>
       </categories>
@@ -1006,6 +1047,56 @@
 <li><strong>volatile关键字主要用于解决变量在多个线程之间的可见性，而 synchronized关键字解决的是多个线程之间访问资源的同步性。</strong></li>
 </ul>
 <hr>
+<h3 id="多线程和多进程分别适用于什么场景？"><a href="#多线程和多进程分别适用于什么场景？" class="headerlink" title="多线程和多进程分别适用于什么场景？"></a>多线程和多进程分别适用于什么场景？</h3><table>
+<thead>
+<tr>
+<th align="center">对比维度</th>
+<th align="center">多进程</th>
+<th align="center"><strong>多线程</strong></th>
+<th align="center"><strong>总结</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数据共享、同步</td>
+<td align="center">数据共享复杂，需要用IPC；数据是分开的，同步简单</td>
+<td align="center">因为共享进程数据，数据共享简单，但也是因为这个原因导致同步复杂</td>
+<td align="center">各有优势</td>
+</tr>
+<tr>
+<td align="center">内存、CPU</td>
+<td align="center">占用内存多，切换复杂，CPU利用率低</td>
+<td align="center">占用内存少，切换简单，CPU利用率高</td>
+<td align="center">线程占优</td>
+</tr>
+<tr>
+<td align="center">创建销毁、切换</td>
+<td align="center">创建销毁、切换复杂，速度慢</td>
+<td align="center">创建销毁、切换简单，速度很快</td>
+<td align="center">线程占优</td>
+</tr>
+<tr>
+<td align="center">编程、调试</td>
+<td align="center">编程简单，调试简单</td>
+<td align="center">编程复杂，调试复杂</td>
+<td align="center">进程占优</td>
+</tr>
+<tr>
+<td align="center">可靠性</td>
+<td align="center">进程间不会互相影响</td>
+<td align="center">一个线程挂掉将导致整个进程挂掉</td>
+<td align="center">进程占优</td>
+</tr>
+<tr>
+<td align="center">分布式</td>
+<td align="center">适应于多核、多机分布式；如果一台机器不够，扩展到多台机器比较简单</td>
+<td align="center">适应于多核分布式</td>
+<td align="center">进程占优</td>
+</tr>
+</tbody></table>
+<p><strong>1）需要频繁创建销毁的优先用线程</strong><br>这种原则最常见的应用就是Web服务器了，来一个连接建立一个线程，断了就销毁线程，要是用进程，创建和销毁的代价是很难承受的<br><strong>2）需要进行大量计算的优先使用线程</strong><br>所谓大量计算，当然就是要耗费很多CPU，切换频繁了，这种情况下线程是最合适的。<br>这种原则最常见的是图像处理、算法处理。<br><strong>3）强相关的处理用线程，弱相关的处理用进程</strong><br>什么叫强相关、弱相关？理论上很难定义，给个简单的例子就明白了。<br>一般的Server需要完成如下任务：消息收发、消息处理。“消息收发”和“消息处理”就是弱相关的任务，而“消息处理”里面可能又分为“消息解码”、“业务处理”，这两个任务相对来说相关性就要强多了。因此“消息收发”和“消息处理”可以分进程设计，“消息解码”、“业务处理”可以分线程设计。<br>当然这种划分方式不是一成不变的，也可以根据实际情况进行调整。<br><strong>4）可能要扩展到多机分布的用进程，多核分布的用线程</strong><br><strong>5）都满足需求的情况下，用你最熟悉、最拿手的方式</strong><br>至于“数据共享、同步”、“编程、调试”、“可靠性”这几个维度的所谓的“复杂、简单”应该怎么取舍，我只能说：没有明确的选择方法。但我可以告诉你一个选择原则：如果多进程和多线程都能够满足要求，那么选择你最熟悉、最拿手的那个。</p>
+<hr>
+<h3 id="并发和并行的区别？"><a href="#并发和并行的区别？" class="headerlink" title="并发和并行的区别？"></a>并发和并行的区别？</h3><p>并行：多个CPU同时执行多个任务。比如：多个人同时做不同的事。<br>并发：一个CPU(采用时间片)同时执行多个任务。比如：秒杀、多个人做同一件事</p>
+<hr>
 ]]></content>
       <categories>
         <category>Java面试</category>
@@ -1073,7 +1164,7 @@
 <hr>
 <h4 id="ArrayList的源码分析："><a href="#ArrayList的源码分析：" class="headerlink" title="ArrayList的源码分析："></a>ArrayList的源码分析：</h4><h5 id="1-jdk-7情况下"><a href="#1-jdk-7情况下" class="headerlink" title="1 jdk 7情况下"></a>1 jdk 7情况下</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList list = <span class="keyword">new</span> ArrayList();<span class="comment">//底层创建了长度是10的Object[]数组elementData      </span></span><br><span class="line">list.add(<span class="number">123</span>);<span class="comment">//elementData[0] = new Integer(123);      </span></span><br><span class="line">...      </span><br><span class="line">list.add(<span class="number">11</span>);<span class="comment">//如果此次的添加导致底层elementData数组容量不够，则扩容。    默认情况下，扩容为原来的容量的1.5倍，同时需要将原有数组中的数据复制到新的数组中。      </span></span><br><span class="line">结论：建议开发中使用带参的构造器：ArrayList list = <span class="keyword">new</span> ArrayList(<span class="keyword">int</span> capacity)</span><br></pre></td></tr></table></figure>
 
-<h5 id="2-jdk-8中ArrayList的变化："><a href="#2-jdk-8中ArrayList的变化：" class="headerlink" title="2 jdk 8中ArrayList的变化："></a>2 jdk 8中ArrayList的变化：</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList list = <span class="keyword">new</span> ArrayList();<span class="comment">//底层Object[] elementData初始化为&#123;&#125;.并没创建长度为10的数组      </span></span><br><span class="line">list.add(<span class="number">123</span>);<span class="comment">//第一次调用add()时，底层才创建了长度10的数组，并将数据123添加到elementData[0]     </span></span><br><span class="line">...</span><br><span class="line">后续的添加和扩容操作与jdk <span class="number">7</span> 无异。</span><br></pre></td></tr></table></figure>
+<h5 id="2-jdk-8中ArrayList的变化："><a href="#2-jdk-8中ArrayList的变化：" class="headerlink" title="2 jdk 8中ArrayList的变化："></a>2 jdk 8中ArrayList的变化：</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList list = <span class="keyword">new</span> ArrayList();<span class="comment">//底层Object[] elementData初始化为&#123;&#125;.并没创建长度为10的数组      </span></span><br><span class="line">list.add(<span class="number">123</span>);<span class="comment">//第一次调用add()时，底层才创建了长度10的数组，并将数据123添加到elementData[0]     </span></span><br><span class="line">...</span><br><span class="line">后续的添加和扩容操作与jdk7无异。</span><br></pre></td></tr></table></figure>
 
 <h5 id="3-小结："><a href="#3-小结：" class="headerlink" title="3 小结："></a>3 小结：</h5><p>jdk7中的ArrayList的对象的创建类似于单例的饿汉式，而jdk8中的ArrayList的对象的创建类似于单例的懒汉式，延迟了数组的创建，节省内存。</p>
 <hr>
@@ -1086,7 +1177,7 @@
 <h3 id="Arraylist-与-LinkedList-区别"><a href="#Arraylist-与-LinkedList-区别" class="headerlink" title="Arraylist 与 LinkedList 区别?"></a>Arraylist 与 LinkedList 区别?</h3><ul>
 <li><strong>1. 是否保证线程安全：</strong> <code>ArrayList</code> 和 <code>LinkedList</code> 都是不同步的，也就是不保证线程安全；</li>
 <li><strong>2. 底层数据结构：</strong> <code>Arraylist</code> 底层使用的是 <strong><code>Object</code> 数组</strong>；<code>LinkedList</code> 底层使用的是 <strong>双向链表</strong> 数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）</li>
-<li><strong>3. 插入和删除是否受元素位置的影响：</strong> ① <strong><code>ArrayList</code> 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。</strong> 比如：执行<code>add(E e)</code>方法的时候， <code>ArrayList</code> 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置 i 插入和删除元素的话（<code>add(int index, E element)</code>）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 ② <strong><code>LinkedList</code> 采用链表存储，所以对于<code>add(�E e)</code>方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O（1），如果是要在指定位置<code>i</code>插入和删除元素的话（<code>(add(int index, E element)</code>） 时间复杂度近似为<code>o(n))</code>因为需要先移动到指定位置再插入。</strong></li>
+<li><strong>3. 插入和删除是否受元素位置的影响：</strong> ① <strong><code>ArrayList</code> 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。</strong> 比如：执行<code>add(E e)</code>方法的时候， <code>ArrayList</code> 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置 i 插入和删除元素的话（<code>add(int index, E element)</code>）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 ② <strong><code>LinkedList</code> 采用链表存储，所以对于<code>add(E e)</code>方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O（1），如果是要在指定位置<code>i</code>插入和删除元素的话（<code>(add(int index, E element)</code>） 时间复杂度近似为<code>o(n))</code>因为需要先移动到指定位置再插入。</strong></li>
 <li><strong>4. 是否支持快速随机访问：</strong> <code>LinkedList</code> 不支持高效的随机元素访问，而 <code>ArrayList</code> 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于<code>get(int index)</code>方法)。</li>
 <li><strong>5. 内存空间占用：</strong> ArrayList的空 间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。</li>
 </ul>
@@ -1230,12 +1321,17 @@
 </ul>
 <h4 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h4><ul>
 <li><strong>HashMap：</strong> JDK1.8之前HashMap由数组+链表组成的，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间</li>
-<li><strong>LinkedHashMap：</strong> LinkedHashMap 继承自 HashMap，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，LinkedHashMap 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。详细可以查看：<a href="https://www.imooc.com/article/22931" target="_blank" rel="noopener">《LinkedHashMap 源码详细分析（JDK1.8）》</a></li>
+<li><strong>LinkedHashMap：</strong> LinkedHashMap 继承自 HashMap，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，LinkedHashMap 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
 <li><strong>Hashtable：</strong> 数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的</li>
 <li><strong>TreeMap：</strong> 红黑树（自平衡的排序二叉树）</li>
 </ul>
 <hr>
 <h3 id="如何选用集合"><a href="#如何选用集合" class="headerlink" title="如何选用集合?"></a>如何选用集合?</h3><p>主要根据集合的特点来选用，比如我们需要根据键值获取到元素值时就选用Map接口下的集合，需要排序时选择TreeMap,不需要排序时就选择HashMap,需要保证线程安全就选用ConcurrentHashMap.当我们只需要存放元素值时，就选择实现Collection接口的集合，需要保证元素唯一时选择实现Set接口的集合比如TreeSet或HashSet，不需要就选择实现List接口的比如ArrayList或LinkedList，然后再根据实现这些接口的集合的特点来选用。</p>
+<hr>
+<h3 id="各数据结构时间复杂度"><a href="#各数据结构时间复杂度" class="headerlink" title="各数据结构时间复杂度"></a>各数据结构时间复杂度</h3><p><strong>数组</strong>：采用一段连续的存储单元来存储数据。对于指定下标的查找，时间复杂度为O(1)；通过给定值进行查找，需要遍历数组，逐一比对给定关键字和数组元素，时间复杂度为O(n)，当然，对于有序数组，则可采用二分查找，插值查找，斐波那契查找等方式，可将查找复杂度提高为O(logn)；对于一般的插入删除操作，涉及到数组元素的移动，其平均复杂度也为O(n)</p>
+<p><strong>线性链表</strong>：对于链表的新增，删除等操作（在找到指定操作位置后），仅需处理结点间的引用即可，时间复杂度为O(1)，而查找操作需要遍历链表逐一进行比对，复杂度为O(n)</p>
+<p><strong>二叉树</strong>：对一棵相对平衡的有序二叉树，对其进行插入，查找，删除等操作，平均复杂度均为O(logn)。</p>
+<p><strong>哈希表</strong>：相比上述几种数据结构，在哈希表中进行添加，删除，查找等操作，性能十分之高，不考虑哈希冲突的情况下，仅需一次定位即可完成，时间复杂度为O(1)，接下来我们就来看看哈希表是如何实现达到惊艳的常数阶O(1)的。</p>
 ]]></content>
       <categories>
         <category>Java面试</category>
@@ -1397,7 +1493,7 @@
 </li>
 <li><p>github自动跳转到我们设置的callback接口中，并且携带参数code</p>
 </li>
-<li><p>我们继续调用github提供的access_token接口，需要提供参数，将数据穿的的参数封装为AccessTokenDTO对象</p>
+<li><p>将数据传的的参数封装为AccessTokenDTO对象，我们继续调用github提供的access_token接口，需要提供参数，</p>
 <ul>
 <li>Client_id: github生成的</li>
 <li>Client_secret: github生成的</li>
@@ -1512,6 +1608,10 @@
 <p>System.out.println(sList);</p>
 <p>sList.add(“ddd”);</p>
 <p>Arrays.asList()返回一个List，通过阅读源码才发现，返回的List不是Collection中的那个List</p>
+<p> 关键代码：<strong><em>List list = Array.asList(strArray);\</em></strong><br>   Array.asList()方式，将数组转换List后，不能对list增删，只能查改，否则抛出异常。 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ArrayList list &#x3D; new ArrayList(Array.asList(strArray));</span><br></pre></td></tr></table></figure>
+
+<p>通过ArrayList的构造器，将Array.asList(strArray)的返回值由java.util.Arrays.ArrayList转为java.util.ArrayList。</p>
 <p>ArrayList提供了一个将List转为数组的方法：toArray</p>
 <hr>
 <h3 id="单点登录"><a href="#单点登录" class="headerlink" title="单点登录"></a>单点登录</h3><p>单点登录SSO（Single Sign On）说得简单点就是在一个多系统共存的环境下，用户在一处登录后，就不用在其他系统中登录，也就是用户的一次登录能得到其他所有系统的信任。单点登录在大型网站里使用得非常频繁，例如像阿里巴巴这样的网站，在网站的背后是成百上千的子系统，用户一次操作或交易可能涉及到几十个子系统的协作，如果每个子系统都需要用户认证，不仅用户会疯掉，各子系统也会为这种重复认证授权的逻辑搞疯掉。实现单点登录说到底就是要解决如何产生和存储那个信任，再就是其他系统如何验证这个信任的有效性，因此要点也就以下两个：</p>
@@ -1540,7 +1640,7 @@
 <h4 id="Nginx-作为-web-服务器"><a href="#Nginx-作为-web-服务器" class="headerlink" title="Nginx 作为 web 服务器"></a>Nginx 作为 web 服务器</h4><p>Nginx 可以作为静态页面的 web 服务器，同时还支持 CGI 协议的动态语言，比如 perl、php 等。但是不支持 java。Java 程序只能通过与 tomcat 配合完成。Nginx 专为性能优化而开发， 性能是其最重要的考量,实现上非常注重效率 ，能经受高负载的考验,有报告表明能支持高 达 50,000 个并发连接数。</p>
 <h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>Nginx 不仅可以做反向代理，实现负载均衡。还能用作正向代理来进行上网等功能。 正向代理：如果把局域网外的 Internet 想象成一个巨大的资源库，则局域网中的客户端要访 问 Internet，则需要通过代理服务器来访问，这种代理服务就称为正向代理。</p>
 <p>简单一点：通过代理服务器来访问服务器的过程 就叫 正向代理。<br>需要在客户端配置代理服务器进行指定网站访问</p>
-<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>反向代理，其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问。<br>我们只 需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，在返 回给客户端，此时反向代理服务器和目标服务器对外就是一个服务器，暴露的是代理服务器 地址，隐藏了真实服务器 IP 地址。</p>
+<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>反向代理，其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问。<br>我们只需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，在返 回给客户端，此时反向代理服务器和目标服务器对外就是一个服务器，暴露的是代理服务器 地址，隐藏了真实服务器 IP 地址。</p>
 <h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><p>增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的 情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，也就是我们所说的负 载均衡</p>
 <p>客户端发送多个请求到服务器，服务器处理请求，有一些可能要与数据库进行交互，服 务器处理完毕后，再将结果返回给客户端。</p>
 <h4 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h4><p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速 度。降低原来单个服务器的压力。</p>
@@ -1570,7 +1670,25 @@
 <p>（3）左、右子树也分别为二叉排序树；</p>
 <p>（4）没有键值相等的结点。</p>
 <h4 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h4><p>它是一棵二叉排序树，且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。</p>
-<h4 id="B树、B-数"><a href="#B树、B-数" class="headerlink" title="B树、B+数"></a>B树、B+数</h4><h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><hr>
+<h4 id="B树、B-数"><a href="#B树、B-数" class="headerlink" title="B树、B+数"></a>B树、B+数</h4><p>B树： B树中所有的叶节点都在同一层</p>
+<p>​            有两个子节点的节点叫二节点，二节点要么有两个子节点，要么没有子节点；有三个子节点的节点叫三节点，三节点要么有两个子节点，要么没有子节点</p>
+<p>B树的阶，2-3树是3阶的树，2-3-4树是4阶的树</p>
+<p>B+树：非叶节点只存储索引信息，不存储数据</p>
+<p>​            叶子节点最右边的指针指向下一个相邻的叶节点</p>
+<p>​            所有的叶节点组成了一个有序列表</p>
+<h4 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h4><p>红黑树是一种含有红黑结点并能自平衡的二叉查找树。它必须满足下面性质：</p>
+<ul>
+<li>性质1：每个节点要么是黑色，要么是红色。</li>
+<li>性质2：根节点是黑色。</li>
+<li>性质3：每个叶子节点（NIL）是黑色。</li>
+<li>性质4：每个红色结点的两个子结点一定都是黑色。</li>
+<li><strong>性质5：任意一结点到每个叶子结点的路径都包含数量相同的黑结点。</strong></li>
+</ul>
+<p>从性质5又可以推出：</p>
+<ul>
+<li>性质5.1：如果一个结点存在黑子结点，那么该结点肯定有两个子结点</li>
+</ul>
+<h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><hr>
 <h3 id="数组与链表的区别？"><a href="#数组与链表的区别？" class="headerlink" title="数组与链表的区别？"></a>数组与链表的区别？</h3><p>链表：上一个元素的引用指向下一个元素的存储结构。</p>
 <p>区别：<strong>链表</strong>是链式存储结构，数组是顺序存储结构；链表通过指针来连接元素和元素，数组则是把所有的元素按次序依次存储；链表的插入和删除元素相对数组较为简单，不需要移动元素，且较为实现长度扩充，但是寻找某个元素较为困难。<strong>数组</strong>寻找某个元素较为简单，但是插入与删除较为复杂 由于最大长度需要再编程一开始时指定，故当达到最大长度时，扩充长度不如链表方便。</p>
 <p>相同：两种结构均可实现数据的顺序存储，构造出来的模型呈线性结构。</p>
@@ -1608,7 +1726,20 @@
   <entry>
     <title>JavaSE面试题</title>
     <url>/2020/03/03/JavaSE%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[<h3 id="JSP九个内置对象"><a href="#JSP九个内置对象" class="headerlink" title="JSP九个内置对象"></a>JSP九个内置对象</h3><ul>
+    <content><![CDATA[<h3 id="面向对象和面向过程的区别"><a href="#面向对象和面向过程的区别" class="headerlink" title="面向对象和面向过程的区别"></a>面向对象和面向过程的区别</h3><ul>
+<li><strong>面向过程</strong> ：<strong>面向过程性能比面向对象高。</strong> 因为类调用时需要实例化，开销比较大，比较消耗资源，所以当性能是最重要的考量因素的时候，比如单片机、嵌入式开发、Linux/Unix 等一般采用面向过程开发。但是，<strong>面向过程没有面向对象易维护、易复用、易扩展。C语言面向过程</strong></li>
+<li><strong>面向对象</strong> ：<strong>面向对象易维护、易复用、易扩展。</strong> 因为面向对象有封装、继承、多态性的特性，所以可以设计出低耦合的系统，使系统更加灵活、更加易于维护。但是，<strong>面向对象性能比面向过程低</strong>。</li>
+</ul>
+<hr>
+<h3 id="Java-和-C-的区别"><a href="#Java-和-C-的区别" class="headerlink" title="Java 和 C++的区别?"></a>Java 和 C++的区别?</h3><ul>
+<li>都是面向对象的语言，都支持封装、继承和多态</li>
+<li>Java 不提供指针来直接访问内存，程序内存更加安全</li>
+<li>Java 的类是单继承的，C++ 支持多重继承；虽然 Java 的类不可以多继承，但是接口可以多继承。</li>
+<li>Java 有自动内存管理机制，不需要程序员手动释放无用内存</li>
+<li><strong>在 C 语言中，字符串或字符数组最后都会有一个额外的字符‘\0’来表示结束。但是，Java 语言中没有结束符这一概念。</strong> </li>
+</ul>
+<hr>
+<h3 id="JSP九个内置对象"><a href="#JSP九个内置对象" class="headerlink" title="JSP九个内置对象"></a>JSP九个内置对象</h3><ul>
 <li>request：封装客户端的请求，其中包含来自GET或POST请求的参数；</li>
 <li>response：封装服务器对客户端的响应；</li>
 <li>pageContext：通过该对象可以获取其他对象；</li>
@@ -1782,15 +1913,18 @@
 <p><a href="https://camo.githubusercontent.com/3a68153ce17be90275df07a47409afaea91aff83/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d322f536c6563746f722e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/3a68153ce17be90275df07a47409afaea91aff83/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d322f536c6563746f722e706e67" alt="一个单线程中Selector维护3个Channel的示意图"></a></p>
 </li>
 </ul>
+<hr>
+<h3 id="抽象类与接口的区别？"><a href="#抽象类与接口的区别？" class="headerlink" title="抽象类与接口的区别？"></a>抽象类与接口的区别？</h3><p><strong>抽象类：</strong><br>一个类中有抽象方法，这个类就变成了抽象类。<br>抽象类中class的前面必须有abstract修饰符。<br>抽象类中可以有普通方法，也可以有抽象方法，而抽象方法的个数可以是0个，也可以是多个。<br>子类继承父类，必须重写全部的抽象方法，除非这个类也变成了抽象类。<br><strong>接口：</strong><br>表面上看，接口是一种特殊的抽象类，但是类是类，接口是接口，是并列的关系。<br>接口中所有方法都必须是抽象的。（1.8之后允许接口定义非抽象方法）<br>接口中方法定义默认为public abstract类型，成员变量默认为public static final 类型。（如果省略，系统会默认补全）。<br><strong>抽象类和普通类的区别：</strong><br>包含抽象方法的类称为抽象类，但并不意味着抽象类中只能有抽象方法，和普通类一样，同样可以拥有成员变量和普通的成员方法，抽象类和普通类的区别如下：</p>
+<p>抽象方法的访问修饰符必须为public和protected。<br>抽象类不能被实例化。<br>如果一个类继承于抽象类，则子类必须实现父类的抽象方法，如果子类没有实现父类的抽象方法，则子类必须也是一个抽象类。<br><strong>抽象类和接口区别如下：</strong><br>一个类只能继承一个抽象类，而一个类可以实现多个接口。<br>抽象类可以有构造方法，接口中不能有构造方法。<br>抽象类中可以有成员变量，接口中没有成员变量。（被final修饰变成了常量）<br>抽象类中可以有普通方法，接口中所有方法都必须是抽象的。（1.8后允许接口定义非抽象方法）<br>抽象类中抽象方法的访问类型可以是public，protected，但接口中抽象方法的访问类型只能是public，并且默认为public abstract（省略则自动默认补全）。<br>抽象类中的成员变量可以是各种类型的，而接口中的成员变量只能是public static final类型的；</p>
 <p>SpringAOP实现原理+IOC实现原理(源码怎么实现)？</p>
 <p>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？</p>
 <p>12.讲一讲线程创建的时候发生了什么？</p>
-<p>第一面：<br>1.多线程和多进程分别适用于什么场景？<br>2.并发和并行的区别？<br>3.TCP/IP协议的3次握手和4次挥手？原因？<br>4.设计平衡二叉树的原因？<br>5.快排、堆排、归并等排序的时间复杂度与空间复杂度？</p>
-<p> <img src="https://img-blog.csdn.net/20160924191851607" alt="这里写图片描述"> </p>
-<p>6.索引的数据结构有哪些，讲一讲B+树？<br>7.MySQL的存储引擎知道吗？区别？<br>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）<br>9.介绍HashMap，说到红黑树，然后提问：介绍一下红黑树？</p>
-<p>第二面：<br>1.介绍堆的数据结构和堆排序的思路，并手写堆排序代码（10分钟）<br>2.场景题：只有一台机器，10亿个ip地址（有重复）找出出现最多的10个ip，怎么处理？<br>3.HashMap冲突的解决方法以及原理分析？<br>4.Git的常用命令有哪些，merge时候出现冲突怎么处理？</p>
+<p>4.设计平衡二叉树的原因？</p>
+<p>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）</p>
+<p>2.场景题：只有一台机器，10亿个ip地址（有重复）找出出现最多的10个ip，怎么处理？</p>
+<p>4.Git的常用命令有哪些，merge时候出现冲突怎么处理？</p>
 <p>记录了一些出现比较多的面试的问题（套路）：</p>
-<p>1.面向对象的特性？<br>2.讲一讲Java多态？<br>3.抽象类与接口的区别？<br>4.讲一讲HashMap？<br>5.Java线程池好处以及实现原理？怎么创建线程池？<br>6.Java8新特性了解吗？，讲一讲流？<br>7.闭包了解吗？讲一讲lambda表达式？<br>8.比较Java锁(synchronized和ReentrantLock的区别)？<br>9.讲一讲JVM里面的GC？<br>10.JVM内存分配策略？<br>11.反射是什么，怎么实现的？<br>12.讲一讲事务的特性？解释一下ACID分别是什么？<br>13.知道哪些设计模式？平时或者项目里面用过哪些设计模式？<br>14.手写单例模式（双重检测机制）<br>15.MySQL 中 InnoDB 和 MyISAM 区别？<br>16.MySQL的默认隔离级别？<br>17.知道数据库优化吗？SQL优化？<br>18.讲一讲索引，说一说B+树<br>19.什么是SQL注入？怎么解决？<br>20.用过哪些SQL的函数？（写一个查找平均分SQL语句）<br>21.讲一讲spring事务，ioc，aop，bean声明周期？<br>22.hibernate和mybatis的区别，各自的优缺点<br>23.Linux常用命令有哪些，查看端口的命令是什么？<br>24.HTTP常用的首部字段有哪些？<br>25.GET和POST的区别？<br>26.HTTPS协议？什么是对称加密和非对称加密？<br>27.多线程join()和yield()方法的作用？<br>28.介绍一下juc里面常用的几个工具类<br>29.TCP/IP协议的3次握手和4次挥手<br>30.各种排序算法思路以及时间复杂度（主要是快排，冒泡，堆排，归并）<br>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
+<p>5.Java线程池好处以及实现原理？怎么创建线程池？<br>6.Java8新特性了解吗？，讲一讲流？<br>7.闭包了解吗？讲一讲lambda表达式？<br>8.比较Java锁(synchronized和ReentrantLock的区别)？<br>9.讲一讲JVM里面的GC？<br>10.JVM内存分配策略？<br>11.反射是什么，怎么实现的？<br>12.讲一讲事务的特性？解释一下ACID分别是什么？<br>13.知道哪些设计模式？平时或者项目里面用过哪些设计模式？<br>14.手写单例模式（双重检测机制）<br>15.MySQL 中 InnoDB 和 MyISAM 区别？<br>16.MySQL的默认隔离级别？<br>17.知道数据库优化吗？SQL优化？<br>18.讲一讲索引，说一说B+树<br>19.什么是SQL注入？怎么解决？<br>20.用过哪些SQL的函数？（写一个查找平均分SQL语句）<br>21.讲一讲spring事务，ioc，aop，bean声明周期？<br>22.hibernate和mybatis的区别，各自的优缺点<br>23.Linux常用命令有哪些，查看端口的命令是什么？<br>24.HTTP常用的首部字段有哪些？<br>25.GET和POST的区别？<br>26.HTTPS协议？什么是对称加密和非对称加密？<br>27.多线程join()和yield()方法的作用？<br>28.介绍一下juc里面常用的几个工具类<br>29.TCP/IP协议的3次握手和4次挥手<br>30.各种排序算法思路以及时间复杂度（主要是快排，冒泡，堆排，归并）<br>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
 <p><strong>基础：</strong></p>
 <ol>
 <li>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</li>
