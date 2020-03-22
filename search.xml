@@ -1047,6 +1047,20 @@
 <li><strong>volatile关键字主要用于解决变量在多个线程之间的可见性，而 synchronized关键字解决的是多个线程之间访问资源的同步性。</strong></li>
 </ul>
 <hr>
+<h3 id="谈谈-synchronized和ReentrantLock-的区别"><a href="#谈谈-synchronized和ReentrantLock-的区别" class="headerlink" title="谈谈 synchronized和ReentrantLock 的区别"></a>谈谈 synchronized和ReentrantLock 的区别</h3><p><strong>① 两者都是可重入锁</strong></p>
+<p>两者都是可重入锁。“可重入锁”概念是：自己可以再次获取自己的内部锁。比如一个线程获得了某个对象的锁，此时这个对象锁还没有释放，当其再次想要获取这个对象的锁的时候还是可以获取的，如果不可锁重入的话，就会造成死锁。同一个线程每次获取锁，锁的计数器都自增1，所以要等到锁的计数器下降为0时才能释放锁。</p>
+<p><strong>② synchronized 依赖于 JVM 而 ReentrantLock 依赖于 API</strong></p>
+<p>synchronized 是依赖于 JVM 实现的，前面我们也讲到了 虚拟机团队在 JDK1.6 为 synchronized 关键字进行了很多优化，但是这些优化都是在虚拟机层面实现的，并没有直接暴露给我们。ReentrantLock 是 JDK 层面实现的（也就是 API 层面，需要 lock() 和 unlock() 方法配合 try/finally 语句块来完成），所以我们可以通过查看它的源代码，来看它是如何实现的。</p>
+<p><strong>③ ReentrantLock 比 synchronized 增加了一些高级功能</strong></p>
+<p>相比synchronized，ReentrantLock增加了一些高级功能。主要来说主要有三点：<strong>①等待可中断；②可实现公平锁；③可实现选择性通知（锁可以绑定多个条件）</strong></p>
+<ul>
+<li><strong>ReentrantLock提供了一种能够中断等待锁的线程的机制</strong>，通过lock.lockInterruptibly()来实现这个机制。也就是说正在等待的线程可以选择放弃等待，改为处理其他事情。</li>
+<li><strong>ReentrantLock可以指定是公平锁还是非公平锁。而synchronized只能是非公平锁。所谓的公平锁就是先等待的线程先获得锁。</strong> ReentrantLock默认情况是非公平的，可以通过 ReentrantLock类的<code>ReentrantLock(boolean fair)</code>构造方法来制定是否是公平的。</li>
+<li>synchronized关键字与wait()和notify()/notifyAll()方法相结合可以实现等待/通知机制，ReentrantLock类当然也可以实现，但是需要借助于Condition接口与newCondition() 方法。Condition是JDK1.5之后才有的，它具有很好的灵活性，比如可以实现多路通知功能也就是在一个Lock对象中可以创建多个Condition实例（即对象监视器），<strong>线程对象可以注册在指定的Condition中，从而可以有选择性的进行线程通知，在调度线程上更加灵活。 在使用notify()/notifyAll()方法进行通知时，被通知的线程是由 JVM 选择的，用ReentrantLock类结合Condition实例可以实现“选择性通知”</strong> ，这个功能非常重要，而且是Condition接口默认提供的。而synchronized关键字就相当于整个Lock对象中只有一个Condition实例，所有的线程都注册在它一个身上。如果执行notifyAll()方法的话就会通知所有处于等待状态的线程这样会造成很大的效率问题，而Condition实例的signalAll()方法 只会唤醒注册在该Condition实例中的所有等待线程。</li>
+</ul>
+<p>如果你想使用上述功能，那么选择ReentrantLock是一个不错的选择。</p>
+<p><strong>④ 性能已不是选择标准</strong></p>
+<hr>
 <h3 id="多线程和多进程分别适用于什么场景？"><a href="#多线程和多进程分别适用于什么场景？" class="headerlink" title="多线程和多进程分别适用于什么场景？"></a>多线程和多进程分别适用于什么场景？</h3><table>
 <thead>
 <tr>
@@ -1726,7 +1740,15 @@
   <entry>
     <title>JavaSE面试题</title>
     <url>/2020/03/03/JavaSE%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[<h3 id="面向对象和面向过程的区别"><a href="#面向对象和面向过程的区别" class="headerlink" title="面向对象和面向过程的区别"></a>面向对象和面向过程的区别</h3><ul>
+    <content><![CDATA[<h3 id="创建对象的方式"><a href="#创建对象的方式" class="headerlink" title="创建对象的方式"></a>创建对象的方式</h3><ul>
+<li>使用new关键字</li>
+<li>使用Class类的newInstance方法</li>
+<li>使用constructor类的newInstance方法</li>
+<li>使用clone方法</li>
+<li>使用反序列化</li>
+</ul>
+<hr>
+<h3 id="面向对象和面向过程的区别"><a href="#面向对象和面向过程的区别" class="headerlink" title="面向对象和面向过程的区别"></a>面向对象和面向过程的区别</h3><ul>
 <li><strong>面向过程</strong> ：<strong>面向过程性能比面向对象高。</strong> 因为类调用时需要实例化，开销比较大，比较消耗资源，所以当性能是最重要的考量因素的时候，比如单片机、嵌入式开发、Linux/Unix 等一般采用面向过程开发。但是，<strong>面向过程没有面向对象易维护、易复用、易扩展。C语言面向过程</strong></li>
 <li><strong>面向对象</strong> ：<strong>面向对象易维护、易复用、易扩展。</strong> 因为面向对象有封装、继承、多态性的特性，所以可以设计出低耦合的系统，使系统更加灵活、更加易于维护。但是，<strong>面向对象性能比面向过程低</strong>。</li>
 </ul>
@@ -1818,35 +1840,20 @@
 <p>对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于只直接执行相同的操作。</p>
 </li>
 <li><p><strong>原理</strong></p>
-<p>反射首先是能够获取到Java中的反射类的字节码，然后将字节码中的方法，变量，构造函数等映射成相应的Method、Filed、Constructor等类 </p>
+<p>反射首先是能够获取到Java中的反射类的字节码，然后将字节码中的方法，变量，构造函数等映射成相应的Method、Filed、Constructor等类 。</p>
+</li>
+<li><p><strong>获取Class实例的几种方式</strong></p>
 </li>
 </ol>
+   <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方式一：调用运行时类的属性：.class</span></span><br><span class="line">        Class clazz1 = Person<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line"><span class="comment">//方式二：通过运行时类的对象,调用getClass()</span></span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person();</span><br><span class="line">        Class clazz2 = p1.getClass();</span><br><span class="line"><span class="comment">//方式三：调用Class的静态方法：forName(String classPath)</span></span><br><span class="line">       Class clazz3 = Class.forName(<span class="string">"com.atguigu.java.Person"</span>);</span><br><span class="line"><span class="comment">//方式四：使用类的加载器：ClassLoader  (了解)</span></span><br><span class="line">	   ClassLoader classLoader = ReflectionTest<span class="class">.<span class="keyword">class</span>.<span class="title">getClassLoader</span>()</span>;</span><br><span class="line">       Class clazz4 = classLoader.loadClass(<span class="string">"com.atguigu.java.Person"</span>);</span><br></pre></td></tr></table></figure>
+
 <hr>
 <h3 id="谈谈对-Java-注解的理解，解决了什么问题？"><a href="#谈谈对-Java-注解的理解，解决了什么问题？" class="headerlink" title="谈谈对 Java 注解的理解，解决了什么问题？"></a>谈谈对 Java 注解的理解，解决了什么问题？</h3><ol>
 <li>jdk 5.0 新增的功能</li>
 <li>Annotation 其实就是代码里的特殊标记, 这些标记可以在编译, 类加载,运行时被读取, 并执行相应的处理。通过使用 Annotation,程序员可以在不改变原逻辑的情况下, 在源文件中嵌入一些补充信息。</li>
 <li>在JavaSE中，注解的使用目的比较简单，例如标记过时的功能，忽略警告等。在JavaEE/Android中注解占据了更重要的角色，例如用来配置应用程序的任何切面，代替JavaEE旧版中所遗留的繁冗代码和XML配置等。</li>
 </ol>
-<hr>
-<h3 id="内部类了解吗？匿名内部类了解吗？"><a href="#内部类了解吗？匿名内部类了解吗？" class="headerlink" title="内部类了解吗？匿名内部类了解吗？"></a>内部类了解吗？匿名内部类了解吗？</h3><ol>
-<li><p>定义：Java中允许将一个类A声明在另一个类B中，则类A就是内部类，类B称为外部类。</p>
-</li>
-<li><p>内部类的分类：<br>成员内部类（静态、非静态 ） vs 局部内部类(方法内、代码块内、构造器内)。</p>
-</li>
-<li><p>成员内部类的理解：<br>一方面，作为外部类的成员：调用外部类的结构；可以被static修饰；可以被4种不同的权限修饰。</p>
-<p>另一方面，作为一个类：类内可以定义属性、方法、构造器等；可以被final修饰，表示此类不能被继承。言外之意，不使用final，就可以被继承；可以被abstract修饰。</p>
-</li>
-<li><p>分类<br>4.1 静态内部类：作为类的静态成员，存在于某个类的内部。<br>4.2 成员内部类：作为类的成员，存在于某个类的内部。<br>4.3 局部内部类：存在于某个方法的内部。<br>4.4 匿名内部类：存在于某个类的内部，但是无类名的类。</p>
-</li>
-</ol>
-<hr>
-<h3 id="BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><a href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程" class="headerlink" title="BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"></a>BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</h3><ol>
-<li>BIO（同步阻塞）：每一个IO请求都会有一个线程去处理，如果数据没有准备就绪，线程会一直等待。直到数据读取完毕线程才会释放，在此期间，进程不回去做任何其他任务，这种模式会浪费一定的线程资源。</li>
-<li>NIO（同步非阻塞）：NIO的优点在于首先基于缓存读写文件，能够批量操作，然后用channel双向读写数据，减少每次打开断开流的资源消耗。引入selecore的概念，用一个线程管理多个通道，大大减少线程开销。</li>
-</ol>
-<hr>
-<h3 id="假如我们需要存500个数需要多大的HashMap？"><a href="#假如我们需要存500个数需要多大的HashMap？" class="headerlink" title="假如我们需要存500个数需要多大的HashMap？"></a>假如我们需要存500个数需要多大的HashMap？</h3><hr>
-<h3 id="自定义注解-应用场景"><a href="#自定义注解-应用场景" class="headerlink" title="自定义注解 应用场景"></a>自定义注解 应用场景</h3><p><strong>自定义注解：</strong></p>
+<h4 id="自定义注解-应用场景"><a href="#自定义注解-应用场景" class="headerlink" title="自定义注解 应用场景"></a>自定义注解 应用场景</h4><p><strong>自定义注解：</strong></p>
 <ul>
 <li><p>① 注解声明为：@interface</p>
 <ul>
@@ -1866,6 +1873,24 @@
 <p>示例一：生成文档相关的注解</p>
 <p>示例二：在编译时进行格式检查(JDK内置的个基本注解)<br>                @Override: 限定重写父类方法, 该注解只能用于方法<br>                @Deprecated: 用于表示所修饰的元素(类, 方法等)已过时。通常是因为所修                饰的结构危险或存在更好的选择<br>                @SuppressWarnings: 抑制编译器警告</p>
 <hr>
+<h3 id="内部类了解吗？匿名内部类了解吗？"><a href="#内部类了解吗？匿名内部类了解吗？" class="headerlink" title="内部类了解吗？匿名内部类了解吗？"></a>内部类了解吗？匿名内部类了解吗？</h3><ol>
+<li><p>定义：Java中允许将一个类A声明在另一个类B中，则类A就是内部类，类B称为外部类。</p>
+</li>
+<li><p>内部类的分类：<br>成员内部类（静态、非静态 ） vs 局部内部类(方法内、代码块内、构造器内)。</p>
+</li>
+<li><p>成员内部类的理解：<br>一方面，作为外部类的成员：调用外部类的结构；可以被static修饰；可以被4种不同的权限修饰。</p>
+<p>另一方面，作为一个类：类内可以定义属性、方法、构造器等；可以被final修饰，表示此类不能被继承。言外之意，不使用final，就可以被继承；可以被abstract修饰。</p>
+</li>
+<li><p>分类<br>4.1 静态内部类：作为类的静态成员，存在于某个类的内部。<br>4.2 成员内部类：作为类的成员，存在于某个类的内部。<br>4.3 局部内部类：存在于某个方法的内部。<br>4.4 匿名内部类：存在于某个类的内部，但是无类名的类。</p>
+</li>
+</ol>
+<hr>
+<h3 id="BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><a href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程" class="headerlink" title="BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"></a>BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</h3><ol>
+<li>BIO（同步阻塞）：每一个IO请求都会有一个线程去处理，如果数据没有准备就绪，线程会一直等待。直到数据读取完毕线程才会释放，在此期间，进程不回去做任何其他任务，这种模式会浪费一定的线程资源。</li>
+<li>NIO（同步非阻塞）：NIO的优点在于首先基于缓存读写文件，能够批量操作，然后用channel双向读写数据，减少每次打开断开流的资源消耗。引入selecore的概念，用一个线程管理多个通道，大大减少线程开销。</li>
+</ol>
+<hr>
+<h3 id="假如我们需要存500个数需要多大的HashMap？"><a href="#假如我们需要存500个数需要多大的HashMap？" class="headerlink" title="假如我们需要存500个数需要多大的HashMap？"></a>假如我们需要存500个数需要多大的HashMap？</h3><hr>
 <h3 id="Java-面向对象编程三大特性-封装-继承-多态"><a href="#Java-面向对象编程三大特性-封装-继承-多态" class="headerlink" title="Java 面向对象编程三大特性: 封装 继承 多态"></a>Java 面向对象编程三大特性: 封装 继承 多态</h3><h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>封装把一个对象的属性私有化，同时提供一些可以被外界访问的属性的方法，如果属性不想被外界访问，我们大可不必提供方法给外界访问。但是如果一个类没有提供给外界访问的方法，那么这个类也没有什么意义了。</p>
 <h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>继承是使用已存在的类的定义作为基础建立新类的技术，新类的定义可以增加新的数据或新的功能，也可以用父类的功能，但不能选择性地继承父类。通过使用继承我们能够非常方便地复用以前的代码。</p>
 <p><strong>关于继承如下 3 点请记住：</strong></p>
@@ -1916,15 +1941,24 @@
 <hr>
 <h3 id="抽象类与接口的区别？"><a href="#抽象类与接口的区别？" class="headerlink" title="抽象类与接口的区别？"></a>抽象类与接口的区别？</h3><p><strong>抽象类：</strong><br>一个类中有抽象方法，这个类就变成了抽象类。<br>抽象类中class的前面必须有abstract修饰符。<br>抽象类中可以有普通方法，也可以有抽象方法，而抽象方法的个数可以是0个，也可以是多个。<br>子类继承父类，必须重写全部的抽象方法，除非这个类也变成了抽象类。<br><strong>接口：</strong><br>表面上看，接口是一种特殊的抽象类，但是类是类，接口是接口，是并列的关系。<br>接口中所有方法都必须是抽象的。（1.8之后允许接口定义非抽象方法）<br>接口中方法定义默认为public abstract类型，成员变量默认为public static final 类型。（如果省略，系统会默认补全）。<br><strong>抽象类和普通类的区别：</strong><br>包含抽象方法的类称为抽象类，但并不意味着抽象类中只能有抽象方法，和普通类一样，同样可以拥有成员变量和普通的成员方法，抽象类和普通类的区别如下：</p>
 <p>抽象方法的访问修饰符必须为public和protected。<br>抽象类不能被实例化。<br>如果一个类继承于抽象类，则子类必须实现父类的抽象方法，如果子类没有实现父类的抽象方法，则子类必须也是一个抽象类。<br><strong>抽象类和接口区别如下：</strong><br>一个类只能继承一个抽象类，而一个类可以实现多个接口。<br>抽象类可以有构造方法，接口中不能有构造方法。<br>抽象类中可以有成员变量，接口中没有成员变量。（被final修饰变成了常量）<br>抽象类中可以有普通方法，接口中所有方法都必须是抽象的。（1.8后允许接口定义非抽象方法）<br>抽象类中抽象方法的访问类型可以是public，protected，但接口中抽象方法的访问类型只能是public，并且默认为public abstract（省略则自动默认补全）。<br>抽象类中的成员变量可以是各种类型的，而接口中的成员变量只能是public static final类型的；</p>
+<hr>
+<h3 id="Java8新特性：闭包（-Lambda-表达式）"><a href="#Java8新特性：闭包（-Lambda-表达式）" class="headerlink" title="Java8新特性：闭包（ Lambda 表达式）"></a>Java8新特性：闭包（ Lambda 表达式）</h3><p>Lambda 表达式，也可称为闭包，它是推动 Java 8 发布的最重要新特性。</p>
+<p>Lambda 允许把函数作为一个方法的参数（函数作为参数传递进方法中）。</p>
+<p>使用 Lambda 表达式可以使代码变的更加简洁紧凑。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 不需要参数,返回值为 5  </span></span><br><span class="line">() -&gt; <span class="number">5</span>  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 2. 接收一个参数(数字类型),返回其2倍的值  </span></span><br><span class="line">x -&gt; <span class="number">2</span> * x  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 3. 接受2个参数(数字),并返回他们的差值  </span></span><br><span class="line">(x, y) -&gt; x – y  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 4. 接收2个int型整数,返回他们的和  </span></span><br><span class="line">(<span class="keyword">int</span> x, <span class="keyword">int</span> y) -&gt; x + y  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)  </span></span><br><span class="line">(String s) -&gt; System.out.print(s)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <p>SpringAOP实现原理+IOC实现原理(源码怎么实现)？</p>
 <p>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？</p>
 <p>12.讲一讲线程创建的时候发生了什么？</p>
 <p>4.设计平衡二叉树的原因？</p>
 <p>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）</p>
 <p>2.场景题：只有一台机器，10亿个ip地址（有重复）找出出现最多的10个ip，怎么处理？</p>
-<p>4.Git的常用命令有哪些，merge时候出现冲突怎么处理？</p>
-<p>记录了一些出现比较多的面试的问题（套路）：</p>
-<p>5.Java线程池好处以及实现原理？怎么创建线程池？<br>6.Java8新特性了解吗？，讲一讲流？<br>7.闭包了解吗？讲一讲lambda表达式？<br>8.比较Java锁(synchronized和ReentrantLock的区别)？<br>9.讲一讲JVM里面的GC？<br>10.JVM内存分配策略？<br>11.反射是什么，怎么实现的？<br>12.讲一讲事务的特性？解释一下ACID分别是什么？<br>13.知道哪些设计模式？平时或者项目里面用过哪些设计模式？<br>14.手写单例模式（双重检测机制）<br>15.MySQL 中 InnoDB 和 MyISAM 区别？<br>16.MySQL的默认隔离级别？<br>17.知道数据库优化吗？SQL优化？<br>18.讲一讲索引，说一说B+树<br>19.什么是SQL注入？怎么解决？<br>20.用过哪些SQL的函数？（写一个查找平均分SQL语句）<br>21.讲一讲spring事务，ioc，aop，bean声明周期？<br>22.hibernate和mybatis的区别，各自的优缺点<br>23.Linux常用命令有哪些，查看端口的命令是什么？<br>24.HTTP常用的首部字段有哪些？<br>25.GET和POST的区别？<br>26.HTTPS协议？什么是对称加密和非对称加密？<br>27.多线程join()和yield()方法的作用？<br>28.介绍一下juc里面常用的几个工具类<br>29.TCP/IP协议的3次握手和4次挥手<br>30.各种排序算法思路以及时间复杂度（主要是快排，冒泡，堆排，归并）<br>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
+<p>4.Git的常用命令有哪些，merge时候出现冲突怎么处理？6.Java8新特性了解吗？，讲一讲流？</p>
+<p>8.比较Java锁(synchronized和ReentrantLock的区别)？<br>9.讲一讲JVM里面的GC？<br>10.JVM内存分配策略？<br>11.反射是什么，怎么实现的？<br>12.讲一讲事务的特性？解释一下ACID分别是什么？<br>13.知道哪些设计模式？平时或者项目里面用过哪些设计模式？<br>14.手写单例模式（双重检测机制）<br>15.MySQL 中 InnoDB 和 MyISAM 区别？<br>16.MySQL的默认隔离级别？<br>17.知道数据库优化吗？SQL优化？<br>18.讲一讲索引，说一说B+树<br>19.什么是SQL注入？怎么解决？<br>20.用过哪些SQL的函数？（写一个查找平均分SQL语句）<br>21.讲一讲spring事务，ioc，aop，bean声明周期？<br>22.hibernate和mybatis的区别，各自的优缺点<br>23.Linux常用命令有哪些，查看端口的命令是什么？<br>24.HTTP常用的首部字段有哪些？<br>25.GET和POST的区别？<br>26.HTTPS协议？什么是对称加密和非对称加密？<br>27.多线程join()和yield()方法的作用？<br>28.介绍一下juc里面常用的几个工具类<br>29.TCP/IP协议的3次握手和4次挥手<br>30.各种排序算法思路以及时间复杂度（主要是快排，冒泡，堆排，归并）<br>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
 <p><strong>基础：</strong></p>
 <ol>
 <li>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</li>
