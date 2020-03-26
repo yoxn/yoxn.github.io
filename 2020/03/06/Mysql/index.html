@@ -53,13 +53,21 @@
 <meta property="og:site_name" content="YoXn&#39;s Blog">
 <meta property="og:description" content="1. 数据库的创建1.1创建一个名称为mydb1的数据库​        create dateabase mydb1; 1.2 创建一个使用utf8字符集的mydb2数据库。​         create database mydb2 character set utf8; 1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。​        create database m">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124012937-1289701426.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124017612-1311097303.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124035486-244716988.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124040486-1174821745.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124121326-558561611.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124140792-1288454591.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124144930-1466105287.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124158256-1877846256.png">
 <meta property="og:image" content="https://camo.githubusercontent.com/429c7cf4d94faa9ee216b110bf3258bf2a346987/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545342542412538422545352538412541312545372538392542392545362538302541372e706e67">
 <meta property="article:published_time" content="2020-03-06T08:59:42.000Z">
-<meta property="article:modified_time" content="2020-03-17T17:25:04.313Z">
+<meta property="article:modified_time" content="2020-03-24T05:37:36.322Z">
 <meta property="article:tag" content="Mysql">
 <meta property="article:tag" content="sql">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://camo.githubusercontent.com/429c7cf4d94faa9ee216b110bf3258bf2a346987/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545342542412538422545352538412541312545372538392542392545362538302541372e706e67">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124012937-1289701426.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/06/Mysql/">
 
@@ -237,7 +245,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-18 01:25:04" itemprop="dateModified" datetime="2020-03-18T01:25:04+08:00">2020-03-18</time>
+                <time title="修改时间：2020-03-24 13:37:36" itemprop="dateModified" datetime="2020-03-24T13:37:36+08:00">2020-03-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -288,6 +296,86 @@
 <h4 id="4-字符串转时间戳"><a href="#4-字符串转时间戳" class="headerlink" title="4.字符串转时间戳"></a>4.字符串转时间戳</h4><p>select unix_timestamp(‘2019-01-20’); </p>
 <h4 id="5-时间戳转字符串"><a href="#5-时间戳转字符串" class="headerlink" title="5.时间戳转字符串"></a>5.时间戳转字符串</h4><p>select from_unixtime(1451997924,’%Y-%d’);</p>
 <h4 id="附日期格式如下："><a href="#附日期格式如下：" class="headerlink" title="附日期格式如下："></a>附日期格式如下：</h4><p>%M 月名字(January……December)<br>%W 星期名字(Sunday……Saturday)<br>%D 有英语前缀的月份的日期(1st, 2nd, 3rd, 等等。）<br>%Y 年, 数字, 4 位<br>%y 年, 数字, 2 位<br>%a 缩写的星期名字(Sun……Sat)<br>%d 月份中的天数, 数字(00……31)<br>%e 月份中的天数, 数字(0……31)<br>%m 月, 数字(01……12)<br>%c 月, 数字(1……12)<br>%b 缩写的月份名字(Jan……Dec)<br>%j 一年中的天数(001……366)<br>%H 小时(00……23)<br>%k 小时(0……23)<br>%h 小时(01……12)<br>%I 小时(01……12)<br>%l 小时(1……12)<br>%i 分钟, 数字(00……59)<br>%r 时间,12 小时(hh:mm:ss [AP]M)<br>%T 时间,24 小时(hh:mm:ss)<br>%S 秒(00……59)<br>%s 秒(00……59)<br>%p AM或PM<br>%w 一个星期中的天数(0=Sunday ……6=Saturday ）<br>%U 星期(0……52), 这里星期天是星期的第一天<br>%u 星期(0……52), 这里星期一是星期的第一 </p>
+<hr>
+<h3 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h3><h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p>联合查询是可合并多个相似的选择查询的结果集。等同于将一个表追加到另一个表，从而实现将两个表的查询组合在一起，使用为此为UNINO或UNION ALL</p>
+<p>联合查询：将多个查询的结果合并到一起（纵向合并）：字段数不变，多个查询的记录数合并</p>
+<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><p>1、将同一张表中不同的结果（需要对应多条查询语句来实现），合并到一起展示数据</p>
+<p>2、最常见：在数据量大的情况下，会对表进行分表操作，需要对每张表进行部分数据统计，使用联合查询来将数据存放到一起显示</p>
+<h4 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h4><p>select 语句</p>
+<p>union[union选项]</p>
+<p>select 语句；</p>
+<p>union选项：与select选项基本一样</p>
+<p>distinct：去重，去掉完全重复的数据（默认）</p>
+<p>all：保存所有的数据。</p>
+<p> <img src="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124012937-1289701426.png" alt="img"></p>
+<p><img src="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124017612-1311097303.png" alt="img"></p>
+<p>注意细节：union理论上只要保证字段数一样，不需要每次拿到的数据对应的字段类型一致。永远只保留第一个select语句对应的字段名字。</p>
+<h4 id="Order-by的使用"><a href="#Order-by的使用" class="headerlink" title="Order by的使用"></a>Order by的使用</h4><p>1、在联合查询中，如果要使用order by，那么对应的select语句必须使用括号括起来</p>
+<p><img src="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124035486-244716988.png" alt="img"></p>
+<p>2、order by在联合查询中若要生效，必须配合使用limit，而limit后面必须跟对应的限制数量（通常可以使用一个较大的值：大于对应表的记录数）</p>
+<p><img src="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124040486-1174821745.png" alt="img"></p>
+<hr>
+<h3 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h3><h4 id="连接查询概念"><a href="#连接查询概念" class="headerlink" title="连接查询概念"></a>连接查询概念</h4><p>连接查询：将多张表连到一起，进行查询（会导致记录数行和字段数列发生改变）</p>
+<h4 id="连接查询的意义"><a href="#连接查询的意义" class="headerlink" title="连接查询的意义"></a>连接查询的意义</h4><p>在关系型数据库设计过程中，实体（表）与实体之间存在很多联系的。在关系型数据库表的设计过程中，遵循着关系来设计：一对一，一对多，多对多，通常在实际操作的过程中，需要利用这层关系来保证数据的完整性</p>
+<h4 id="连接查询的分类"><a href="#连接查询的分类" class="headerlink" title="连接查询的分类"></a>连接查询的分类</h4><p>连接查询一共有以下几类：</p>
+<p>交叉连接</p>
+<p>内连接</p>
+<p>外连接：左外连接（左连接）和右外连接（右连接）</p>
+<p>自然连接</p>
+<h4 id="交叉连接"><a href="#交叉连接" class="headerlink" title="交叉连接"></a>交叉连接</h4><p>交叉连接：将两张表的数据与另外一张表彼此交叉</p>
+<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>1、从第一张表依次取出每一条记录</p>
+<p>2、取出每一条记录之后，与另外一张表的全部记录挨个匹配</p>
+<p>3、没有任何匹配条件，所有的结果都会进行保留</p>
+<p>4、记录数 = 第一张表记录数 * 第二张表记录数；字段数 = 第一张表字段数 + 第二张表字段数（笛卡尔积）</p>
+<h5 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h5><p>基本语法：表1 cross join 表2；</p>
+<h5 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h5><p>交叉连接产生那个的结果是笛卡尔积，没有实际应用。保证连接查询的整体完整性。</p>
+<p>本质与from 表1，表2；产生的结果一样</p>
+<h4 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h4><p>内连接:inner join,从一张表中取出所有的记录去另外一张表中匹配：利用匹配条件进行匹配，成功了则保留，失败了放弃</p>
+<h5 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h5><p>1、从第一张表中取出一条记录，然后去另外一张表中进行匹配</p>
+<p>2、利用匹配条件进行匹配</p>
+<p> 2.1 匹配成功，保留，继续向下匹配</p>
+<p> 2.2 匹配失败，向下继续，如果全表匹配失败，结束</p>
+<h5 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h5><p>基本语法：表1[inner]join 表2 on匹配条件；</p>
+<p>1、如果内连接没有匹配条件，结果为笛卡尔积，其实就是交叉连接（避免）</p>
+<p>2、使用匹配条件进行匹配</p>
+<p> <img src="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124121326-558561611.png" alt="img"></p>
+<p>3、因为表的设计通常容易产生同名字段，尤其是ID，所以为了避免重名出现错误，通常使用表名.字段名，确保唯一性。</p>
+<p>4、通常，如果条件中使用到对应的表名，而表名通常比较长，所以可以通过表别名来简化。</p>
+<p><img src="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124140792-1288454591.png" alt="img"></p>
+<p>5、内连接匹配的时候，必须保证匹配到才会保存。</p>
+<p>6、内连接因为可以不强制必须使用匹配条件，（on）因此可以在完成数据匹配完成后，所用where条件来限制，效果与on一样（建议使用on）</p>
+<p><img src="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124144930-1466105287.png" alt="img"></p>
+<h4 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h4><p>内连接通常是在对数据有精确要求的地方使用，必须保证两张表中都能进行数据匹配</p>
+<h4 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h4><p>外连接：outer join，按照某一张表作为主表（表中所有记录在最后都会保留），根据条件去连接另外一张表，从而得到目标数据</p>
+<p>外连接分为两种：左外连接（left join），右外连接（right join）</p>
+<p>左连接：左表是主表</p>
+<p>右连接：右表是主表</p>
+<h5 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h5><p>1、确定连接主表：左连接就是left join左边的表为主表；right join就是右边为主表</p>
+<p>2、拿主表的每一条记录，去匹配另外一张表（从表）的每一条记录</p>
+<p>3、如果满足匹配条件，保留，不满足即不保留</p>
+<p>4、如果主表记录在从表中一条都没有匹配成功，那么也要保留该记录，从表对应的字段值都为NULL</p>
+<h5 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h5><p>基本语法：</p>
+<p>左连接：主表 left join 从表 on 连接条件；</p>
+<p>右连接：从表 right join 主表 on 连接条件； </p>
+<p>左连接对应的主表数据在左边，右连接对应的主表数据在右边。</p>
+<p><img src="https://img2018.cnblogs.com/blog/1371486/201809/1371486-20180904124158256-1877846256.png" alt="img"></p>
+<p>特点：</p>
+<p>1、外连接中主表数据记录一定会保存：连接之后不会出现记录数少于主表（内连接可能）</p>
+<p>2、左连接和右连接可以互相转换，但是数据对应的位置（表顺序）会改变</p>
+<h5 id="应用-2"><a href="#应用-2" class="headerlink" title="应用"></a>应用</h5><p>非常常用的一种获取数据的方式。作为数据获取对应主表以及其他数据（关联）</p>
+<h4 id="自然连接"><a href="#自然连接" class="headerlink" title="自然连接"></a>自然连接</h4><p>自然连接：nature join，自然连接其实就是自动匹配连接条件，系统以两表中同名字段作为匹配条件，如果两表有多个同名字段，那就都作为匹配条件。在这里，自然连接可以分为自然内连接和自然外连接。</p>
+<p>自然外连接：</p>
+<p>基本语法：左表 + nature + left/right + join + 右表; </p>
+<p>自然内连接：</p>
+<p>基本语法：左表 + nature + join + 右表;</p>
+<p>自然连接自动使用同名字段作为连接条件，而且在连接完成之后合并同名字段。</p>
+<p>实际上，自然连接并不常用。而且，咱们可以用内连接和外连接来模拟自然连接，模拟的关键就在于使用同名字段作为连接条件及合并同名字段。</p>
+<h4 id="using关键字"><a href="#using关键字" class="headerlink" title="using关键字"></a>using关键字</h4><p>是在连接查询中用来代替对应的on关键字的，进行条件匹配</p>
+<p>using内部的字段名就是作为连接条件的字段，也是需要合并的同名字段。</p>
+<h5 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h5><p>1、在连接查询中，使用on的地方使用using代替</p>
+<p>2、使用using的前提是对应的两张表连接的字段是同名（类似自然连接自动匹配）</p>
+<p>3、如果使用using关键字，那么对应的同名字段，最终在结果中只会保留一个</p>
+<h5 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h5><p>基本语法：表1 [inner,left,right] join 表2 using（同名字段列表）；//连接字段</p>
 <hr>
 <h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><strong>事务是逻辑上的一组操作，要么都执行，要么都不执行。</strong></p>
 <p>事务最经典也经常被拿出来说例子就是转账了。假如小明要给小红转账1000元，这个转账会涉及到两个关键操作就是：将小明的余额减少1000元，将小红的余额增加1000元。万一在这两个操作之间突然出现错误比如银行系统崩溃，导致小明余额减少而小红的余额没有增加，这样就不对了。事务就是保证这两个关键操作要么都成功，要么都要失败。</p>
@@ -473,7 +561,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库的创建"><span class="nav-number">1.</span> <span class="nav-text">1. 数据库的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1创建一个名称为mydb1的数据库"><span class="nav-number">1.1.</span> <span class="nav-text">1.1创建一个名称为mydb1的数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-创建一个使用utf8字符集的mydb2数据库。"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 创建一个使用utf8字符集的mydb2数据库。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-数据库的修改"><span class="nav-number">2.</span> <span class="nav-text">2. 数据库的修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-数据库的删除"><span class="nav-number">3.</span> <span class="nav-text">3. 数据库的删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-数据库查看"><span class="nav-number">4.</span> <span class="nav-text">4. 数据库查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库中表操作的sql练习"><span class="nav-number">5.</span> <span class="nav-text">数据库中表操作的sql练习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、创建表"><span class="nav-number">5.1.</span> <span class="nav-text">一、创建表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、删除表"><span class="nav-number">5.2.</span> <span class="nav-text">二、删除表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、数据表的结构的修改："><span class="nav-number">5.3.</span> <span class="nav-text">三、数据表的结构的修改：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、查看表结构"><span class="nav-number">5.4.</span> <span class="nav-text">四、查看表结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql时间与字符串之间相互转换"><span class="nav-number">6.</span> <span class="nav-text">mysql时间与字符串之间相互转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-时间转字符串"><span class="nav-number">6.1.</span> <span class="nav-text">1.时间转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-字符串转时间"><span class="nav-number">6.2.</span> <span class="nav-text">2.字符串转时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-时间转时间戳"><span class="nav-number">6.3.</span> <span class="nav-text">3.时间转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-字符串转时间戳"><span class="nav-number">6.4.</span> <span class="nav-text">4.字符串转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-时间戳转字符串"><span class="nav-number">6.5.</span> <span class="nav-text">5.时间戳转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附日期格式如下："><span class="nav-number">6.6.</span> <span class="nav-text">附日期格式如下：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-number">7.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事物的四大特性-ACID"><span class="nav-number">7.1.</span> <span class="nav-text">事物的四大特性(ACID)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发事务带来哪些问题"><span class="nav-number">7.2.</span> <span class="nav-text">并发事务带来哪些问题?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务隔离级别有哪些-MySQL的默认隔离级别是"><span class="nav-number">7.3.</span> <span class="nav-text">事务隔离级别有哪些?MySQL的默认隔离级别是?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyISAM和InnoDB区别"><span class="nav-number">7.4.</span> <span class="nav-text">MyISAM和InnoDB区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引"><span class="nav-number">8.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#哈希索引"><span class="nav-number">8.1.</span> <span class="nav-text">哈希索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BTree索引"><span class="nav-number">8.2.</span> <span class="nav-text">BTree索引</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库的创建"><span class="nav-number">1.</span> <span class="nav-text">1. 数据库的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1创建一个名称为mydb1的数据库"><span class="nav-number">1.1.</span> <span class="nav-text">1.1创建一个名称为mydb1的数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-创建一个使用utf8字符集的mydb2数据库。"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 创建一个使用utf8字符集的mydb2数据库。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-创建一个使用utf8字符集，并带比较规则的mydb3数据库。"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 创建一个使用utf8字符集，并带比较规则的mydb3数据库。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-数据库的修改"><span class="nav-number">2.</span> <span class="nav-text">2. 数据库的修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-数据库的删除"><span class="nav-number">3.</span> <span class="nav-text">3. 数据库的删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-数据库查看"><span class="nav-number">4.</span> <span class="nav-text">4. 数据库查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库中表操作的sql练习"><span class="nav-number">5.</span> <span class="nav-text">数据库中表操作的sql练习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、创建表"><span class="nav-number">5.1.</span> <span class="nav-text">一、创建表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、删除表"><span class="nav-number">5.2.</span> <span class="nav-text">二、删除表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、数据表的结构的修改："><span class="nav-number">5.3.</span> <span class="nav-text">三、数据表的结构的修改：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、查看表结构"><span class="nav-number">5.4.</span> <span class="nav-text">四、查看表结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql时间与字符串之间相互转换"><span class="nav-number">6.</span> <span class="nav-text">mysql时间与字符串之间相互转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-时间转字符串"><span class="nav-number">6.1.</span> <span class="nav-text">1.时间转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-字符串转时间"><span class="nav-number">6.2.</span> <span class="nav-text">2.字符串转时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-时间转时间戳"><span class="nav-number">6.3.</span> <span class="nav-text">3.时间转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-字符串转时间戳"><span class="nav-number">6.4.</span> <span class="nav-text">4.字符串转时间戳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-时间戳转字符串"><span class="nav-number">6.5.</span> <span class="nav-text">5.时间戳转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附日期格式如下："><span class="nav-number">6.6.</span> <span class="nav-text">附日期格式如下：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#联合查询"><span class="nav-number">7.</span> <span class="nav-text">联合查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本概念"><span class="nav-number">7.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景"><span class="nav-number">7.2.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本语法"><span class="nav-number">7.3.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Order-by的使用"><span class="nav-number">7.4.</span> <span class="nav-text">Order by的使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接查询"><span class="nav-number">8.</span> <span class="nav-text">连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连接查询概念"><span class="nav-number">8.1.</span> <span class="nav-text">连接查询概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#连接查询的意义"><span class="nav-number">8.2.</span> <span class="nav-text">连接查询的意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#连接查询的分类"><span class="nav-number">8.3.</span> <span class="nav-text">连接查询的分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交叉连接"><span class="nav-number">8.4.</span> <span class="nav-text">交叉连接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#原理"><span class="nav-number">8.4.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#语法"><span class="nav-number">8.4.2.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#应用"><span class="nav-number">8.4.3.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内连接"><span class="nav-number">8.5.</span> <span class="nav-text">内连接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#原理-1"><span class="nav-number">8.5.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#语法-1"><span class="nav-number">8.5.2.</span> <span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用-1"><span class="nav-number">8.6.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外连接"><span class="nav-number">8.7.</span> <span class="nav-text">外连接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#原理-2"><span class="nav-number">8.7.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#语法-2"><span class="nav-number">8.7.2.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#应用-2"><span class="nav-number">8.7.3.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自然连接"><span class="nav-number">8.8.</span> <span class="nav-text">自然连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#using关键字"><span class="nav-number">8.9.</span> <span class="nav-text">using关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#原理-3"><span class="nav-number">8.9.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#语法-3"><span class="nav-number">8.9.2.</span> <span class="nav-text">语法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-number">9.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事物的四大特性-ACID"><span class="nav-number">9.1.</span> <span class="nav-text">事物的四大特性(ACID)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发事务带来哪些问题"><span class="nav-number">9.2.</span> <span class="nav-text">并发事务带来哪些问题?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务隔离级别有哪些-MySQL的默认隔离级别是"><span class="nav-number">9.3.</span> <span class="nav-text">事务隔离级别有哪些?MySQL的默认隔离级别是?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyISAM和InnoDB区别"><span class="nav-number">9.4.</span> <span class="nav-text">MyISAM和InnoDB区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引"><span class="nav-number">10.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#哈希索引"><span class="nav-number">10.1.</span> <span class="nav-text">哈希索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BTree索引"><span class="nav-number">10.2.</span> <span class="nav-text">BTree索引</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
