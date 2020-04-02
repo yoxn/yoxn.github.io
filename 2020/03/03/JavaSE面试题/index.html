@@ -55,7 +55,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://camo.githubusercontent.com/3a68153ce17be90275df07a47409afaea91aff83/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d322f536c6563746f722e706e67">
 <meta property="article:published_time" content="2020-03-03T13:50:35.000Z">
-<meta property="article:modified_time" content="2020-03-26T16:41:13.942Z">
+<meta property="article:modified_time" content="2020-04-01T10:47:25.862Z">
 <meta property="article:tag" content="反射">
 <meta property="article:tag" content="注解">
 <meta property="article:tag" content="内部类">
@@ -240,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-27 00:41:13" itemprop="dateModified" datetime="2020-03-27T00:41:13+08:00">2020-03-27</time>
+                <time title="修改时间：2020-04-01 18:47:25" itemprop="dateModified" datetime="2020-04-01T18:47:25+08:00">2020-04-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -313,32 +313,35 @@
 <p>客户端第一次请求服务端时，（jsessionid-sessionid）服务端会产生一个session对象（用于保存该客户的信息）；<br>并且每个session对象 都会有一个唯一的 sessionId( 用于区分其他session);<br>服务端也会产生一个cookie，并且 该cookie的name=JSESSIONID ,value=服务端sessionId的值；<br>然后 服务端会在 响应客户端的同时 将该cookie发送给客户端，至此 客户端就有了 一个cookie(JSESSIONID)；<br>因此，客户端的cookie就可以和服务端的session一一对应（JSESSIONID - sessionID）</p>
 <p>客户端第二/n次请求服务端时:服务端会先用客户端cookie种的JSESSIONID  去服务端的session中匹配sessionid,如果匹配成功（cookie  jsessionid和sesion sessionid），说明此用户 不是第一次访问,无需登录；</p>
 <hr>
-<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><ul>
-<li><p><strong>单例模式</strong></p>
-<p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。 </p>
-</li>
-<li><p><strong>工厂模式</strong></p>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><p><strong>单例模式</strong></p>
+<p><strong>定义：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</strong> </p>
+<p><strong>为什么要用单例模式呢</strong>：在我们的系统中，有<strong>一些对象其实我们只需要一个</strong>，比如说：线程池、缓存、对话框、注册表、日志对象、充当打印机、显卡等设备驱动程序的对象。事实上，这一类对象只能有一个实例，<strong>如果制造出多个实例就可能会导致一些问题的产生，比如：程序的行为异常、资源使用过量、或者不一致性的结果</strong>。</p>
+<p><strong>使用单例模式好处:</strong></p>
+<p>对于频繁使用的对象，可以省略创建对象所花费的时间，这对于那些重量级对象而言，是非常可观的一笔系统开销；<br>由于 new 操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻 GC 压力，缩短 GC 停顿时间。</p>
+<p><strong>单例的模式的实现</strong>：<br>通常单例模式在Java语言中，有两种构建方式：</p>
+<p><strong>饿汉方式。指全局的单例实例在类装载时构建</strong><br><strong>懒汉方式。指全局的单例实例在第一次被使用时构建。</strong></p>
+<p><strong>不管是那种创建方式，它们通常都存在下面几点相似处：</strong></p>
+<ul>
+<li>单例类必须要有一个 private 访问级别的构造函数，只有这样，才能确保单例不会在系统中的其他代码内被实例化;</li>
+<li>instance 成员变量和 uniqueInstance 方法必须是 static 的。</li>
+</ul>
+<p><strong>工厂模式</strong></p>
 <p>在基类中定义创建对象的一个接口，让子类决定实例化哪个类。工厂方法让一个类的实例化延迟到子类中进行。 </p>
-</li>
-<li><p><strong>代理模式</strong></p>
+<p><strong>代理模式</strong></p>
 <p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
 <p><strong>Spring AOP 就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDK Proxy</strong>，去创建代理对象，而对于没有实现接口的对象，就无法使用 JDK Proxy 去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong> ，这时候Spring AOP会使用 <strong>Cglib</strong> 生成一个被代理对象的子类来作为代理。当然你也可以使用 AspectJ ,Spring AOP 已经集成了AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。</p>
 <p>使用 AOP 之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了 AOP 。</p>
 <p><strong>Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。</strong> Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。</p>
 <p>Spring AOP 已经集成了 AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。AspectJ 相比于 Spring AOP 功能更加强大，但是 Spring AOP 相对来说更简单，</p>
 <p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择 AspectJ ，它比Spring AOP 快很多。</p>
-</li>
-<li><p><strong>策略模式</strong></p>
+<p><strong>策略模式</strong></p>
 <p>定义一系列的算法，把每一个算法封装起来，并且使它们可以相互替换。这个模式中使得各个算法可以独立于使用它的客户而变化。<br>策略模式的构成：<br>1.抽象策略角色：策略类，通常由一个接口或者抽象类实现。<br>2.具体策略角色：包装了相关的算法和行为，实现策略接口或继承抽象类。<br>3.环境角色：context，运行时持有一个策略类的引用，最终给客户端调用。</p>
 <p>策略模式让算法独立于使用它的客户而独立变化。策略模式重点是封装不同的算法和行为，不同的场景下可以相互替换。策略模式是开闭原则的体现，开闭原则讲的是一个软件实体应该对拓展开放对修改关闭。因为策略模式在加入新的策略时，不会影响其他类的修改，增加了拓展性，也就是对拓展是开放的；对于调用场景来说，只依赖于抽象，而不依赖于具体实现，所以对修改是关闭的。<br>策略模式的优点和缺点<br>优点：<br>（1）调用策略中的方法在context中，没有和各个策略的实现耦合在一起，各个实现策略的不同子类可以去拓展、修改和切换。<br>（2）避免写很多if else代码，提高了可观性。同时可以结合抽象类（策略类）去使用，Java支持很好。<br>缺点：<br>（1）客户端调用时必须知道所有的策略类，并且感知到要调用哪一种策略实现。<br>（2）一旦抽象，必然会对一些特殊场景难以处理。并且这里去加入了很多的策略实现类，也有Context类的加入，增加了开销。</p>
-</li>
-<li><p><strong>模板模式</strong></p>
+<p><strong>模板模式</strong></p>
 <p>在模板模式（Template Pattern）中，一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。这种类型的设计模式属于行为型模式。 </p>
-</li>
-<li><p><strong>观察者模式</strong></p>
+<p><strong>观察者模式</strong></p>
 <p>观察者模式是一种对象行为型模式。它表示的是一种对象与对象之间具有依赖关系，当一个对象发生改变的时候，这个对象所依赖的对象也会做出反应。</p>
-</li>
-<li><p><strong>适配器模式</strong></p>
+<p><strong>适配器模式</strong></p>
 <p>适配器模式(Adapter Pattern) 将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Spring 框架中用到了哪些设计模式？</p>
 <ul>
@@ -349,8 +352,6 @@
 <li><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</li>
 <li><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</li>
 <li><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</li>
-</ul>
-</li>
 </ul>
 <hr>
 <h3 id="Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><a href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？" class="headerlink" title="Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"></a>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</h3><ol>
@@ -472,10 +473,18 @@
 <p>使用 Lambda 表达式可以使代码变的更加简洁紧凑。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 不需要参数,返回值为 5  </span></span><br><span class="line">() -&gt; <span class="number">5</span>  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 2. 接收一个参数(数字类型),返回其2倍的值  </span></span><br><span class="line">x -&gt; <span class="number">2</span> * x  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 3. 接受2个参数(数字),并返回他们的差值  </span></span><br><span class="line">(x, y) -&gt; x – y  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 4. 接收2个int型整数,返回他们的和  </span></span><br><span class="line">(<span class="keyword">int</span> x, <span class="keyword">int</span> y) -&gt; x + y  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)  </span></span><br><span class="line">(String s) -&gt; System.out.print(s)</span><br></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="手写单例模式（双重检测机制）"><a href="#手写单例模式（双重检测机制）" class="headerlink" title="手写单例模式（双重检测机制）"></a>手写单例模式（双重检测机制）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">//先判断对象是否已经实例过，没有实例化过才进入加锁代码</span></span><br><span class="line">        <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//类对象加锁</span></span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> uniqueInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
-
+<hr>
+<p>###jdk常用分析问题的工具</p>
+<p>jvisualvm 能够监控线程，内存情况，查看方法的CPU时间和内存中的对 象，已被GC的对象，反向查看分配的堆栈(如100个String对象分别由哪几个对象分配出来的). </p>
+<hr>
+<p>###什么是SQL注入？怎么解决？</p>
+<p>所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。 </p>
+<p>1、采用PreparedStatement来避免sql注入，会自动对用户填写的数据进行验证(简单有效)<br>sql注入只对sql语句的准备(编译)过程有破坏作用<br>而PreparedStatement已经准备好了,执行阶段只是把输入串作为数据处理,<br>而不再对sql语句进行解析,准备,因此也就避免了sql注入问题.</p>
+<p>2、使用正则表达式过滤传入的参数（典型的SQL 注入攻击的正则表达式 ）</p>
+<p>3、字符串过滤，敏感词过滤</p>
 <p>SpringAOP实现原理+IOC实现原理(源码怎么实现)？</p>
 <p>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？</p>
 <p>12.讲一讲线程创建的时候发生了什么？</p>
@@ -483,7 +492,8 @@
 <p>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）</p>
 <p>2.场景题：只有一台机器，10亿个ip地址（有重复）找出出现最多的10个ip，怎么处理？</p>
 <p>4.Git的常用命令有哪些，merge时候出现冲突怎么处理？6.Java8新特性了解吗？，讲一讲流？</p>
-<p>14.手写单例模式（双重检测机制）<br>15.MySQL 中 InnoDB 和 MyISAM 区别？<br>16.MySQL的默认隔离级别？<br>17.知道数据库优化吗？SQL优化？<br>18.讲一讲索引，说一说B+树<br>19.什么是SQL注入？怎么解决？<br>20.用过哪些SQL的函数？（写一个查找平均分SQL语句）<br>21.讲一讲spring事务，ioc，aop，bean声明周期？<br>22.hibernate和mybatis的区别，各自的优缺点<br>23.Linux常用命令有哪些，查看端口的命令是什么？<br>24.HTTP常用的首部字段有哪些？<br>25.GET和POST的区别？<br>26.HTTPS协议？什么是对称加密和非对称加密？<br>27.多线程join()和yield()方法的作用？<br>28.介绍一下juc里面常用的几个工具类<br>29.TCP/IP协议的3次握手和4次挥手<br>30.各种排序算法思路以及时间复杂度（主要是快排，冒泡，堆排，归并）<br>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
+<hr>
+<p>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
 <p><strong>基础：</strong></p>
 <ol>
 <li>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</li>
@@ -695,7 +705,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建对象的方式"><span class="nav-number">1.</span> <span class="nav-text">创建对象的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象和面向过程的区别"><span class="nav-number">2.</span> <span class="nav-text">面向对象和面向过程的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-和-C-的区别"><span class="nav-number">3.</span> <span class="nav-text">Java 和 C++的区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSP九个内置对象"><span class="nav-number">4.</span> <span class="nav-text">JSP九个内置对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie和Session的的区别"><span class="nav-number">5.</span> <span class="nav-text">Cookie和Session的的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式"><span class="nav-number">6.</span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">6.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><span class="nav-number">7.</span> <span class="nav-text">Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谈谈对-Java-注解的理解，解决了什么问题？"><span class="nav-number">8.</span> <span class="nav-text">谈谈对 Java 注解的理解，解决了什么问题？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义注解-应用场景"><span class="nav-number">8.1.</span> <span class="nav-text">自定义注解 应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部类了解吗？匿名内部类了解吗？"><span class="nav-number">9.</span> <span class="nav-text">内部类了解吗？匿名内部类了解吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><span class="nav-number">10.</span> <span class="nav-text">BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假如我们需要存500个数需要多大的HashMap？"><span class="nav-number">11.</span> <span class="nav-text">假如我们需要存500个数需要多大的HashMap？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-面向对象编程三大特性-封装-继承-多态"><span class="nav-number">12.</span> <span class="nav-text">Java 面向对象编程三大特性: 封装 继承 多态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">12.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">12.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">12.3.</span> <span class="nav-text">多态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO、NIO和AIO总结"><span class="nav-number">13.</span> <span class="nav-text">BIO、NIO和AIO总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象类与接口的区别？"><span class="nav-number">14.</span> <span class="nav-text">抽象类与接口的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java8新特性：闭包（-Lambda-表达式）"><span class="nav-number">15.</span> <span class="nav-text">Java8新特性：闭包（ Lambda 表达式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring"><span class="nav-number">16.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微服务-分布式"><span class="nav-number">17.</span> <span class="nav-text">微服务&#x2F;分布式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库"><span class="nav-number">18.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络"><span class="nav-number">19.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法和数据结构"><span class="nav-number">20.</span> <span class="nav-text">算法和数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计题"><span class="nav-number">21.</span> <span class="nav-text">设计题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">22.</span> <span class="nav-text">其他问题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建对象的方式"><span class="nav-number">1.</span> <span class="nav-text">创建对象的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象和面向过程的区别"><span class="nav-number">2.</span> <span class="nav-text">面向对象和面向过程的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-和-C-的区别"><span class="nav-number">3.</span> <span class="nav-text">Java 和 C++的区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSP九个内置对象"><span class="nav-number">4.</span> <span class="nav-text">JSP九个内置对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie和Session的的区别"><span class="nav-number">5.</span> <span class="nav-text">Cookie和Session的的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式"><span class="nav-number">6.</span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">6.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><span class="nav-number">7.</span> <span class="nav-text">Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谈谈对-Java-注解的理解，解决了什么问题？"><span class="nav-number">8.</span> <span class="nav-text">谈谈对 Java 注解的理解，解决了什么问题？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义注解-应用场景"><span class="nav-number">8.1.</span> <span class="nav-text">自定义注解 应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部类了解吗？匿名内部类了解吗？"><span class="nav-number">9.</span> <span class="nav-text">内部类了解吗？匿名内部类了解吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO和NIO区别-4核cpu，100个http连接，用BIO和NIO分别需要多少个线程"><span class="nav-number">10.</span> <span class="nav-text">BIO和NIO区别,4核cpu，100个http连接，用BIO和NIO分别需要多少个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假如我们需要存500个数需要多大的HashMap？"><span class="nav-number">11.</span> <span class="nav-text">假如我们需要存500个数需要多大的HashMap？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-面向对象编程三大特性-封装-继承-多态"><span class="nav-number">12.</span> <span class="nav-text">Java 面向对象编程三大特性: 封装 继承 多态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">12.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">12.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">12.3.</span> <span class="nav-text">多态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO、NIO和AIO总结"><span class="nav-number">13.</span> <span class="nav-text">BIO、NIO和AIO总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象类与接口的区别？"><span class="nav-number">14.</span> <span class="nav-text">抽象类与接口的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java8新特性：闭包（-Lambda-表达式）"><span class="nav-number">15.</span> <span class="nav-text">Java8新特性：闭包（ Lambda 表达式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手写单例模式（双重检测机制）"><span class="nav-number">16.</span> <span class="nav-text">手写单例模式（双重检测机制）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring"><span class="nav-number">17.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微服务-分布式"><span class="nav-number">18.</span> <span class="nav-text">微服务&#x2F;分布式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库"><span class="nav-number">19.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络"><span class="nav-number">20.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法和数据结构"><span class="nav-number">21.</span> <span class="nav-text">算法和数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计题"><span class="nav-number">22.</span> <span class="nav-text">设计题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">23.</span> <span class="nav-text">其他问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

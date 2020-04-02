@@ -10,9 +10,68 @@
  <a id="more"></a>
 
 <h4 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h4><p>多个业务中有同一个实例对象和方法，如果这个方法名改了，所有的引用处都得修改，如果修改了位置，也需要所有的引用出进行修改，针对这两个不足，通过AOP面向切面进行改进，将这个方法定义成切点，切点和通知组成切面，通知一般有Before、After、After-returning、After-throwing、Around通知。</p>
-<p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。 </p>
+<p>AOP(Aspect-Oriented Programming):面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。  <strong>Spring AOP就是基于动态代理和反射的</strong> </p>
+<p>假如没有aop，在做日志处理的时候，我们会在每个方法中添加日志处理，比如</p>
+<p><img src="https://static.oschina.net/uploads/img/201607/03162016_hOnw.jpg" alt="1"></p>
+<p>但大多数的日子处理代码是相同的，为了实现代码复用，我们可能把日志处理抽离成一个新的方法。但是这样我们仍然必须手动插入这些方法。</p>
+<p><img src="https://static.oschina.net/uploads/img/201607/03162051_GxmQ.jpg" alt="2"></p>
+<p>但这样两个方法就是强耦合的，假如此时我们不需要这个功能了，或者想换成其他功能，那么就必须一个个修改。</p>
+<p>通过动态代理，可以在指定位置执行对应流程。这样就可以将一些横向的功能抽离出来形成一个独立的模块，然后在指定位置插入这些功能。这样的思想，被称为面向切面编程，亦即AOP。</p>
+<p><img src="https://static.oschina.net/uploads/img/201607/03162109_vav0.jpg" alt="3"></p>
+<p>为了在指定位置执行这些横向的功能，需要知道指定的是什么地方</p>
+<p><img src="https://static.oschina.net/uploads/img/201607/03162132_tup3.jpg" alt="4"></p>
+<p>例如上图，方法级别的aop实现，在一个程序执行链条中，把method2称为切点，也就是说在method2执行时会执行横切的功能，那么是在method2之前还是之后呢，又是执行什么呢？这些都由advice（通知）来指定。advice有5种类型，分别是</p>
+<table>
+<thead>
+<tr>
+<th align="left">通知类型</th>
+<th align="left">简介</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Before（前置通知）</td>
+<td align="left">目标方法调用之前执行</td>
+</tr>
+<tr>
+<td align="left">After（后置通知）</td>
+<td align="left">目标方法调用之后执行</td>
+</tr>
+<tr>
+<td align="left">After-returning（返回通知）</td>
+<td align="left">目标方法执行成功后执行</td>
+</tr>
+<tr>
+<td align="left">After-throwing（异常通知）</td>
+<td align="left">目标方法抛出异常后执行</td>
+</tr>
+<tr>
+<td align="left">Around（环绕通知）</td>
+<td align="left">相当于合并了前置和后置</td>
+</tr>
+</tbody></table>
+<p>把切点和通知合在一起就是切面了，一个切面指定了在何时何地执行何种方法。在spring aop中如此定义这个切面：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserAspect</span> </span>&#123;     </span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"execution(* com.aop.service.impl.UserServiceImpl.login(..))"</span>)    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loginLog</span><span class="params">()</span></span>&#123;        </span><br><span class="line">        System.out.println(<span class="string">"user login"</span>);    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用注解@Aspect将某个特定的类声明为切面，这样，该类下的方法就可以声明为横向的功能点后插入到指定位置。使用execution表达式声明在这个切点，格式如下</p>
+<p> <img src="https://static.oschina.net/uploads/img/201607/03162151_uRae.jpg" alt="5"></p>
+<p>第一个位置指定了方法的返回值，* 号代表任意类型的返回值，然后是所在的类和方法名，*号同样代表任意，就是该类中任意的方法，在上一个例子中方法名是login，则是指定了该类中的login方法。然后最后一个参数是方法入参，因为java中支持重载，所以这个参数可以帮助你更精确的进行定位。两点表示任意参数类型。这样，execution表达式告诉了程序该在何地执行通知。而被诸如@Before注解修饰的方法就是通知的内容，也就是做什么。</p>
+<p>至此，我们就可以使用spring aop，但是还有两点需要得到注意</p>
+<ol>
+<li>将切面类声明为一个bean</li>
+<li>切点指定的方法所在的类也同样需由spring注入才能生效</li>
+</ol>
 <hr>
-<h4 id="SpringAOP实现原理-IOC实现原理-源码怎么实现-？"><a href="#SpringAOP实现原理-IOC实现原理-源码怎么实现-？" class="headerlink" title="SpringAOP实现原理+IOC实现原理(源码怎么实现)？"></a>SpringAOP实现原理+IOC实现原理(源码怎么实现)？</h4><hr>
+<h4 id="Spring有哪些模块"><a href="#Spring有哪些模块" class="headerlink" title="Spring有哪些模块"></a>Spring有哪些模块</h4><ul>
+<li><strong>Spring Core：</strong> 基础,可以说 Spring 其他所有的功能都需要依赖于该类库。主要提供 IoC 依赖注入功能。</li>
+<li><strong>Spring Aspects</strong> ： 该模块为与AspectJ的集成提供支持。</li>
+<li><strong>Spring AOP</strong> ：提供了面向切面的编程实现。</li>
+<li><strong>Spring JDBC</strong> : Java数据库连接。</li>
+<li><strong>Spring JMS</strong> ：Java消息服务。</li>
+<li><strong>Spring ORM</strong> : 用于支持Hibernate等ORM工具。</li>
+<li><strong>Spring Web</strong> : 为创建Web应用程序提供支持。</li>
+<li><strong>Spring Test</strong> : 提供了对 JUnit 和 TestNG 测试的支持。</li>
+</ul>
+<hr>
 <h4 id="Spring-bean"><a href="#Spring-bean" class="headerlink" title="Spring bean"></a>Spring bean</h4><h5 id="1-Spring-中的-bean-的作用域有哪些"><a href="#1-Spring-中的-bean-的作用域有哪些" class="headerlink" title="1. Spring 中的 bean 的作用域有哪些?"></a>1. Spring 中的 bean 的作用域有哪些?</h5><ul>
 <li>singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
 <li>prototype : 每次请求都会创建一个新的 bean 实例。</li>
@@ -187,7 +246,10 @@
 <p>当<code>@Transactional</code>注解作用于类上时，该类的所有 public 方法将都具有该类型的事务属性，同时，我们也可以在方法级别使用该标注来覆盖类级别的定义。如果类或者方法加了这个注解，那么这个类里面的方法抛出异常，就会回滚，数据库里面的数据也会回滚。</p>
 <p>在<code>@Transactional</code>注解中如果不配置<code>rollbackFor</code>属性,那么事物只会在遇到<code>RuntimeException</code>的时候才会回滚,加上<code>rollbackFor=Exception.class</code>,可以让事物在遇到非运行时异常时也回滚。</p>
 <hr>
-<h3 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h3><h4 id="MyBatis开发时的常用对象"><a href="#MyBatis开发时的常用对象" class="headerlink" title="MyBatis开发时的常用对象"></a>MyBatis开发时的常用对象</h4><p>1.SqlSessionFactory：SqlSesssion工厂。通过SqlSessionFactory：SqlSesssion中的openSession()产生SqlSesssion对象。</p>
+<h3 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h3><p>首先Mybatis是一个优秀的持久化框架，它支持自定义SQL查询、存储过程，和很好的一个映射。第二点Mybatis减少了大部分JDBC的代码，避免了手动设置参数和结果集的映射。第三点Mybatis用简单的XML配置文件或注解来配置映射关系，将接口和POJO对象映射到数据库记录中。</p>
+<p>在使用传统JDBC时，我们往往需要写很多JDBC代码，需要自己写SQL语句以及自己装配参数，然后自己对结果集进行封装处理，而Mybatis帮我们简化了以上功能，只需要一些配置文件（xml）或是注解的方式即可完成对数据库的查询以及结果的映射封装。</p>
+<p><strong>使用Generator生成代码</strong><br>一般在项目开发时都会使用generator插件去自动生成实体类、dao层（mapper接口）、mapper.xml的简单增删改查方法，这可以替我们省去大量重复工作，如有复杂查询再去mapper添加即可。在项目中一般不用到Example，如果是个人快速项目，建议使用Example可以加速项目的开发，如有需要Example需在generatorConfig.xml中<table/>标签中对应属性设为true即可生成Example文件。</p>
+<h4 id="MyBatis开发时的常用对象"><a href="#MyBatis开发时的常用对象" class="headerlink" title="MyBatis开发时的常用对象"></a>MyBatis开发时的常用对象</h4><p>1.SqlSessionFactory：SqlSesssion工厂。通过SqlSessionFactory：SqlSesssion中的openSession()产生SqlSesssion对象。</p>
 <p>2.SqlSesssion：SqlSesssion对象（类似于JDBC中的Connection）</p>
 <p>3.Executor：MyBatis中所有Mapper语句的执行 都是通过Executor进行的。</p>
 <h4 id="MyBatis四大核心对象"><a href="#MyBatis四大核心对象" class="headerlink" title="MyBatis四大核心对象"></a>MyBatis四大核心对象</h4><p>1.StatementHandler(负责sql语句)：数据库的处理对象 select… from where id = #{}  ..</p>
@@ -202,6 +264,29 @@
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">使用&lt;resultMap&gt;中&lt;association&gt;</span><br><span class="line">一对一的延迟加载：</span><br><span class="line">使用&lt;resultMap&gt;中&lt;association&gt;的select属性指定延迟加载的sql语句</span><br><span class="line">&lt;resultMap&gt;	</span><br><span class="line">		&lt;association select=<span class="string">"延迟加载的sql语句"</span> &gt;</span><br><span class="line">		&lt;&lt;association&gt;&gt;</span><br><span class="line">&lt;/resultMap&gt;</span><br></pre></td></tr></table></figure>
 
 <p>一对多：将一对一中的<association>改为<collection></p>
+<h4 id="hibernate和mybatis的区别，各自的优缺点"><a href="#hibernate和mybatis的区别，各自的优缺点" class="headerlink" title="hibernate和mybatis的区别，各自的优缺点"></a>hibernate和mybatis的区别，各自的优缺点</h4><p>1.两者最大的区别：</p>
+<p>针对简单逻辑，Hibernate和MyBatis都有相应的代码生成工具，可以生成简单基本的DAO层方法。</p>
+<p>针对高级查询，Mybatis需要手动编写SQL语句，以及ResultMap。而Hibernate有良好的映射机制，开发者无需关心SQL的生成与结果映射，可以更专注于业务流程。</p>
+<p>2.开发难度对比</p>
+<p>Hibernate的开发难度要大于Mybatis。主要由于Hibernate比较复杂、庞大，学习周期较长。</p>
+<p>而Mybatis则相对简单一些，并且Mybatis主要依赖于sql的书写，让开发者感觉更熟悉。</p>
+<p>3.sql书写比较</p>
+<p>Mybatis的SQL是手动编写的，所以可以按需求指定查询的字段。不过没有自己的日志统计，所以要借助log4j来记录日志。</p>
+<p>Hibernate也可以自己写SQL来指定需要查询的字段，但这样就破坏了Hibernate开发的简洁性。不过Hibernate具有自己的日志统计。</p>
+<p>4.数据库扩展性比较</p>
+<p>Mybatis由于所有SQL都是依赖数据库书写的，所以扩展性，迁移性比较差。</p>
+<p>Hibernate与数据库具体的关联都在XML中，所以HQL对具体是用什么数据库并不是很关心。</p>
+<p>5.缓存机制比较</p>
+<p>相同点：Hibernate和Mybatis的二级缓存除了采用系统默认的缓存机制外，都可以通过实现你自己的缓存或为其他第三方缓存方案，创建适配器来完全覆盖缓存行为。</p>
+<p><strong>不同点：</strong>Hibernate的二级缓存配置在SessionFactory生成的配置文件中进行详细配置，然后再在具体的表-对象映射中配置是那种缓存。</p>
+<p>MyBatis的二级缓存配置都是在每个具体的表-对象映射中进行详细配置，这样针对不同的表可以自定义不同的缓存机制。并且Mybatis可以在命名空间中共享相同的缓存配置和实例，通过Cache-ref来实现。</p>
+<p><strong>两者比较：</strong>因为Hibernate对查询对象有着良好的管理机制，用户无需关心SQL。所以在使用二级缓存时如果出现脏数据，系统会报出错误并提示。</p>
+<p>而MyBatis在这一方面，使用二级缓存时需要特别小心。如果不能完全确定数据更新操作的波及范围，避免Cache的盲目使用。否则，脏数据的出现会给系统的正常运行带来很大的隐患。</p>
+<p>6.总结：</p>
+<p>mybatis：小巧、方便、高效、简单、直接、半自动<br>hibernate：强大、方便、高效、复杂、绕弯子、全自动</p>
+<p>Hibernate与MyBatis都可以是通过SessionFactoryBuider由XML配置文件生成SessionFactory，然后由SessionFactory 生成Session，最后由Session来开启执行事务和SQL语句。</p>
+<p>而MyBatis的优势是MyBatis可以进行更为细致的SQL优化，可以减少查询字段，并且容易掌握。</p>
+<p>Hibernate的优势是DAO层开发比MyBatis简单，Mybatis需要维护SQL和结果映射。数据库移植性很好，MyBatis的数据库移植性不好，不同的数据库需要写不同SQL。有更好的二级缓存机制，可以使用第三方缓存。MyBatis本身提供的缓存机制不佳。</p>
 <hr>
 <h3 id="springboot主要配置文件"><a href="#springboot主要配置文件" class="headerlink" title="springboot主要配置文件"></a>springboot主要配置文件</h3><p>SpringBoot使用一个全局的配置文件，配置文件名是固定的；<br> <strong>1.application.properties</strong><br> <strong>2.application.yml(或者是yaml)</strong><br> 配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好</p>
 ]]></content>
@@ -525,6 +610,44 @@
 <p>　　（3）SSL证书需要钱，功能越强大的证书费用越高，个人网站、小网站没有必要一般不会用。</p>
 <p>　  （4）SSL证书通常需要绑定IP，不能在同一IP上绑定多个域名，IPv4资源不可能支撑这个消耗。</p>
 <p>　　（5）HTTPS协议的加密范围也比较有限，在黑客攻击、拒绝服务攻击、服务器劫持等方面几乎起不到什么作用。最关键的，SSL证书的信用链体系并不安全，特别是在某些国家可以控制CA根证书的情况下，中间人攻击一样可行。</p>
+<hr>
+<h3 id="GET和POST的区别"><a href="#GET和POST的区别" class="headerlink" title="GET和POST的区别"></a>GET和POST的区别</h3><ul>
+<li>GET请求在URL中传送的参数是有长度限制的，而POST没有。</li>
+<li>GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。</li>
+<li>GET参数通过URL传递，POST放在Request body中。</li>
+<li>GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。</li>
+<li>GET请求只能进行url编码，而POST支持多种编码方式。</li>
+<li>GET请求会被浏览器主动cache，而POST不会，除非手动设置。</li>
+<li>GET产生的URL地址可以被Bookmark，而POST不可以。</li>
+<li>GET在浏览器回退时是无害的，而POST会再次提交请求。</li>
+</ul>
+<p><strong>GET和POST本质上没有区别</strong></p>
+<p>GET和POST是什么？HTTP协议中的两种发送请求的方法。</p>
+<p>HTTP是什么？HTTP是基于TCP/IP的关于数据如何在万维网中如何通信的协议。</p>
+<p>HTTP的底层是TCP/IP。所以GET和POST的底层也是TCP/IP，也就是说，GET/POST都是TCP链接。</p>
+<p><strong>GET和POST本质上就是TCP链接</strong>，并无差别。但是由于<strong>HTTP的规定和浏览器/服务器的限制</strong>，导致他们在应用过程中体现出一些不同。 </p>
+<p><strong>GET和POST还有一个重大区别</strong></p>
+<p>简单的说：<strong>GET产生一个TCP数据包；POST产生两个TCP数据包</strong>。</p>
+<p>长的说：对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；</p>
+<p>而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。</p>
+<hr>
+<p>###什么是对称加密和非对称加密？</p>
+<p><strong>什么是对称加密技术？</strong></p>
+<p><strong>对称加密采用了对称密码编码技术，它的特点是文件加密和解密使用相同的密钥加密</strong></p>
+<p><strong>也就是密钥也可以用作解密密钥，这种方法在密码学中叫做对称加密<a href="http://lib.csdn.net/base/datastructure" target="_blank" rel="noopener">算法</a>，对称加密算法使用起来简单快捷，密钥较短，且破译困难，除了数据加密标准（DES），另一个对称密钥加密系统是国际数据加密算法（IDEA），它比DES的加密性好，而且对计算机功能要求也没有那么高</strong></p>
+<p><strong>对称加密算法在电子商务交易过程中存在几个问题：</strong></p>
+<p> 1、要求提供一条安全的渠道使通讯双方在首次通讯时协商一个共同的密钥。直接的面对面协商可能是不现实而且难于实施的，所以双方可能需要借助于邮件和电话等其它相对不够安全的手段来进行协商；</p>
+<p> 2、密钥的数目难于管理。因为对于每一个合作者都需要使用不同的密钥，很难适应开放社会中大量的信息交流；</p>
+<p> 3、对称加密算法一般不能提供信息完整性的鉴别。它无法验证发送者和接受者的身份；</p>
+<p> 4、对称密钥的管理和分发工作是一件具有潜在危险的和烦琐的过程。对称加密是基于共同保守秘密来实现的，采用对称加密技术的贸易双方必须保证采用的是相同的密钥，保证彼此密钥的交换是安全可靠的，同时还要设定防止密钥泄密和更改密钥的程序。</p>
+<p> 假设两个用户需要使用对称加密方法加密然后交换数据，则用户最少需要2个密钥并交换使用，如果企业内用户有n个，则整个企业共需要n×(n-1) 个密钥，密钥的生成和分发将成为企业信息部门的恶梦。</p>
+<p>常见的对称加密算法有DES、3DES、Blowfish、IDEA、RC4、RC5、RC6和AES </p>
+<p><strong>什么是非对称加密技术</strong></p>
+<p><strong>与对称加密算法不同，非对称加密算法需要两个密钥：公开密钥（publickey）和私有密钥（privatekey）。</strong></p>
+<p><strong>公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。</strong></p>
+<p><strong>非对称加密算法实现机密信息交换的基本过程是：甲方生成一对密钥并将其中的一把作为公用密钥向其它方公开；得到该公用密钥的乙方使用该密钥对机密信息进行加密后再发送给甲方；甲方再用自己保存的另一把专用密钥对加密后的信息进行解密。甲方只能用其专用密钥解密由其公用密钥加密后的任何信息。</strong></p>
+<p> 非对称加密的典型应用是数字签名。</p>
+<p>  常见的非对称加密算法有：RSA、ECC（移动设备用）、Diffie-Hellman、El Gamal、DSA（数字签名用）</p>
 ]]></content>
       <categories>
         <category>Java面试</category>
@@ -753,7 +876,7 @@
   </entry>
   <entry>
     <title>并发知识</title>
-    <url>/2020/03/08/%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86/</url>
+    <url>/2020/03/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h3 id="什么是线程阻塞？"><a href="#什么是线程阻塞？" class="headerlink" title="什么是线程阻塞？"></a>什么是线程阻塞？</h3><p>在某一时刻某一个线程在运行一段代码的时候，这时候另一个线程也需要运行，但是在运行过程中的那个线程执行完成之前，另一个线程是无法获取到CPU执行权的（调用sleep方法是进入到睡眠暂停状态，但是CPU执行权并没有交出去，而调用wait方法则是将CPU执行权交给另一个线程），这个时候就会造成线程阻塞。</p>
  <a id="more"></a>
 
@@ -1059,7 +1182,7 @@
 <h4 id="1-讲一下Java内存模型"><a href="#1-讲一下Java内存模型" class="headerlink" title="1. 讲一下Java内存模型"></a>1. 讲一下Java内存模型</h4><p>在 JDK1.2 之前，Java的内存模型实现总是从<strong>主存</strong>（即共享内存）读取变量，是不需要进行特别的注意的。而在当前的 Java 内存模型下，线程可以把变量保存<strong>本地内存</strong>（比如机器的寄存器）中，而不是直接在主存中进行读写。这就可能造成一个线程在主存中修改了一个变量的值，而另外一个线程还继续使用它在寄存器中的变量值的拷贝，造成<strong>数据的不一致</strong>。</p>
 <p><a href="https://camo.githubusercontent.com/2df61e9867d603bd3216c12851b2f7bcaec8847b/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545362539352542302545362538442541452545342542382538442545342542382538302545382538372542342e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/2df61e9867d603bd3216c12851b2f7bcaec8847b/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f2545362539352542302545362538442541452545342542382538442545342542382538302545382538372542342e706e67" alt="数据不一致"></a></p>
 <p>要解决这个问题，就需要把变量声明为<strong>volatile</strong>，这就指示 JVM，<strong>这个变量是不稳定的，每次使用它都到主存中进行读取。</strong></p>
-<p>说白了， <strong>volatile</strong> 关键字的主要作用就是保证变量的可见性然后还有一个作用是防止指令重排序。</p>
+<p>说白了， <strong>volatile</strong> 关键字的主要作用就是<strong>保证变量的可见性</strong>然后还有一个作用是防止指令重排序。</p>
 <p><a href="https://camo.githubusercontent.com/9944baae059c325540072f4bb365a4d1591474c4/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f766f6c6174696c652545352538352542332545392539342541452545352541442539372545372539412538342545352538462541462545382541372538312545362538302541372e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/9944baae059c325540072f4bb365a4d1591474c4/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f766f6c6174696c652545352538352542332545392539342541452545352541442539372545372539412538342545352538462541462545382541372538312545362538302541372e706e67" alt="volatile关键字的可见性"></a></p>
 <h4 id="2-说说-synchronized-关键字和-volatile-关键字的区别"><a href="#2-说说-synchronized-关键字和-volatile-关键字的区别" class="headerlink" title="2. 说说 synchronized 关键字和 volatile 关键字的区别"></a>2. 说说 synchronized 关键字和 volatile 关键字的区别</h4><p>synchronized关键字和volatile关键字比较</p>
 <ul>
@@ -1132,6 +1255,31 @@
 <p><strong>1）需要频繁创建销毁的优先用线程</strong><br>这种原则最常见的应用就是Web服务器了，来一个连接建立一个线程，断了就销毁线程，要是用进程，创建和销毁的代价是很难承受的<br><strong>2）需要进行大量计算的优先使用线程</strong><br>所谓大量计算，当然就是要耗费很多CPU，切换频繁了，这种情况下线程是最合适的。<br>这种原则最常见的是图像处理、算法处理。<br><strong>3）强相关的处理用线程，弱相关的处理用进程</strong><br>什么叫强相关、弱相关？理论上很难定义，给个简单的例子就明白了。<br>一般的Server需要完成如下任务：消息收发、消息处理。“消息收发”和“消息处理”就是弱相关的任务，而“消息处理”里面可能又分为“消息解码”、“业务处理”，这两个任务相对来说相关性就要强多了。因此“消息收发”和“消息处理”可以分进程设计，“消息解码”、“业务处理”可以分线程设计。<br>当然这种划分方式不是一成不变的，也可以根据实际情况进行调整。<br><strong>4）可能要扩展到多机分布的用进程，多核分布的用线程</strong><br><strong>5）都满足需求的情况下，用你最熟悉、最拿手的方式</strong><br>至于“数据共享、同步”、“编程、调试”、“可靠性”这几个维度的所谓的“复杂、简单”应该怎么取舍，我只能说：没有明确的选择方法。但我可以告诉你一个选择原则：如果多进程和多线程都能够满足要求，那么选择你最熟悉、最拿手的那个。</p>
 <hr>
 <h3 id="并发和并行的区别？"><a href="#并发和并行的区别？" class="headerlink" title="并发和并行的区别？"></a>并发和并行的区别？</h3><p>并行：多个CPU同时执行多个任务。比如：多个人同时做不同的事。<br>并发：一个CPU(采用时间片)同时执行多个任务。比如：秒杀、多个人做同一件事</p>
+<hr>
+<p>###jdk原子操作相关的类</p>
+<h4 id="基本类型的原子类"><a href="#基本类型的原子类" class="headerlink" title="基本类型的原子类"></a>基本类型的原子类</h4><ul>
+<li>AtomicInteger：整型原子类</li>
+<li>AtomicLong：长整型原子类</li>
+<li>AtomicBoolean ：布尔型原子类</li>
+</ul>
+<h4 id="数组类型的原子类"><a href="#数组类型的原子类" class="headerlink" title="数组类型的原子类"></a>数组类型的原子类</h4><ul>
+<li>AtomicIntegerArray：整型数组原子类</li>
+<li>AtomicLongArray：长整型数组原子类</li>
+<li>AtomicReferenceArray ：引用类型数组原子类</li>
+</ul>
+<h4 id="引用类型的原子类"><a href="#引用类型的原子类" class="headerlink" title="引用类型的原子类"></a>引用类型的原子类</h4><ul>
+<li>AtomicReference：引用类型原子类</li>
+<li>AtomicMarkableReference：原子更新带有标记的引用类型。该类将 boolean 标记与引用关联起来。</li>
+<li>AtomicStampedReference ：原子更新带有版本号的引用类型。该类将整数值与引用关联起来，可用于解决原子的更新数据和数据的版本号，可以解决使用 CAS 进行原子更新时可能出现的 ABA 问题。</li>
+</ul>
+<p>####对象的属性修改类型的原子类</p>
+<ul>
+<li>AtomicIntegerFieldUpdater:原子更新整型字段的更新器</li>
+<li>AtomicLongFieldUpdater：原子更新长整型字段的更新器</li>
+<li>AtomicReferenceFieldUpdater：原子更新引用类型里的字段</li>
+</ul>
+<hr>
+<p>###juc包下关于并发的四大工具类</p>
 <hr>
 ]]></content>
       <categories>
@@ -1211,11 +1359,20 @@
 </ul>
 <hr>
 <h3 id="Arraylist-与-LinkedList-区别"><a href="#Arraylist-与-LinkedList-区别" class="headerlink" title="Arraylist 与 LinkedList 区别?"></a>Arraylist 与 LinkedList 区别?</h3><ul>
-<li><strong>1. 是否保证线程安全：</strong> <code>ArrayList</code> 和 <code>LinkedList</code> 都是不同步的，也就是不保证线程安全；</li>
-<li><strong>2. 底层数据结构：</strong> <code>Arraylist</code> 底层使用的是 <strong><code>Object</code> 数组</strong>；<code>LinkedList</code> 底层使用的是 <strong>双向链表</strong> 数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）</li>
-<li><strong>3. 插入和删除是否受元素位置的影响：</strong> ① <strong><code>ArrayList</code> 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。</strong> 比如：执行<code>add(E e)</code>方法的时候， <code>ArrayList</code> 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置 i 插入和删除元素的话（<code>add(int index, E element)</code>）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 ② <strong><code>LinkedList</code> 采用链表存储，所以对于<code>add(E e)</code>方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O（1），如果是要在指定位置<code>i</code>插入和删除元素的话（<code>(add(int index, E element)</code>） 时间复杂度近似为<code>o(n))</code>因为需要先移动到指定位置再插入。</strong></li>
-<li><strong>4. 是否支持快速随机访问：</strong> <code>LinkedList</code> 不支持高效的随机元素访问，而 <code>ArrayList</code> 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于<code>get(int index)</code>方法)。</li>
-<li><strong>5. 内存空间占用：</strong> ArrayList的空 间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。</li>
+<li><p><strong>1. 是否保证线程安全：</strong> <code>ArrayList</code> 和 <code>LinkedList</code> 都是不同步的，也就是不保证线程安全；</p>
+</li>
+<li><p><strong>2. 底层数据结构：</strong> <code>Arraylist</code> 底层使用的是 <strong><code>Object</code> 数组</strong>；<code>LinkedList</code> 底层使用的是 <strong>双向链表</strong> 数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）</p>
+</li>
+<li><p><strong>3. 插入和删除是否受元素位置的影响：</strong> ① <strong><code>ArrayList</code> 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。</strong> 比如：执行<code>add(E e)</code>方法的时候， <code>ArrayList</code> 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置 i 插入和删除元素的话（<code>add(int index, E element)</code>）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 ② <strong><code>LinkedList</code> 采用链表存储，所以对于<code>add(E e)</code>方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O（1），如果是要在指定位置<code>i</code>插入和删除元素的话（<code>(add(int index, E element)</code>） 时间复杂度近似为<code>o(n))</code>因为需要先移动到指定位置再插入。</strong></p>
+</li>
+<li><p><strong>4. 是否支持快速随机访问：</strong> <code>LinkedList</code> 不支持高效的随机元素访问，而 <code>ArrayList</code> 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于<code>get(int index)</code>方法)。</p>
+</li>
+<li><p><strong>5. 内存空间占用：</strong> ArrayList的空 间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。</p>
+</li>
+<li><p><strong>tips：</strong></p>
+<p> <strong>ArrayList 是线性表（数组）</strong><br>get() 直接读取第几个下标，复杂度 O(1)<br>add(E) 添加元素，直接在后面添加，复杂度O（1）<br>add(index, E) 添加元素，在第几个元素后面插入，后面的元素需要向后移动，复杂度O（n）<br>remove（）删除元素，后面的元素需要逐个移动，复杂度O（n）</p>
+<p><strong>LinkedList 是链表的操作</strong><br>get() 获取第几个元素，依次遍历，复杂度O(n)<br>add(E) 添加到末尾，复杂度O(1)<br>add(index, E) 添加第几个元素后，需要先查找到第几个元素，直接指针指向操作，复杂度O(n)<br>remove（）删除元素，直接指针指向操作，复杂度O(1) </p>
+</li>
 </ul>
 <hr>
 <h3 id="ArrayList-与-Vector-区别呢-为什么要用Arraylist取代Vector呢？"><a href="#ArrayList-与-Vector-区别呢-为什么要用Arraylist取代Vector呢？" class="headerlink" title="ArrayList 与 Vector 区别呢?为什么要用Arraylist取代Vector呢？"></a>ArrayList 与 Vector 区别呢?为什么要用Arraylist取代Vector呢？</h3><p><code>Vector</code>类的所有方法都是同步的。可以由两个线程安全地访问一个Vector对象、但是一个线程访问Vector的话代码要在同步操作上耗费大量的时间。</p>
@@ -1319,6 +1476,13 @@
 <p><a href="https://camo.githubusercontent.com/092aae16c3a38854b4cea8b7e42dc6720df4441f/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f436f6e63757272656e74486173684d61702545352538382538362545362541452542352545392539342538312e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/092aae16c3a38854b4cea8b7e42dc6720df4441f/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f436f6e63757272656e74486173684d61702545352538382538362545362541452542352545392539342538312e6a7067" alt="JDK1.7的ConcurrentHashMap"></a></p>
 <p><strong>JDK1.8的ConcurrentHashMap（TreeBin: 红黑二叉树节点 Node: 链表节点）：</strong></p>
 <p><a href="https://camo.githubusercontent.com/b823c5f2cf18e7e27da70409d2b5e18fed820364/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f4a444b312e382d436f6e63757272656e74486173684d61702d5374727563747572652e6a7067" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/b823c5f2cf18e7e27da70409d2b5e18fed820364/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f4a444b312e382d436f6e63757272656e74486173684d61702d5374727563747572652e6a7067" alt="JDK1.8的ConcurrentHashMap"></a></p>
+<h4 id="CAS算法（保证原子性）"><a href="#CAS算法（保证原子性）" class="headerlink" title="CAS算法（保证原子性）"></a>CAS算法（保证原子性）</h4><p>即<strong>compare and swap（比较与交换）</strong>，是一种有名的<strong>无锁算法</strong>。无锁编程，即不使用锁的情况下实现多线程之间的变量同步，也就是在没有线程被阻塞的情况下实现变量的同步，所以也叫非阻塞同步（Non-blocking Synchronization）。<strong>CAS算法</strong>涉及到三个操作数</p>
+<ul>
+<li>需要读写的内存值 V</li>
+<li>进行比较的值 A</li>
+<li>拟写入的新值 B</li>
+</ul>
+<p>当且仅当 V 的值等于 A时，CAS通过原子方式用新值B来更新V的值，否则不会执行任何操作（比较和替换是一个原子操作）。一般情况下是一个<strong>自旋操作</strong>，即<strong>不断的重试</strong>。</p>
 <hr>
 <h3 id="ConcurrentHashMap线程安全的具体实现方式-底层具体实现"><a href="#ConcurrentHashMap线程安全的具体实现方式-底层具体实现" class="headerlink" title="ConcurrentHashMap线程安全的具体实现方式/底层具体实现"></a>ConcurrentHashMap线程安全的具体实现方式/底层具体实现</h3><h4 id="JDK1-7（上面有示意图）"><a href="#JDK1-7（上面有示意图）" class="headerlink" title="JDK1.7（上面有示意图）"></a>JDK1.7（上面有示意图）</h4><p>首先将数据分为一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据时，其他段的数据也能被其他线程访问。</p>
 <p><strong>ConcurrentHashMap 是由 Segment 数组结构和 HashEntry 数组结构组成</strong>。</p>
@@ -1367,7 +1531,7 @@
 <h3 id="各数据结构时间复杂度"><a href="#各数据结构时间复杂度" class="headerlink" title="各数据结构时间复杂度"></a>各数据结构时间复杂度</h3><p><strong>数组</strong>：采用一段连续的存储单元来存储数据。对于指定下标的查找，时间复杂度为O(1)；通过给定值进行查找，需要遍历数组，逐一比对给定关键字和数组元素，时间复杂度为O(n)，当然，对于有序数组，则可采用二分查找，插值查找，斐波那契查找等方式，可将查找复杂度提高为O(logn)；对于一般的插入删除操作，涉及到数组元素的移动，其平均复杂度也为O(n)</p>
 <p><strong>线性链表</strong>：对于链表的新增，删除等操作（在找到指定操作位置后），仅需处理结点间的引用即可，时间复杂度为O(1)，而查找操作需要遍历链表逐一进行比对，复杂度为O(n)</p>
 <p><strong>二叉树</strong>：对一棵相对平衡的有序二叉树，对其进行插入，查找，删除等操作，平均复杂度均为O(logn)。</p>
-<p><strong>哈希表</strong>：相比上述几种数据结构，在哈希表中进行添加，删除，查找等操作，性能十分之高，不考虑哈希冲突的情况下，仅需一次定位即可完成，时间复杂度为O(1)，接下来我们就来看看哈希表是如何实现达到惊艳的常数阶O(1)的。</p>
+<p><strong>哈希表</strong>：相比上述几种数据结构，在哈希表中进行添加，删除，查找等操作，性能十分之高，不考虑哈希冲突的情况下，仅需一次定位即可完成，时间复杂度为O(1)。</p>
 ]]></content>
       <categories>
         <category>Java面试</category>
@@ -1550,7 +1714,7 @@
 <p>MySQL InnoDB 存储引擎的默认支持的隔离级别是 <strong>REPEATABLE-READ（可重读）</strong>。我们可以通过<code>SELECT @@tx_isolation;</code>命令来查看</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br><span class="line">+-----------------+</span><br><span class="line">| @@tx_isolation  |</span><br><span class="line">+-----------------+</span><br><span class="line">| REPEATABLE-READ |</span><br><span class="line">+-----------------+</span><br></pre></td></tr></table></figure>
 
-<p>这里需要注意的是：与 SQL 标准不同的地方在于 InnoDB 存储引擎在 <strong>REPEATABLE-READ（可重读）</strong> 事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server) 是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是 <strong>REPEATABLE-READ（可重读）</strong> 已经可以完全保证事务的隔离性要求，即达到了 SQL标准的 <strong>SERIALIZABLE(可串行化)</strong> 隔离级别。因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是 <strong>READ-COMMITTED(读取提交内容)</strong> ，但是你要知道的是InnoDB 存储引擎默认使用 <strong>REPEAaTABLE-READ（可重读）</strong> 并不会有任何性能损失。</p>
+<p>这里需要注意的是：与 SQL 标准不同的地方在于 InnoDB 存储引擎在 <strong>REPEATABLE-READ（可重读）</strong> 事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server) 是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是 <strong>REPEATABLE-READ（可重读）</strong> 已经可以完全保证事务的隔离性要求，即达到了 SQL标准的 <strong>SERIALIZABLE(可串行化)</strong> 隔离级别。因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是 <strong>READ-COMMITTED(读取提交内容)</strong> ，但是你要知道的是InnoDB 存储引擎默认使用 <strong>REPEATABLE-READ（可重读）</strong> 并不会有任何性能损失。</p>
 <p>InnoDB 存储引擎在 <strong>分布式事务</strong> 的情况下一般会用到 <strong>SERIALIZABLE(可串行化)</strong> 隔离级别。</p>
 <hr>
 <p>###数据库（MySQL）瓶颈在哪儿？数据库瓶颈现象如何解决？</p>
@@ -1586,6 +1750,23 @@
 <p>其数据文件本身就是索引文件。相比MyISAM，索引文件和数据文件是分离的，其表数据文件本身就是按B+Tree组织的一个索引结构，树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。这被称为“聚簇索引（或聚集索引）”，而其余的索引都作为辅助索引，辅助索引的data域存储相应记录主键的值而不是地址，这也是和MyISAM不同的地方。在根据主索引搜索时，直接找到key所在的节点即可取出数据；在根据辅助索引查找时，则需要先取出主键的值，在走一遍主索引。 因此，在设计表的时候，不建议使用过长的字段作为主键，也不建议使用非单调的字段作为主键，这样会造成主索引频繁分裂。</p>
 </li>
 </ul>
+<hr>
+<h3 id="mysqldumpslow"><a href="#mysqldumpslow" class="headerlink" title="mysqldumpslow"></a>mysqldumpslow</h3><p>mysql慢查询日志是mysql提供的一种日志记录，它是用来记录在mysql中相应时间超过阈值的语句，就是指运行时间超过long_query_time值的sql，会被记录在慢查询日志中。long_query_time的默认值是10，意思是运行10S之上的语句。</p>
+<p>慢查询日志的设置</p>
+<p>1 、查看是否开启慢查询日志命令：</p>
+<p>show variables like ‘%slow_query_log%’<br>1<br>2、设置慢查询开启的命令</p>
+<p>set global slow_query_log=1<br>1<br>注：<br>slow_query_log ON为开启，OFF为关闭<br>slow_query_log_file 为慢查询日志的存放地址</p>
+<p>3、查询并修改慢查询定义的时间</p>
+<p>show variables like ‘long_query_time%’<br>1<br>set global long_query_time=4<br>1<br>4、未使用索引的查询被记录到慢查询日志中。如果调优的话，建议开启这个选项。如果开启了这个参数，full index scan的sql也会被记录到慢查询日志中。</p>
+<p>show variables like ‘log_queries_not_using_indexes’<br>1<br>set global log_queries_not_using_indexes=1<br>1<br>5、查询有多少条慢查询记录</p>
+<p>show global status like ‘%Slow_queries%’;<br>1<br>mysqldumpslow 慢日志分析工具<br>命令：</p>
+<p>-s 按照那种方式排序<br>    c：访问计数<br>    l：锁定时间<br>    r:返回记录<br>    al：平均锁定时间<br>    ar：平均访问记录数<br>    at：平均查询时间<br>-t 是top n的意思，返回多少条数据。<br>-g 可以跟上正则匹配模式，大小写不敏感。<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>得到返回记录最多的20个sql</p>
+<p>mysqldumpslow -s r -t 20 sqlslow.log<br>1<br>得到平均访问次数最多的20条sql</p>
+<p>mysqldumpslow -s ar -t 20 sqlslow.log<br>1<br>得到平均访问次数最多,并且里面含有ttt字符的20条sql</p>
+<p>mysqldumpslow -s ar -t 20 -g “ttt” sqldlow.log<br>1<br>注：<br>1、如果出现 -bash: mysqldumpslow: command not found 错误，请执行</p>
+<p>ln -s /usr/local/mysql/bin/mysqldumpslow /usr/bin<br>1<br>2、如果出现如下错误，Died at /usr/bin/mysqldumpslow line 161, &lt;&gt; chunk 405659.说明你要分析的sql日志太大了，请拆分后再分析</p>
+<p>拆分的命令为：</p>
+<p>tail -100000 mysql-slow.log&gt;mysql-slow.20180725.log</p>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -1890,32 +2071,35 @@
 <p>客户端第一次请求服务端时，（jsessionid-sessionid）服务端会产生一个session对象（用于保存该客户的信息）；<br>并且每个session对象 都会有一个唯一的 sessionId( 用于区分其他session);<br>服务端也会产生一个cookie，并且 该cookie的name=JSESSIONID ,value=服务端sessionId的值；<br>然后 服务端会在 响应客户端的同时 将该cookie发送给客户端，至此 客户端就有了 一个cookie(JSESSIONID)；<br>因此，客户端的cookie就可以和服务端的session一一对应（JSESSIONID - sessionID）</p>
 <p>客户端第二/n次请求服务端时:服务端会先用客户端cookie种的JSESSIONID  去服务端的session中匹配sessionid,如果匹配成功（cookie  jsessionid和sesion sessionid），说明此用户 不是第一次访问,无需登录；</p>
 <hr>
-<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><ul>
-<li><p><strong>单例模式</strong></p>
-<p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。 </p>
-</li>
-<li><p><strong>工厂模式</strong></p>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><p><strong>单例模式</strong></p>
+<p><strong>定义：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</strong> </p>
+<p><strong>为什么要用单例模式呢</strong>：在我们的系统中，有<strong>一些对象其实我们只需要一个</strong>，比如说：线程池、缓存、对话框、注册表、日志对象、充当打印机、显卡等设备驱动程序的对象。事实上，这一类对象只能有一个实例，<strong>如果制造出多个实例就可能会导致一些问题的产生，比如：程序的行为异常、资源使用过量、或者不一致性的结果</strong>。</p>
+<p><strong>使用单例模式好处:</strong></p>
+<p>对于频繁使用的对象，可以省略创建对象所花费的时间，这对于那些重量级对象而言，是非常可观的一笔系统开销；<br>由于 new 操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻 GC 压力，缩短 GC 停顿时间。</p>
+<p><strong>单例的模式的实现</strong>：<br>通常单例模式在Java语言中，有两种构建方式：</p>
+<p><strong>饿汉方式。指全局的单例实例在类装载时构建</strong><br><strong>懒汉方式。指全局的单例实例在第一次被使用时构建。</strong></p>
+<p><strong>不管是那种创建方式，它们通常都存在下面几点相似处：</strong></p>
+<ul>
+<li>单例类必须要有一个 private 访问级别的构造函数，只有这样，才能确保单例不会在系统中的其他代码内被实例化;</li>
+<li>instance 成员变量和 uniqueInstance 方法必须是 static 的。</li>
+</ul>
+<p><strong>工厂模式</strong></p>
 <p>在基类中定义创建对象的一个接口，让子类决定实例化哪个类。工厂方法让一个类的实例化延迟到子类中进行。 </p>
-</li>
-<li><p><strong>代理模式</strong></p>
+<p><strong>代理模式</strong></p>
 <p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
 <p><strong>Spring AOP 就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDK Proxy</strong>，去创建代理对象，而对于没有实现接口的对象，就无法使用 JDK Proxy 去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong> ，这时候Spring AOP会使用 <strong>Cglib</strong> 生成一个被代理对象的子类来作为代理。当然你也可以使用 AspectJ ,Spring AOP 已经集成了AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。</p>
 <p>使用 AOP 之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了 AOP 。</p>
 <p><strong>Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。</strong> Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。</p>
 <p>Spring AOP 已经集成了 AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。AspectJ 相比于 Spring AOP 功能更加强大，但是 Spring AOP 相对来说更简单，</p>
 <p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择 AspectJ ，它比Spring AOP 快很多。</p>
-</li>
-<li><p><strong>策略模式</strong></p>
+<p><strong>策略模式</strong></p>
 <p>定义一系列的算法，把每一个算法封装起来，并且使它们可以相互替换。这个模式中使得各个算法可以独立于使用它的客户而变化。<br>策略模式的构成：<br>1.抽象策略角色：策略类，通常由一个接口或者抽象类实现。<br>2.具体策略角色：包装了相关的算法和行为，实现策略接口或继承抽象类。<br>3.环境角色：context，运行时持有一个策略类的引用，最终给客户端调用。</p>
 <p>策略模式让算法独立于使用它的客户而独立变化。策略模式重点是封装不同的算法和行为，不同的场景下可以相互替换。策略模式是开闭原则的体现，开闭原则讲的是一个软件实体应该对拓展开放对修改关闭。因为策略模式在加入新的策略时，不会影响其他类的修改，增加了拓展性，也就是对拓展是开放的；对于调用场景来说，只依赖于抽象，而不依赖于具体实现，所以对修改是关闭的。<br>策略模式的优点和缺点<br>优点：<br>（1）调用策略中的方法在context中，没有和各个策略的实现耦合在一起，各个实现策略的不同子类可以去拓展、修改和切换。<br>（2）避免写很多if else代码，提高了可观性。同时可以结合抽象类（策略类）去使用，Java支持很好。<br>缺点：<br>（1）客户端调用时必须知道所有的策略类，并且感知到要调用哪一种策略实现。<br>（2）一旦抽象，必然会对一些特殊场景难以处理。并且这里去加入了很多的策略实现类，也有Context类的加入，增加了开销。</p>
-</li>
-<li><p><strong>模板模式</strong></p>
+<p><strong>模板模式</strong></p>
 <p>在模板模式（Template Pattern）中，一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。这种类型的设计模式属于行为型模式。 </p>
-</li>
-<li><p><strong>观察者模式</strong></p>
+<p><strong>观察者模式</strong></p>
 <p>观察者模式是一种对象行为型模式。它表示的是一种对象与对象之间具有依赖关系，当一个对象发生改变的时候，这个对象所依赖的对象也会做出反应。</p>
-</li>
-<li><p><strong>适配器模式</strong></p>
+<p><strong>适配器模式</strong></p>
 <p>适配器模式(Adapter Pattern) 将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Spring 框架中用到了哪些设计模式？</p>
 <ul>
@@ -1926,8 +2110,6 @@
 <li><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</li>
 <li><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</li>
 <li><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</li>
-</ul>
-</li>
 </ul>
 <hr>
 <h3 id="Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"><a href="#Java-反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？" class="headerlink" title="Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？"></a>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</h3><ol>
@@ -2049,10 +2231,18 @@
 <p>使用 Lambda 表达式可以使代码变的更加简洁紧凑。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 不需要参数,返回值为 5  </span></span><br><span class="line">() -&gt; <span class="number">5</span>  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 2. 接收一个参数(数字类型),返回其2倍的值  </span></span><br><span class="line">x -&gt; <span class="number">2</span> * x  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 3. 接受2个参数(数字),并返回他们的差值  </span></span><br><span class="line">(x, y) -&gt; x – y  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 4. 接收2个int型整数,返回他们的和  </span></span><br><span class="line">(<span class="keyword">int</span> x, <span class="keyword">int</span> y) -&gt; x + y  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)  </span></span><br><span class="line">(String s) -&gt; System.out.print(s)</span><br></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="手写单例模式（双重检测机制）"><a href="#手写单例模式（双重检测机制）" class="headerlink" title="手写单例模式（双重检测机制）"></a>手写单例模式（双重检测机制）</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">//先判断对象是否已经实例过，没有实例化过才进入加锁代码</span></span><br><span class="line">        <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//类对象加锁</span></span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> uniqueInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
-
+<hr>
+<p>###jdk常用分析问题的工具</p>
+<p>jvisualvm 能够监控线程，内存情况，查看方法的CPU时间和内存中的对 象，已被GC的对象，反向查看分配的堆栈(如100个String对象分别由哪几个对象分配出来的). </p>
+<hr>
+<p>###什么是SQL注入？怎么解决？</p>
+<p>所谓SQL注入，就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。 </p>
+<p>1、采用PreparedStatement来避免sql注入，会自动对用户填写的数据进行验证(简单有效)<br>sql注入只对sql语句的准备(编译)过程有破坏作用<br>而PreparedStatement已经准备好了,执行阶段只是把输入串作为数据处理,<br>而不再对sql语句进行解析,准备,因此也就避免了sql注入问题.</p>
+<p>2、使用正则表达式过滤传入的参数（典型的SQL 注入攻击的正则表达式 ）</p>
+<p>3、字符串过滤，敏感词过滤</p>
 <p>SpringAOP实现原理+IOC实现原理(源码怎么实现)？</p>
 <p>10.并发时怎么应对？<br>11.OM平时用过吗？怎么解决OM？</p>
 <p>12.讲一讲线程创建的时候发生了什么？</p>
@@ -2060,7 +2250,8 @@
 <p>8.合并两个有序表最优解（当时只想到了归并排序的思想双指针外排序方式）</p>
 <p>2.场景题：只有一台机器，10亿个ip地址（有重复）找出出现最多的10个ip，怎么处理？</p>
 <p>4.Git的常用命令有哪些，merge时候出现冲突怎么处理？6.Java8新特性了解吗？，讲一讲流？</p>
-<p>14.手写单例模式（双重检测机制）<br>15.MySQL 中 InnoDB 和 MyISAM 区别？<br>16.MySQL的默认隔离级别？<br>17.知道数据库优化吗？SQL优化？<br>18.讲一讲索引，说一说B+树<br>19.什么是SQL注入？怎么解决？<br>20.用过哪些SQL的函数？（写一个查找平均分SQL语句）<br>21.讲一讲spring事务，ioc，aop，bean声明周期？<br>22.hibernate和mybatis的区别，各自的优缺点<br>23.Linux常用命令有哪些，查看端口的命令是什么？<br>24.HTTP常用的首部字段有哪些？<br>25.GET和POST的区别？<br>26.HTTPS协议？什么是对称加密和非对称加密？<br>27.多线程join()和yield()方法的作用？<br>28.介绍一下juc里面常用的几个工具类<br>29.TCP/IP协议的3次握手和4次挥手<br>30.各种排序算法思路以及时间复杂度（主要是快排，冒泡，堆排，归并）<br>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
+<hr>
+<p>31.topk问题（快排和堆来解决）<br>32.Git的常用命令有哪些？<br>33.Git在merge的时候出现冲突，怎么处理冲突？</p>
 <p><strong>基础：</strong></p>
 <ol>
 <li>Java 反射？反射有什么缺点？你是怎么理解反射的（为什么框架需要反射）？</li>
