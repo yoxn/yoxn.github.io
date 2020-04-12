@@ -303,13 +303,7 @@
   <entry>
     <title>Linux知识</title>
     <url>/2020/03/08/Linux%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<ul>
-<li> <a id="more"></a>
-
-</li>
-</ul>
-<hr>
-<h3 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h3><h3 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令"></a>ls命令</h3><ul>
+    <content><![CDATA[<h3 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h3><h3 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令"></a>ls命令</h3><ul>
 <li><p>ls（list）功能：列出目录内容</p>
 </li>
 <li><p>格式： Is [参数］［文件或目录］</p>
@@ -321,6 +315,8 @@
 <li><p>常用</p>
 <p>ls -l 简化版：ll</p>
 <p>ls -al</p>
+<a id="more"></a>
+
 </li>
 </ul>
 <h4 id="cd命令"><a href="#cd命令" class="headerlink" title="cd命令"></a>cd命令</h4><ul>
